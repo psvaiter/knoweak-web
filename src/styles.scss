@@ -44,14 +44,13 @@ body {
   color: #333;
 }
 
-
 .sidebar .nav-link.active {
-  color: #007bff;
+  color: #c62311;
+  background-color: #dee2e6;
 }
 
-.sidebar .nav-link:hover .feather,
-.sidebar .nav-link.active .feather {
-  color: inherit;
+.sidebar .nav-link:hover {
+  color: #007bff;
 }
 
 .sidebar-heading {
