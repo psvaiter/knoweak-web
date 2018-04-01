@@ -15,13 +15,13 @@
         
         <ul class="nav flex-column">
           <li class="nav-item">
-            <a class="nav-link active" href="#">
+            <a routerLink="dashboard" routerLinkActive="active" class="nav-link">
               <fa name="eye"></fa>
-              Dashboard <span class="sr-only">(current)</span>
+              Dashboard
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a routerLink="organizations" routerLinkActive="active" class="nav-link">
               <fa name="sitemap"></fa>
               Organizações
             </a>
@@ -29,48 +29,47 @@
         </ul>
 
         <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 pb-2 mt-4 border-bottom text-muted">
-          <span>Catálogo
-          </span>
+          Catálogo
         </h6>
         <ul class="nav flex-column">
           <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a routerLink="department" routerLinkActive="active" class="nav-link">
               <fa name="columns"></fa>
               Departamentos
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a routerLink="macroprocesses" routerLinkActive="active" class="nav-link">
               <fa name="th"></fa>
               Macroprocessos
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a routerLink="processes" routerLinkActive="active" class="nav-link">
               <fa name="square"></fa>
               Processos
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a routerLink="services" routerLinkActive="active" class="nav-link">
               <fa name="cogs"></fa>
               Serviços de TI
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a routerLink="assets" routerLinkActive="active" class="nav-link">
               <fa name="laptop"></fa>
               Ativos de TI
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a routerLink="threats" routerLinkActive="active" class="nav-link">
               <fa name="exclamation-triangle"></fa>
               Ameaças
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a routerLink="mitigation-controls" routerLinkActive="active" class="nav-link">
               <fa name="fire-extinguisher"></fa>
               Controles Mitigatórios
             </a>
@@ -78,11 +77,11 @@
         </ul>
 
         <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 pb-2 mt-4 border-bottom text-muted">
-          <span>Admin</span>
+          Admin
         </h6>
         <ul class="nav flex-column mb-2">
           <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a routerLink="users" routerLinkActive="active" class="nav-link">
               <fa name="users"></fa>
               Usuários
             </a>
@@ -91,11 +90,10 @@
       </div>
     </nav>
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
-      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
-        <div>
-          DASHBOARD
-        </div>
+      <div class="d-flex flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+        <router-outlet></router-outlet>
       </div>
     </main>
+    
   </div>
 </div>
