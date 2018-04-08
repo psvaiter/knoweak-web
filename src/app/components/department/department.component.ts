@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DepartmentService, Department } from './department.service';
+import { Paging } from '../pagination/pagination.component';
 
 @Component({
   selector: 'app-department',
@@ -36,41 +37,5 @@ export class DepartmentComponent implements OnInit {
       },
       err => console.error(err)
     );
-  }
-}
-
-
-
-class Paging {
-  currentPage: number = 0;
-  recordsPerPage: number = 0;
-  totalRecords: number = 0;
-  totalPages: number = 0;
-
-  getCurrentStart() {
-    // Empty page
-    if (this.currentPage == 0 || this.totalRecords == 0) {
-      return 0;
-    }
-
-    // All other situations
-    return ((this.currentPage - 1) * this.recordsPerPage) + 1;
-  }
-
-  getCurrentEnd() {
-    let recordsInPage = this.recordsPerPage;
-
-    // Empty page
-    if (this.currentPage == 0 || this.totalRecords == 0) {
-      return 0;
-    }
-
-    // Special case for if current page is the last page
-    if (this.currentPage == this.totalPages) {
-      let remainder = this.totalRecords % this.recordsPerPage;
-      recordsInPage = (remainder > 0) ? remainder : this.recordsPerPage;
-    }
-
-    return this.getCurrentStart() + recordsInPage - 1;
   }
 }

@@ -2,7 +2,7 @@
   <form>
     <div class="form-group">
       <label for="name">Nome</label>
-      <input type="text" name="name" id="name" class="form-control form-control-sm" [(ngModel)]="newDepartment.name" />
+      <input type="text" name="name" id="name" class="form-control form-control-sm" [(ngModel)]="newDepartment.name" /> 
     </div>
     <input type="submit" class="btn btn-sm btn-primary" value="Adicionar" (click)="createDepartment()" />
   </form>
@@ -28,23 +28,4 @@
   </table>
 </div>
 
-<nav aria-label="Page navigation example">
-  <span>Exibindo {{ paging.getCurrentStart() }} a {{ paging.getCurrentEnd() }} de {{ paging.totalRecords }}</span>
-  <ul class="pagination">
-    <li class="page-item">
-      <a class="page-link" href="#" aria-label="Previous">
-        <span aria-hidden="true">&laquo;</span>
-        <span class="sr-only">Previous</span>
-      </a>
-    </li>
-    <li class="page-item"><a class="page-link" href="#">1</a></li>
-    <li class="page-item"><a class="page-link" href="#">2</a></li>
-    <li class="page-item"><a class="page-link" href="#">3</a></li>
-    <li class="page-item">
-      <a class="page-link" href="#" aria-label="Next">
-        <span aria-hidden="true">&raquo;</span>
-        <span class="sr-only">Next</span>
-      </a>
-    </li>
-  </ul>
-</nav>
+<app-pagination [paging]="paging"></app-pagination>

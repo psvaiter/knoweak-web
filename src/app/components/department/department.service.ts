@@ -12,7 +12,11 @@ export class DepartmentService {
   constructor(private _http: HttpClient) { }
 
   getAll() {
-    return this._http.get('http://localhost:8000/departments');
+    return this._http.get(this.baseUrl + '/departments');
+  }
+
+  getById(id: number) {
+    return this._http.get(this.baseUrl + '/departments' + id);    
   }
 
   create(department: Department) {
