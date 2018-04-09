@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-pagination',
@@ -6,21 +6,13 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./pagination.component.scss']
 })
 
-export class PaginationComponent implements OnInit {
+export class PaginationComponent {
 
   @Input() paging: Paging;
-  currentStart: number;
-  currentEnd: number;
 
   constructor() { }
 
-  ngOnInit() {
-    this.currentStart = this.getCurrentStart(); // trying to load to a variable
-    console.log(this.paging.currentPage); // is zero here
-  }
-
   getCurrentStart() {
-    console.log(this.paging); // called once by ngOnInit, ok
     // Empty page
     if (this.paging.currentPage == 0 || this.paging.totalRecords == 0) {
       return 0;
@@ -34,7 +26,7 @@ export class PaginationComponent implements OnInit {
     return this.getCurrentStart() + this.getRecordCountInPage() - 1;
   }
 
-  getRecordCountInPage() {
+  private getRecordCountInPage() {
     let recordsInPage = this.paging.recordsPerPage;
 
     // Empty page

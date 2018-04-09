@@ -1,0 +1,29 @@
+.pagination-container {
+    font-size: 0.8rem;
+    overflow: hidden;
+    margin: 10px 0px;
+    padding: 0;
+    border-radius: 6px;
+    // box-shadow: 0 0 10px 2px #c2c2c2;
+}
+
+.pagination-container nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 0.6rem;
+}
+
+.page-item a.page-link {
+    padding: 0.3rem 0.6rem;
+    font-size: 0.8rem;
+    font-weight: bold;
+    color: black;
+    //text-decoration: underline;
+    border: none;
+}
+
+ul.pagination {
+    float: right;
+    margin: 0;
+}
