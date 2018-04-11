@@ -19,8 +19,8 @@ export class DepartmentComponent implements OnInit {
     this.getDepartments();
   }
 
-  getDepartments() {
-    this._departmentService.getAll().subscribe(
+  getDepartments(page?: number, recordsPerPage?: number) {
+    this._departmentService.getAll(page, recordsPerPage).subscribe(
       data => {
         this.departments = data['data'];
         this.paging = Object.assign(this.paging, data['paging']);
@@ -32,10 +32,25 @@ export class DepartmentComponent implements OnInit {
   createDepartment() {
     this._departmentService.create(this.newDepartment).subscribe(
       data => {
-        this.getDepartments();
+        this.getDepartments(this.paging.currentPage);
         this.paging = Object.assign(this.paging, data['paging']);
+        this.newDepartment.name = "";
       },
       err => console.error(err)
     );
+  }
+
+  getPrevPage() {
+    if (this.paging.currentPage <= 1) {
+      return;
+    }
+    this.getDepartments(this.paging.currentPage - 1);
+  }
+
+  getNextPage() {
+    if (this.paging.currentPage >= this.paging.totalPages) {
+      return;
+    }
+    this.getDepartments(this.paging.currentPage + 1);
   }
 }

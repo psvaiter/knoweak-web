@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-pagination',
@@ -9,6 +9,8 @@ import { Component, Input } from '@angular/core';
 export class PaginationComponent {
 
   @Input() paging: Paging;
+  @Output() goPrevPage = new EventEmitter<boolean>();
+  @Output() goNextPage = new EventEmitter<boolean>();
 
   constructor() { }
 
@@ -41,6 +43,14 @@ export class PaginationComponent {
     }
 
     return recordsInPage;
+  }
+
+  goPrev() {
+    this.goPrevPage.emit(true);
+  }
+
+  goNext() {
+    this.goNextPage.emit(true);
   }
 }
 

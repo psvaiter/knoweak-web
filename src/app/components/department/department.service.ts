@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
 @Injectable()
 export class DepartmentService {
@@ -11,8 +11,25 @@ export class DepartmentService {
 
   constructor(private _http: HttpClient) { }
 
-  getAll() {
-    return this._http.get(this.baseUrl + '/departments');
+  getAll(page?: number, recordsPerPage?: number) {
+
+    let url = this.baseUrl + '/departments';
+    let params = this.GetPageRequestParams(page, recordsPerPage);
+    
+    return this._http.get(url, { params });
+  }
+
+  private GetPageRequestParams(page: number, recordsPerPage: number): HttpParams {
+    let params = new HttpParams();
+    
+    if (page) {
+      params = params.set('page', page.toString());
+    }
+    if (recordsPerPage) {
+      params = params.set('recordsPerPage', recordsPerPage.toString());
+    }
+    
+    return params;
   }
 
   getById(id: number) {
