@@ -11,11 +11,13 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { DepartmentComponent } from './components/department/department.component';
 import { DepartmentService } from './components/department/department.service';
 import { PaginationComponent } from './components/pagination/pagination.component';
+import { EditDepartmentComponent } from './components/department/edit-department/edit-department.component';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
   { path: 'dashboard', component: DashboardComponent },
-  { path: 'department', component: DepartmentComponent }
+  { path: 'departments', component: DepartmentComponent },
+  { path: 'departments/:id/edit', component: EditDepartmentComponent }
 ]
 
 @NgModule({
@@ -23,7 +25,8 @@ const appRoutes: Routes = [
     AppComponent,
     DashboardComponent,
     DepartmentComponent,
-    PaginationComponent
+    PaginationComponent,
+    EditDepartmentComponent
   ],
   imports: [
     BrowserModule,
