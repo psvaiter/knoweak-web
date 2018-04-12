@@ -1,0 +1,21 @@
+<div>
+  <div>
+    <h5>Atualização de departamento</h5>
+    <form>
+      <div class="entity-metadata my-2">
+        <b>Criado em:</b> {{ deptartment.createdOn }}<br>
+        <b>Atualizado por último em:</b> {{ deptartment.lastModifiedOn }}
+      </div>
+
+      <div class="form-group">
+        <label for="name">Nome</label>
+        <div class="input-group input-group-sm">
+          <input type="text" name="name" id="name" class="form-control form-control-sm" [(ngModel)]="department.name" /> 
+        </div>      
+      </div>
+      
+      <input type="submit" class="btn btn-sm btn-outline-secondary" value="Cancelar" (click)="goBack()" />
+      <input type="submit" class="btn btn-sm btn-outline-success" value="Salvar" (click)="saveChanges()" />
+    </form>
+  </div>
+</div>

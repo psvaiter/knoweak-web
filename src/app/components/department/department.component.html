@@ -1,34 +1,39 @@
 <div>
-  <form>
-    <div class="form-group">
-      <label for="name">Nome</label>
-      <input type="text" name="name" id="name" class="form-control form-control-sm" [(ngModel)]="newDepartment.name" /> 
-    </div>
-    <input type="submit" class="btn btn-sm btn-primary" value="Adicionar" (click)="createDepartment()" />
-  </form>
-</div>
-<div class="table-container">
-  <table class="table table-hover">
-    <thead>
-      <tr>
-        <th>Nome</th>
-        <th>Criado em</th>
-        <th>Atualizado em</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let dept of departments">
-        <td>{{ dept.name }}</td>
-        <td>{{ dept.createdOn | date : "dd/MM/yyyy HH:mm" }}</td>
-        <td>{{ dept.lastModifiedOn | date : "dd/MM/yyyy HH:mm" }}</td>
-        <td><fa name="edit"></fa></td>
-      </tr>
-    </tbody>
-  </table>
-  <app-pagination 
-    [paging]="paging"
-    (goPrevPage)="getPrevPage()"
-    (goNextPage)="getNextPage()">
-  </app-pagination>
+  <div>
+    <h5>Departamentos</h5>
+    <form>
+      <div class="form-group">
+        <label for="name">Nome</label>
+        <div class="input-group input-group-sm">
+          <input type="text" name="name" id="name" class="form-control form-control-sm" [(ngModel)]="newDepartment.name" /> 
+        </div>      
+      </div>
+      <input type="submit" class="btn btn-sm btn-outline-secondary" value="Adicionar" (click)="createDepartment()" />
+    </form>
+  </div>
+  <div class="table-container">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>Nome</th>
+          <th>Criado em</th>
+          <th>Atualizado em</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let dept of departments">
+          <td>{{ dept.name }}</td>
+          <td>{{ dept.createdOn | date : "dd/MM/yyyy HH:mm" }}</td>
+          <td>{{ dept.lastModifiedOn | date : "dd/MM/yyyy HH:mm" }}</td>
+          <td><a [routerLink]="['/departments', dept.id, 'edit']"><fa name="edit"></fa></a></td>
+        </tr>
+      </tbody>
+    </table>
+    <app-pagination 
+      [paging]="paging"
+      (goPrevPage)="getPrevPage()"
+      (goNextPage)="getNextPage()">
+    </app-pagination>
+  </div>
 </div>
