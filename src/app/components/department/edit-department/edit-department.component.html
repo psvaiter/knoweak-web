@@ -1,21 +1,24 @@
 <div>
-  <div>
+  <div *ngIf="department.id">
     <h5>Atualização de departamento</h5>
     <form>
       <div class="entity-metadata my-2">
-        <b>Criado em:</b> {{ department.createdOn }}<br>
-        <b>Atualizado por último em:</b> {{ department.lastModifiedOn }}
+        <b>Criado em:</b> {{ department.createdOn | date : "dd/MM/yyyy HH:mm" }} (UTC)<br>
+        <b>Atualizado em:</b> {{ department.lastModifiedOn | date : "dd/MM/yyyy HH:mm" }} (UTC)
       </div>
 
       <div class="form-group">
         <label for="name">Nome</label>
         <div class="input-group input-group-sm">
-          <input type="text" name="name" id="name" class="form-control form-control-sm" [(ngModel)]="department.name" /> 
+          <input type="text" name="name" id="name" class="form-control form-control-sm"
+                 [(ngModel)]="department.name" #name="ngModel" />
         </div>      
       </div>
       
-      <input type="submit" class="btn btn-sm btn-outline-secondary" value="Cancelar" (click)="goBack()" />
-      <input type="submit" class="btn btn-sm btn-outline-success" value="Salvar" (click)="saveChanges()" />
+      <button type="button" class="btn btn-sm btn-outline-danger"
+              (click)="goBack()">Cancelar</button>
+      <button type="submit" class="btn btn-sm btn-success" [disabled]="!hasDepartmentChanged()"
+              (click)="saveChanges()">Salvar</button>
     </form>
   </div>
 </div>

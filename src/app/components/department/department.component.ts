@@ -7,6 +7,7 @@ import { Paging } from '../pagination/pagination.component';
   templateUrl: './department.component.html',
   styleUrls: ['./department.component.scss']
 })
+
 export class DepartmentComponent implements OnInit {
 
   departments: Department[];
