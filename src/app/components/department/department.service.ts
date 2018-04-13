@@ -33,7 +33,7 @@ export class DepartmentService {
   }
 
   getById(id: number) {
-    return this._http.get(this.baseUrl + '/departments' + id);    
+    return this._http.get(this.baseUrl + '/departments/' + id);
   }
 
   create(department: Department) {
