@@ -13,6 +13,8 @@ export class DepartmentComponent implements OnInit {
   departments: Department[];
   paging: Paging = new Paging();
   newDepartment: Department = new Department();
+  errors = []
+  hasCreated: boolean = false;
 
   constructor(private _departmentService: DepartmentService) { }
 
@@ -26,7 +28,9 @@ export class DepartmentComponent implements OnInit {
         this.departments = data['data'];
         this.paging = Object.assign(this.paging, data['paging']);
       },
-      err => console.error(err)
+      err => {
+        console.error(err);
+      }
     );
   }
 
@@ -36,8 +40,14 @@ export class DepartmentComponent implements OnInit {
         this.getDepartments(this.paging.currentPage);
         this.paging = Object.assign(this.paging, data['paging']);
         this.newDepartment.name = "";
+        this.hasCreated = true;
+        this.errors = [];
       },
-      err => console.error(err)
+      err => {
+        console.error(err);
+        this.hasCreated = false;
+        this.errors = err['error'].errors;
+      }
     );
   }
 

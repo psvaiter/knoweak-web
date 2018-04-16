@@ -13,6 +13,8 @@ export class EditDepartmentComponent implements OnInit {
   id: number;
   department: Department = new Department();
   persistedDepartment: Department = new Department();
+  hasUpdated: boolean = false;
+  errors = [];
 
   constructor(
     private location: Location,
@@ -49,8 +51,14 @@ export class EditDepartmentComponent implements OnInit {
       data => {
         this.persistedDepartment = data['data'];
         this.department = Object.assign({}, this.persistedDepartment);
+        this.hasUpdated = true;
+        this.errors = [];
       },
-      err => console.error(err)
+      err => {
+        console.error(err);
+        this.hasUpdated = true;
+        this.errors = err['error'].errors;
+      }
     );
   }
 

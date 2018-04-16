@@ -19,6 +19,22 @@
               (click)="goBack()">Cancelar</button>
       <button type="submit" class="btn btn-sm btn-success" [disabled]="!hasDepartmentChanged()"
               (click)="saveChanges()">Salvar</button>
+      
+      <!-- Success feedback -->
+      <span class="mx-2 align-middle text-success" [class.d-none]="hasUpdated == false || hasDepartmentChanged()">
+        Salvo<fa name="check"></fa>
+      </span>
     </form>
+
+    <!-- Error alert -->
+    <div class="alert alert-danger my-3" *ngIf="errors.length > 0">
+      <h6>Solicitação não concluída</h6>
+      <ul class="m-0">
+        <li *ngFor="let error of errors">
+          Field: {{ error.field }}<br>
+          Message: {{ error.message }}
+        </li>
+      </ul>
+    </div>
   </div>
 </div>

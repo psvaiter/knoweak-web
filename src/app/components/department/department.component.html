@@ -1,6 +1,8 @@
 <div>
   <div>
     <h5>Departamentos</h5>
+
+    <!-- Form to add a new record -->
     <form>
       <div class="form-group">
         <label for="name">Nome</label>
@@ -9,7 +11,24 @@
         </div>      
       </div>
       <input type="submit" class="btn btn-sm btn-outline-secondary" value="Adicionar" (click)="createDepartment()" />
+
+      <!-- Success feedback -->
+      <span class="mx-2 align-middle text-success" [class.d-none]="hasCreated == false">
+        Departamento adicionado<fa name="check"></fa>
+      </span>
     </form>
+
+    <!-- Error alert -->
+    <div class="alert alert-danger my-3" *ngIf="errors.length > 0">
+      <h6>Solicitação não concluída</h6>
+      <ul class="m-0">
+        <li *ngFor="let error of errors">
+          Field: {{ error.field }}<br>
+          Message: {{ error.message }}
+        </li>
+      </ul>
+    </div>
+
   </div>
   <div class="table-container">
     <table class="table table-hover">
