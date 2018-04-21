@@ -31,7 +31,21 @@ const appRoutes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
   { path: 'dashboard', component: DashboardComponent },
   { path: 'departments', component: DepartmentComponent },
-  { path: 'departments/:id/edit', component: EditDepartmentComponent }
+  { path: 'departments/:id/edit', component: EditDepartmentComponent },
+  { path: 'macroprocesses', component: MacroprocessComponent },
+  { path: 'macroprocesses/:id/edit', component: EditMacroprocessComponent },
+  { path: 'processes', component: ProcessComponent },
+  { path: 'processes/:id/edit', component: EditProcessComponent },
+  { path: 'services', component: ItServiceComponent },
+  { path: 'services/:id/edit', component: EditItServiceComponent },
+  { path: 'assets', component: ItAssetComponent },
+  { path: 'assets/:id/edit', component: EditItAssetComponent },
+  { path: 'securityThreats', component: SecurityThreatComponent },
+  { path: 'securityThreats/:id/edit', component: EditSecurityThreatComponent },
+  { path: 'mitigationControls', component: MitigationControlComponent },
+  { path: 'mitigationControls/:id/edit', component: EditMitigationControlComponent },
+  { path: 'users', component: UserComponent },
+  { path: 'users/:id/edit', component: EditUserComponent }
 ]
 
 @NgModule({
