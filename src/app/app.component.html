@@ -1,5 +1,8 @@
 <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
-  <a class="navbar-brand col-10 mr-0" href="#">knoweak - A <b>Know Your Weakness</b> Tool</a>
+  <button type="button" class="btn btn-sm btn-secondary mx-1 d-sm-block d-md-none" (click)="toggleSidebar()">
+    <fa name="bars"></fa>
+  </button>
+  <a class="navbar-brand mx-3" href="#">knoweak - A <b>Know Your Weakness</b> Tool</a>
   <ul class="navbar-nav px-3">
     <li class="nav-item text-nowrap">
       <a class="nav-link" href="#">Sair</a>
@@ -8,88 +11,87 @@
 </nav>
 
 <div class="container-fluid">
-  <div class="row">
-    <nav class="d-none d-md-block col-md-3 col-xl-2 bg-light sidebar">
-      <div class="sidebar-sticky">
-        
-        <ul class="nav flex-column">
-          <li class="nav-item">
-            <a routerLink="dashboard" routerLinkActive="active" class="nav-link">
-              <fa name="eye"></fa>
-              Dashboard
-            </a>
-          </li>
-          <li class="nav-item">
-            <a routerLink="organizations" routerLinkActive="active" class="nav-link">
-              <fa name="sitemap"></fa>
-              Organizações
-            </a>
-          </li>
-        </ul>
+  <div class="row d-flex align-items-strecth flex-nowrap">
+    <nav class="sidebar bg-light" [class.sidebar-invisible]="!isOpen">
+      
+      <ul class="nav flex-column">
+        <li class="nav-item">
+          <a routerLink="dashboard" routerLinkActive="active" class="nav-link">
+            <fa name="eye"></fa>
+            Dashboard
+          </a>
+        </li>
+        <li class="nav-item">
+          <a routerLink="organizations" routerLinkActive="active" class="nav-link">
+            <fa name="sitemap"></fa>
+            Organizações
+          </a>
+        </li>
+      </ul>
 
-        <h6 class="sidebar-heading px-3 pb-2 mt-4 border-bottom text-muted">
-          Catálogo
-        </h6>
-        <ul class="nav flex-column">
-          <li class="nav-item">
-            <a routerLink="departments" routerLinkActive="active" class="nav-link">
-              <fa name="columns"></fa>
-              Departamentos
-            </a>
-          </li>
-          <li class="nav-item">
-            <a routerLink="macroprocesses" routerLinkActive="active" class="nav-link">
-              <fa name="th"></fa>
-              Macroprocessos
-            </a>
-          </li>
-          <li class="nav-item">
-            <a routerLink="processes" routerLinkActive="active" class="nav-link">
-              <fa name="square"></fa>
-              Processos
-            </a>
-          </li>
-          <li class="nav-item">
-            <a routerLink="services" routerLinkActive="active" class="nav-link">
-              <fa name="cogs"></fa>
-              Serviços de TI
-            </a>
-          </li>
-          <li class="nav-item">
-            <a routerLink="assets" routerLinkActive="active" class="nav-link">
-              <fa name="laptop"></fa>
-              Ativos de TI
-            </a>
-          </li>
-          <li class="nav-item">
-            <a routerLink="threats" routerLinkActive="active" class="nav-link">
-              <fa name="exclamation-triangle"></fa>
-              Ameaças
-            </a>
-          </li>
-          <li class="nav-item">
-            <a routerLink="mitigation-controls" routerLinkActive="active" class="nav-link">
-              <fa name="fire-extinguisher"></fa>
-              Controles Mitigatórios
-            </a>
-          </li>
-        </ul>
+      <h6 class="sidebar-heading px-3 pb-2 mt-4 border-bottom text-muted">
+        Catálogo
+      </h6>
+      <ul class="nav flex-column">
+        <li class="nav-item">
+          <a routerLink="departments" routerLinkActive="active" class="nav-link">
+            <fa name="columns"></fa>
+            Departamentos
+          </a>
+        </li>
+        <li class="nav-item">
+          <a routerLink="macroprocesses" routerLinkActive="active" class="nav-link">
+            <fa name="th"></fa>
+            Macroprocessos
+          </a>
+        </li>
+        <li class="nav-item">
+          <a routerLink="processes" routerLinkActive="active" class="nav-link">
+            <fa name="square"></fa>
+            Processos
+          </a>
+        </li>
+        <li class="nav-item">
+          <a routerLink="services" routerLinkActive="active" class="nav-link">
+            <fa name="cogs"></fa>
+            Serviços de TI
+          </a>
+        </li>
+        <li class="nav-item">
+          <a routerLink="assets" routerLinkActive="active" class="nav-link">
+            <fa name="laptop"></fa>
+            Ativos de TI
+          </a>
+        </li>
+        <li class="nav-item">
+          <a routerLink="threats" routerLinkActive="active" class="nav-link">
+            <fa name="exclamation-triangle"></fa>
+            Ameaças
+          </a>
+        </li>
+        <li class="nav-item">
+          <a routerLink="mitigation-controls" routerLinkActive="active" class="nav-link">
+            <fa name="fire-extinguisher"></fa>
+            Controles Mitigatórios
+          </a>
+        </li>
+      </ul>
 
-        <h6 class="sidebar-heading px-3 pb-2 mt-4 border-bottom text-muted">
-          Admin
-        </h6>
-        <ul class="nav flex-column mb-2">
-          <li class="nav-item">
-            <a routerLink="users" routerLinkActive="active" class="nav-link">
-              <fa name="users"></fa>
-              Usuários
-            </a>
-          </li>
-        </ul>
-      </div>
+      <h6 class="sidebar-heading px-3 pb-2 mt-4 border-bottom text-muted">
+        Admin
+      </h6>
+      <ul class="nav flex-column mb-2">
+        <li class="nav-item">
+          <a routerLink="users" routerLinkActive="active" class="nav-link">
+            <fa name="users"></fa>
+            Usuários
+          </a>
+        </li>
+      </ul>
+
     </nav>
-    <main role="main" class="col-md-9 col-xl-10 ml-sm-auto pt-3 px-4">
-      <div class="d-flex flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+    <main role="main" class=" pt-3 px-4">
+      <div class="d-flex flex-nowrap align-items-center pb-2 mb-3 border-bottom">
         <router-outlet></router-outlet>
       </div>
     </main>
