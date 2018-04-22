@@ -17,7 +17,10 @@ export abstract class CrudComponent<TEntity> {
   paging: Paging = new Paging();
   errors = []
   newRecord = <TEntity> {};
+  currentRecord = <TEntity> {};
+  persistedRecord = <TEntity> {};
   hasCreated: boolean = false;
+  hasUpdated: boolean = false;
 
   constructor(protected _crudService: CrudService) { }
 
@@ -30,6 +33,16 @@ export abstract class CrudComponent<TEntity> {
       err => {
         console.error(err);
       }
+    );
+  }
+
+  getSingleRecord(url: string) {
+    this._crudService.get(url).subscribe(
+      data => {
+        this.persistedRecord = data['data'];
+        this.currentRecord = Object.assign({}, this.persistedRecord);
+      }, 
+      err => console.error(err)
     );
   }
 
@@ -51,6 +64,32 @@ export abstract class CrudComponent<TEntity> {
         this.errors = err['error'].errors;
       }
     );
+  }
+
+  patchRecord(currentRecord: TEntity, url: string): void {
+    // Don't make request if record hasn't been changed
+    if (!this.hasChangedRecord()) {
+      return;
+    }
+
+    this._crudService.patch(this.currentRecord, url).subscribe(
+      data => {
+        this.persistedRecord = data['data'];
+        this.currentRecord = Object.assign({}, this.persistedRecord);
+        
+        this.hasUpdated = true;
+        this.errors = [];
+      },
+      err => {
+        console.error(err);
+        this.hasUpdated = true;
+        this.errors = err['error'].errors;
+      }
+    );
+  }
+
+  hasChangedRecord(): boolean {
+    return JSON.stringify(this.currentRecord) != JSON.stringify(this.persistedRecord);
   }
 
   getPrevPage() {

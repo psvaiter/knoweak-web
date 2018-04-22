@@ -1,40 +1,32 @@
 <div>
-  <div *ngIf="department.id">
+  <div *ngIf="currentRecord.id">
     <h5>Atualização de departamento</h5>
     <form>
       <div class="entity-metadata my-2">
-        <b>Criado em:</b> {{ department.createdOn | date : "dd/MM/yyyy HH:mm" }} (UTC)<br>
-        <b>Atualizado em:</b> {{ department.lastModifiedOn | date : "dd/MM/yyyy HH:mm" }} (UTC)
+        <b>Criado em:</b> {{ currentRecord.createdOn | date : "dd/MM/yyyy HH:mm" }} (UTC)<br>
+        <b>Atualizado em:</b> {{ currentRecord.lastModifiedOn | date : "dd/MM/yyyy HH:mm" }} (UTC)
       </div>
 
       <div class="form-group">
         <label for="name">Nome</label>
         <div class="input-group input-group-sm">
           <input type="text" name="name" id="name" class="form-control form-control-sm"
-                 [(ngModel)]="department.name" #name="ngModel" />
+                 [(ngModel)]="currentRecord.name" #name="ngModel" />
         </div>      
       </div>
       
       <button type="button" class="btn btn-sm btn-outline-danger"
               (click)="goBack()">Cancelar</button>
-      <button type="submit" class="btn btn-sm btn-success" [disabled]="!hasDepartmentChanged()"
-              (click)="saveChanges()">Salvar</button>
+      <button type="submit" class="btn btn-sm btn-success" [disabled]="!hasChangedRecord()"
+              (click)="patchRecord(currentRecord, url + '/' + id)">Salvar</button>
       
       <!-- Success feedback -->
-      <span class="mx-2 align-middle text-success" [class.d-none]="hasUpdated == false || hasDepartmentChanged()">
+      <span class="mx-2 align-middle text-success" [class.d-none]="hasUpdated == false || hasChangedRecord()">
         Salvo<fa name="check"></fa>
       </span>
     </form>
 
     <!-- Error alert -->
-    <div class="alert alert-danger my-3" *ngIf="errors.length > 0">
-      <h6>Solicitação não concluída</h6>
-      <ul class="m-0">
-        <li *ngFor="let error of errors">
-          Field: {{ error.field }}<br>
-          Message: {{ error.message }}
-        </li>
-      </ul>
-    </div>
+    <app-error-alert [errors]="errors"></app-error-alert>
   </div>
 </div>
