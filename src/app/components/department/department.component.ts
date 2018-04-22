@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { DepartmentService, Department } from './department.service';
-import { Paging } from '../pagination/pagination.component';
+import { CrudComponent } from '../utils/crud/crud.component';
+import { CrudService } from '../utils/crud/crud.service';
+import { Department } from './department';
 
 @Component({
   selector: 'app-department',
@@ -8,60 +9,12 @@ import { Paging } from '../pagination/pagination.component';
   styleUrls: ['./department.component.scss']
 })
 
-export class DepartmentComponent implements OnInit {
+export class DepartmentComponent extends CrudComponent<Department> implements OnInit {
 
-  departments: Department[];
-  paging: Paging = new Paging();
-  newDepartment: Department = new Department();
-  errors = []
-  hasCreated: boolean = false;
-
-  constructor(private _departmentService: DepartmentService) { }
+  url = CrudService.BaseUrl + '/departments';
 
   ngOnInit() {
-    this.getDepartments();
+    this.getRecords(1);
   }
 
-  getDepartments(page?: number, recordsPerPage?: number) {
-    this._departmentService.getAll(page, recordsPerPage).subscribe(
-      data => {
-        this.departments = data['data'];
-        this.paging = Object.assign(this.paging, data['paging']);
-      },
-      err => {
-        console.error(err);
-      }
-    );
-  }
-
-  createDepartment() {
-    this._departmentService.create(this.newDepartment).subscribe(
-      data => {
-        this.getDepartments(this.paging.currentPage);
-        this.paging = Object.assign(this.paging, data['paging']);
-        this.newDepartment.name = "";
-        this.hasCreated = true;
-        this.errors = [];
-      },
-      err => {
-        console.error(err);
-        this.hasCreated = false;
-        this.errors = err['error'].errors;
-      }
-    );
-  }
-
-  getPrevPage() {
-    if (this.paging.currentPage <= 1) {
-      return;
-    }
-    this.getDepartments(this.paging.currentPage - 1);
-  }
-
-  getNextPage() {
-    if (this.paging.currentPage >= this.paging.totalPages) {
-      return;
-    }
-    this.getDepartments(this.paging.currentPage + 1);
-  }
 }

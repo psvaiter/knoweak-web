@@ -1,50 +1,51 @@
 <div>
-  <div>
-    <h5>Departamentos</h5>
-
-    <!-- Form to add a new record -->
-    <form>
-      <div class="form-group">
-        <label for="name">Nome</label>
-        <div class="input-group input-group-sm">
-          <input type="text" name="name" id="name" class="form-control form-control-sm" [(ngModel)]="newDepartment.name" /> 
-        </div>      
-      </div>
-      <input type="submit" class="btn btn-sm btn-outline-secondary" value="Adicionar" (click)="createDepartment()" />
-
-      <!-- Success feedback -->
-      <span class="mx-2 align-middle text-success" [class.d-none]="hasCreated == false">
-        Departamento adicionado<fa name="check"></fa>
-      </span>
-    </form>
-
-    <!-- Error alert -->
-    <app-error-alert [errors]="errors"></app-error-alert>
-
+    <div>
+      <h5>Departamentos</h5>
+  
+      <!-- Form to add a new record -->
+      <form>
+        <div class="form-group">
+          <label for="name">Nome</label>
+          <div class="input-group input-group-sm">
+            <input type="text" name="name" id="name" class="form-control form-control-sm" [(ngModel)]="newRecord.name" /> 
+          </div>      
+        </div>
+        <input type="submit" class="btn btn-sm btn-outline-secondary" value="Adicionar" (click)="createRecord(newRecord)" />
+  
+        <!-- Success feedback -->
+        <span class="mx-2 align-middle text-success" [class.d-none]="hasCreated == false">
+          Departamento adicionado<fa name="check"></fa>
+        </span>
+      </form>
+  
+      <!-- Error alert -->
+      <app-error-alert [errors]="errors"></app-error-alert>
+  
+    </div>
+    <div class="table-container">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>Criado em</th>
+            <th>Atualizado em</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let record of records">
+            <td>{{ record.name }}</td>
+            <td>{{ record.createdOn | date : "dd/MM/yyyy HH:mm" }}</td>
+            <td>{{ record.lastModifiedOn | date : "dd/MM/yyyy HH:mm" }}</td>
+            <td><a [routerLink]="['/departments', record.id, 'edit']"><fa name="edit"></fa></a></td>
+          </tr>
+        </tbody>
+      </table>
+      <app-pagination 
+        [paging]="paging"
+        (goPrevPage)="getPrevPage()"
+        (goNextPage)="getNextPage()">
+      </app-pagination>
+    </div>
   </div>
-  <div class="table-container">
-    <table class="table table-hover">
-      <thead>
-        <tr>
-          <th>Nome</th>
-          <th>Criado em</th>
-          <th>Atualizado em</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let dept of departments">
-          <td>{{ dept.name }}</td>
-          <td>{{ dept.createdOn | date : "dd/MM/yyyy HH:mm" }}</td>
-          <td>{{ dept.lastModifiedOn | date : "dd/MM/yyyy HH:mm" }}</td>
-          <td><a [routerLink]="['/departments', dept.id, 'edit']"><fa name="edit"></fa></a></td>
-        </tr>
-      </tbody>
-    </table>
-    <app-pagination 
-      [paging]="paging"
-      (goPrevPage)="getPrevPage()"
-      (goNextPage)="getNextPage()">
-    </app-pagination>
-  </div>
-</div>
+  

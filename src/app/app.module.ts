@@ -7,10 +7,12 @@ import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { HttpClientModule } from '@angular/common/http'
 
 import { AppComponent } from './app.component';
+import { CrudComponent } from './components/utils/crud/crud.component';
+import { CrudService } from './components/utils/crud/crud.service';
+import { PaginationComponent } from './components/pagination/pagination.component';
+import { ErrorAlertComponent } from './components/utils/error-alert/error-alert.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { DepartmentComponent } from './components/department/department.component';
-import { DepartmentService } from './components/department/department.service';
-import { PaginationComponent } from './components/pagination/pagination.component';
 import { EditDepartmentComponent } from './components/department/edit-department/edit-department.component';
 import { MacroprocessComponent } from './components/macroprocess/macroprocess.component';
 import { EditMacroprocessComponent } from './components/macroprocess/edit-macroprocess/edit-macroprocess.component';
@@ -26,9 +28,7 @@ import { MitigationControlComponent } from './components/mitigation-control/miti
 import { EditMitigationControlComponent } from './components/mitigation-control/edit-mitigation-control/edit-mitigation-control.component';
 import { UserComponent } from './components/user/user.component';
 import { EditUserComponent } from './components/user/edit-user/edit-user.component';
-import { ErrorAlertComponent } from './components/utils/error-alert/error-alert.component';
-import { CrudComponent } from './components/utils/crud/crud.component';
-import { CrudService } from './components/utils/crud/crud.service';
+
 
 const appRoutes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
@@ -83,7 +83,6 @@ const appRoutes: Routes = [
     HttpClientModule
   ],
   providers: [
-    DepartmentService,
     CrudService
   ],
   bootstrap: [AppComponent]
