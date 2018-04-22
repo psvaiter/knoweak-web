@@ -26,6 +26,9 @@ import { MitigationControlComponent } from './components/mitigation-control/miti
 import { EditMitigationControlComponent } from './components/mitigation-control/edit-mitigation-control/edit-mitigation-control.component';
 import { UserComponent } from './components/user/user.component';
 import { EditUserComponent } from './components/user/edit-user/edit-user.component';
+import { ErrorAlertComponent } from './components/utils/error-alert/error-alert.component';
+import { CrudComponent } from './components/utils/crud/crud.component';
+import { CrudService } from './components/utils/crud/crud.service';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
@@ -68,7 +71,8 @@ const appRoutes: Routes = [
     MitigationControlComponent,
     EditMitigationControlComponent,
     UserComponent,
-    EditUserComponent
+    EditUserComponent,
+    ErrorAlertComponent
   ],
   imports: [
     BrowserModule,
@@ -79,7 +83,8 @@ const appRoutes: Routes = [
     HttpClientModule
   ],
   providers: [
-    DepartmentService
+    DepartmentService,
+    CrudService
   ],
   bootstrap: [AppComponent]
 })
