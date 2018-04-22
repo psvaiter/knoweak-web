@@ -15,8 +15,6 @@ export class EditDepartmentComponent extends CrudComponent<Department> implement
 
   url = CrudService.BaseUrl + '/departments';
   id: number;
-  department: Department = new Department();
-  errors = [];
 
   constructor(
     protected _crudService: CrudService,
