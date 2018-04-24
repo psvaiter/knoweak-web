@@ -11,9 +11,21 @@ import { CrudService } from '../utils/crud/crud.service';
 export class ItAssetComponent extends CrudComponent<ItAsset> implements OnInit {
 
   url = CrudService.BaseUrl + '/itAssets';
+  
+  selectedCategory = new ItAssetCategory;
+  categories = [
+    { id: 1, name: "Hardware" },
+    { id: 2, name: "Infraestrutura" },
+    { id: 3, name: "Pessoa" }
+  ]
 
   ngOnInit() {
     this.getRecords(1);
+  }
+
+  createRecord(newRecord: ItAsset) {
+    newRecord.categoryId = this.selectedCategory.id;
+    super.createRecord(newRecord);
   }
 
 }
@@ -21,6 +33,13 @@ export class ItAssetComponent extends CrudComponent<ItAsset> implements OnInit {
 class ItAsset {
   id: number;
   name: string;
+  description: string;
+  categoryId: number;
   createdOn: DateTimeFormat;
   lastModifiedOn: DateTimeFormat;
+}
+
+class ItAssetCategory {
+  id: number;
+  name: string;
 }

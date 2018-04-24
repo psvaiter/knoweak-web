@@ -4,12 +4,40 @@
   
       <!-- Form to add a new record -->
       <form>
-        <div class="form-group">
-          <label for="name">Nome</label>
-          <div class="input-group input-group-sm">
-            <input type="text" name="name" id="name" class="form-control form-control-sm" [(ngModel)]="newRecord.name" /> 
-          </div>      
+        
+        <!-- Category -->
+        <div class="form-group row">
+          <label for="category" class="col-3 col-form-label col-form-label-sm">
+            Categoria
+          </label>
+          <div class="col-9">
+            <select id="category" name="category" [(ngModel)]="selectedCategory" class="form-control form-control-sm">
+              <option *ngFor="let category of categories" [ngValue]="category">{{ category.name }}</option>
+            </select>
+          </div>
         </div>
+
+        <!-- Name -->
+        <div class="form-group row">
+          <label for="name" class="col-3 col-form-label col-form-label-sm">
+            Nome
+          </label>
+          <div class="col-9">
+            <input type="text" [(ngModel)]="newRecord.name" name="name" id="name" class="form-control form-control-sm" />
+          </div>
+        </div>
+
+        <!-- Description -->
+        <div class="form-group row">
+          <label for="description" class="col-3 col-form-label col-form-label-sm">
+            Descrição
+          </label>
+          <div class="col-9">
+            <input type="text" [(ngModel)]="newRecord.description" name="description" id="description" class="form-control form-control-sm" />
+          </div>
+        </div>
+
+        <!-- Add button -->
         <input type="submit" class="btn btn-sm btn-outline-secondary" value="Adicionar" (click)="createRecord(newRecord)" />
   
         <!-- Success feedback -->
