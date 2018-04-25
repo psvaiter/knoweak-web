@@ -11,15 +11,19 @@ import { CrudService } from '../utils/crud/crud.service';
 export class ItAssetComponent extends CrudComponent<ItAsset> implements OnInit {
 
   url = CrudService.BaseUrl + '/itAssets';
-  
-  categories = [
-    { id: 1, name: "Hardware" },
-    { id: 2, name: "Infraestrutura" },
-    { id: 3, name: "Pessoa" }
-  ]
+  categories = [];
 
   ngOnInit() {
+    this.getCategories();
     this.getRecords(1);
+  }
+
+  getCategories() {
+    this._crudService.getPage(CrudService.BaseUrl + '/itAssetCategories', 1, 100).subscribe(
+      data => {
+        this.categories = data['data'];
+      }
+    );
   }
 
 }
