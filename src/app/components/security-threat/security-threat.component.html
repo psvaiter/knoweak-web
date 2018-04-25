@@ -1,3 +1,67 @@
-<p>
-  security-threat works!
-</p>
+<div>
+    <div>
+      <h5>Ameaças</h5>
+  
+      <!-- Form to add a new record -->
+      <form>
+
+        <!-- Name -->
+        <div class="form-group row">
+          <label for="name" class="col-3 col-form-label col-form-label-sm">
+            Nome
+          </label>
+          <div class="col-9">
+            <input type="text" [(ngModel)]="newRecord.name" name="name" id="name" class="form-control form-control-sm" />
+          </div>
+        </div>
+
+        <!-- Description -->
+        <div class="form-group row">
+          <label for="description" class="col-3 col-form-label col-form-label-sm">
+            Descrição
+          </label>
+          <div class="col-9">
+            <input type="text" [(ngModel)]="newRecord.description" name="description" id="description" class="form-control form-control-sm" />
+          </div>
+        </div>
+
+        <!-- Add button -->
+        <input type="submit" class="btn btn-sm btn-outline-secondary" value="Adicionar" (click)="createRecord(newRecord)" />
+  
+        <!-- Success feedback -->
+        <span class="mx-2 align-middle text-success" [class.d-none]="hasCreated == false">
+          Ameaça adicionada<fa name="check"></fa>
+        </span>
+      </form>
+  
+      <!-- Error alert -->
+      <app-error-alert [errors]="errors"></app-error-alert>
+  
+    </div>
+    <div class="table-container">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>Criado em</th>
+            <th>Atualizado em</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let record of records">
+            <td>{{ record.name }}</td>
+            <td>{{ record.createdOn | date : "dd/MM/yyyy HH:mm" }}</td>
+            <td>{{ record.lastModifiedOn | date : "dd/MM/yyyy HH:mm" }}</td>
+            <td><a [routerLink]="['/securityThreats', record.id, 'edit']"><fa name="edit"></fa></a></td>
+          </tr>
+        </tbody>
+      </table>
+      <app-pagination 
+        [paging]="paging"
+        (goPrevPage)="getPrevPage()"
+        (goNextPage)="getNextPage()">
+      </app-pagination>
+    </div>
+  </div>
+  
