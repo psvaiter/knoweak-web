@@ -4,12 +4,16 @@
   
       <!-- Form to add a new record -->
       <form>
+
+        <!-- Name -->
         <div class="form-group">
           <label for="name">Nome</label>
           <div class="input-group input-group-sm">
             <input type="text" name="name" id="name" class="form-control form-control-sm" [(ngModel)]="newRecord.name" /> 
-          </div>      
+          </div>
         </div>
+
+        <!-- Add button -->
         <input type="submit" class="btn btn-sm btn-outline-secondary" value="Adicionar" (click)="createRecord(newRecord)" />
   
         <!-- Success feedback -->
