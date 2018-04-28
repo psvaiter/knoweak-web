@@ -17,10 +17,3 @@ export class MacroprocessComponent extends CrudComponent<Macroprocess> implement
     this.getRecords(1);
   }
 }
-
-class Macroprocess {
-  id: number;
-  name: string;
-  createdOn: DateTimeFormat;
-  lastModifiedOn: DateTimeFormat;
-}
