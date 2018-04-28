@@ -17,10 +17,3 @@ export class ItServiceComponent extends CrudComponent<ItService> implements OnIn
   }
 
 }
-
-class ItService {
-  id: number;
-  name: string;
-  createdOn: DateTimeFormat;
-  lastModifiedOn: DateTimeFormat;
-}
