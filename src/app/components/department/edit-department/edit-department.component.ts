@@ -29,6 +29,10 @@ export class EditDepartmentComponent extends CrudComponent<Department> implement
     this.getSingleRecord(this.url + `/${this.id}`);
   }
 
+  patchRecord(currentRecord: Department) {
+    super.patchRecord(currentRecord, this.url + `/${this.id}`);
+  }
+
   goBack(): void {
     this.location.back();
   }

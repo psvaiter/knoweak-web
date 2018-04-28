@@ -18,7 +18,7 @@
       <button type="button" class="btn btn-sm btn-outline-danger"
               (click)="goBack()">Cancelar</button>
       <button type="submit" class="btn btn-sm btn-success" [disabled]="!hasChangedRecord()"
-              (click)="patchRecord(currentRecord, url + '/' + id)">Salvar</button>
+              (click)="patchRecord(currentRecord)">Salvar</button>
       
       <!-- Success feedback -->
       <span class="mx-2 align-middle text-success" [class.d-none]="hasUpdated == false || hasChangedRecord()">
