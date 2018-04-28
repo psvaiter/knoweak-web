@@ -17,10 +17,3 @@ export class ProcessComponent extends CrudComponent<Process> implements OnInit {
   }
 
 }
-
-class Process {
-  id: number;
-  name: string;
-  createdOn: DateTimeFormat;
-  lastModifiedOn: DateTimeFormat;
-}
