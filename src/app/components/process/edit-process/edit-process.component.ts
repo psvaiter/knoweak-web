@@ -27,8 +27,8 @@ export class EditProcessComponent extends CrudComponent<Process> implements OnIn
     this.getSingleRecord(this.url + `/${this.id}`);
   }
 
-  patchRecord(currentRecord: Macroprocess) {
-    super.patchRecord(currentRecord, this.url + `/${this.id}`);
+  patchRecord() {
+    super.patchRecord(this.url + `/${this.id}`);
   }
 
   goBack(): void {

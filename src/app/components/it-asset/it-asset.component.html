@@ -12,7 +12,7 @@
           </label>
           <div class="col-9">
             <select id="category" name="category" [(ngModel)]="newRecord.categoryId" class="form-control form-control-sm">
-              <option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</option>
+              <option *ngFor="let category of categories" [ngValue]="category.id">{{ category.name }}</option>
             </select>
           </div>
         </div>
