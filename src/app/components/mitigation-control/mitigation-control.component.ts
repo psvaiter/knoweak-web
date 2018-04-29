@@ -17,11 +17,3 @@ export class MitigationControlComponent extends CrudComponent<MitigationControl>
   }
 
 }
-
-class MitigationControl {
-  id: number;
-  name: string;
-  description: string;
-  createdOn: DateTimeFormat;
-  lastModifiedOn: DateTimeFormat;
-}
