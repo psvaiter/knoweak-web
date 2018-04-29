@@ -22,13 +22,11 @@ export class CrudService {
   }
 
   create(resource, url: string) {
-    let body = JSON.stringify(resource);
-    return this._http.post(url, body, this.httpOptions);
+    return this._http.post(url, resource, this.httpOptions);
   }
 
   patch(resource, url: string) {
-    let body = JSON.stringify(resource);
-    return this._http.patch(url, body, this.httpOptions);
+    return this._http.patch(url, resource, this.httpOptions);
   }
 
   delete(url: string) {

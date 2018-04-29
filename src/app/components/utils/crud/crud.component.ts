@@ -66,13 +66,11 @@ export abstract class CrudComponent<TEntity> {
     );
   }
 
-  patchRecord(currentRecord: TEntity, url: string): void {
-    // Don't make request if record hasn't been changed
-    if (!this.hasChangedRecord()) {
-      return;
-    }
+  patchRecord(url: string): void {
+    
+    let patchRequestBody = this.buildPatchRequestBody();
 
-    this._crudService.patch(this.currentRecord, url).subscribe(
+    this._crudService.patch(patchRequestBody, url).subscribe(
       data => {
         this.persistedRecord = data['data'];
         this.currentRecord = Object.assign({}, this.persistedRecord);
@@ -92,6 +90,29 @@ export abstract class CrudComponent<TEntity> {
     return JSON.stringify(this.currentRecord) != JSON.stringify(this.persistedRecord);
   }
 
+  buildPatchRequestBody() {
+    let patchRequestBody: any = {};
+
+    for (const key in this.currentRecord) {
+
+      let value = this.currentRecord[key];
+
+      // Extract value if changed
+      // Set null when value is an empty string
+      if (value != this.persistedRecord[key]) {
+        
+        if (typeof value === "string" && !value) {
+          patchRequestBody[key] = null;
+        }
+        else {
+          patchRequestBody[key] = this.currentRecord[key];
+        }
+      }
+    }
+
+    return patchRequestBody;
+  }
+  
   getPrevPage() {
     this.getRecords(this.paging.currentPage - 1);
   }
