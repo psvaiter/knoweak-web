@@ -1,3 +1,46 @@
-<p>
-  edit-security-threat works!
-</p>
+<div>
+  <div *ngIf="currentRecord.id">
+    <h5>Atualização de ameaça</h5>
+    <form>
+
+      <div class="entity-metadata my-4">
+        <b>Criado em:</b> {{ currentRecord.createdOn | date : "dd/MM/yyyy HH:mm" }} (UTC)<br>
+        <b>Atualizado em:</b> {{ currentRecord.lastModifiedOn | date : "dd/MM/yyyy HH:mm" }} (UTC)
+      </div>
+
+      <!-- Name -->
+      <div class="form-group row">
+        <label for="name" class="col-3 col-form-label col-form-label-sm">
+          Nome
+        </label>
+        <div class="col-9">
+          <input type="text" [(ngModel)]="currentRecord.name" name="name" id="name" class="form-control form-control-sm" />
+        </div>
+      </div>
+
+      <!-- Description -->
+      <div class="form-group row">
+        <label for="description" class="col-3 col-form-label col-form-label-sm">
+          Descrição
+        </label>
+        <div class="col-9">
+          <input type="text" [(ngModel)]="currentRecord.description" name="description" id="description" class="form-control form-control-sm" />
+        </div>
+      </div>
+      
+      <!-- Back and Save buttons -->
+      <button type="button" class="btn btn-sm btn-outline-danger"
+              (click)="goBack()">Cancelar</button>
+      <button type="submit" class="btn btn-sm btn-success" [disabled]="!hasChangedRecord()"
+              (click)="patchRecord()">Salvar</button>
+      
+      <!-- Success feedback -->
+      <span class="mx-2 align-middle text-success" [class.d-none]="hasUpdated == false || hasChangedRecord()">
+        Salvo<fa name="check"></fa>
+      </span>
+    </form>
+
+    <!-- Error alert -->
+    <app-error-alert [errors]="errors"></app-error-alert>
+  </div>
+</div>

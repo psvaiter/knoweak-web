@@ -17,11 +17,3 @@ export class SecurityThreatComponent extends CrudComponent<SecurityThreat> imple
   }
 
 }
-
-class SecurityThreat {
-  id: number;
-  name: string;
-  description: string;
-  createdOn: DateTimeFormat;
-  lastModifiedOn: DateTimeFormat;
-}
