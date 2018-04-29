@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { HttpClientModule } from '@angular/common/http'
+import { NgSelectModule } from '@ng-select/ng-select'
 
 import { AppComponent } from './app.component';
 import { CrudComponent } from './components/utils/crud/crud.component';
@@ -80,7 +81,8 @@ const appRoutes: Routes = [
     FormsModule,
     NgbModule.forRoot(),
     AngularFontAwesomeModule,
-    HttpClientModule
+    HttpClientModule,
+    NgSelectModule
   ],
   providers: [
     CrudService
