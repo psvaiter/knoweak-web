@@ -37,23 +37,23 @@
 
       <!-- Roles -->
       <div class="form-group row">
-          <label for="role" class="col-3 col-form-label col-form-label-sm">
-            Roles
-          </label>
-          <div class="col-9">
-            <!-- <select id="role" name="role" [(ngModel)]="newRecord.roleId" class="form-control form-control-sm">
-              <option *ngFor="let role of roles" [ngValue]="role.id">{{ role.name }}</option>
-            </select> -->
-            <ng-select id="role" name="role" class="custom"
-                [items]="roles"
-                [multiple]="true"
-                [closeOnSelect]="false"
-                [hideSelected]="true"
-                bindLabel="name"
-                [(ngModel)]="newRecord.roles">
-            </ng-select>
-          </div>
+        <label for="role" class="col-3 col-form-label col-form-label-sm">
+          Roles
+        </label>
+        <div class="col-9">
+          <!-- <select id="role" name="role" [(ngModel)]="newRecord.roleId" class="form-control form-control-sm">
+            <option *ngFor="let role of roles" [ngValue]="role.id">{{ role.name }}</option>
+          </select> -->
+          <ng-select id="role" name="role" class="custom"
+              [items]="roles"
+              [multiple]="true"
+              [closeOnSelect]="false"
+              [hideSelected]="true"
+              bindLabel="name"
+              [(ngModel)]="newRecord.roles">
+          </ng-select>
         </div>
+      </div>
 
       <!-- Add button -->
       <input type="submit" class="btn btn-sm btn-outline-secondary" value="Adicionar" (click)="createRecord(newRecord)" />

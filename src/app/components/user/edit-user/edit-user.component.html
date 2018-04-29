@@ -1,3 +1,99 @@
-<p>
-  edit-user works!
-</p>
+<div>
+  <div *ngIf="currentRecord.id">
+    <h5>Atualização de usuário</h5>
+    <form>
+
+      <div class="entity-metadata my-4">
+        <b>Criado em:</b> {{ currentRecord.createdOn | date : "dd/MM/yyyy HH:mm" }} (UTC)<br>
+        <b>Atualizado em:</b> {{ currentRecord.lastModifiedOn | date : "dd/MM/yyyy HH:mm" }} (UTC)
+      </div>
+
+      <!-- Name -->
+      <div class="form-group row">
+        <label for="name" class="col-4 col-form-label col-form-label-sm text-nowrap">
+          Nome completo
+        </label>
+        <div class="col-8">
+          <input type="text" [(ngModel)]="currentRecord.fullName" name="name" id="name" class="form-control form-control-sm" />
+        </div>
+      </div>
+
+      <!-- Email -->
+      <div class="form-group row">
+        <label for="email" class="col-3 col-form-label col-form-label-sm">
+          Email
+        </label>
+        <div class="col-9">
+          <input type="text" [(ngModel)]="currentRecord.email" name="email" id="email" class="form-control form-control-sm" />
+        </div>
+      </div>
+
+      <!-- Roles -->
+      <div class="form-group row">
+        <label for="role" class="col-3 col-form-label col-form-label-sm">
+          Roles
+        </label>
+        <div class="col-9">
+          <ng-select id="role" name="role" class="custom"
+              [items]="roles"
+              [multiple]="true"
+              [searchable]="true"
+              [closeOnSelect]="false"
+              [hideSelected]="true"
+              bindLabel="name"
+              [(ngModel)]="currentRecord.roles">
+          </ng-select>
+        </div>
+      </div>
+
+      <div class="form-group mr-3">
+
+        <!-- Last login date -->
+        <small class="row">
+          <div class="col">Último login com sucesso em:</div>
+          <div class="text-nowrap">{{ (currentRecord.lastLoggedInOn | date : "dd/MM/yyyy HH:mm") || "-" }}</div>
+        </small>
+
+        <!-- Last login attempt date -->
+        <small class="row">
+          <div class="col">Último tentantiva de login em:</div>
+          <div class="text-nowrap">{{ (currentRecord.lastLoginAttemptedOn | date : "dd/MM/yyyy HH:mm") || "-" }}</div>
+        </small>
+
+        <!-- Number of failed login attempts -->
+        <small class="row">
+          <div class="col">Número de tentantivas inválidas de login:</div>
+          <div class="text-nowrap">{{ currentRecord.failedLoginAttemptCount }}</div>
+        </small>
+
+        <!-- Locked out -->
+        <small class="row">
+          <div class="col">Bloqueado (por login inválido) desde:</div>
+          <div class="text-nowrap">{{ (currentRecord.lockedOutOn | date : "dd/MM/yyyy HH:mm") || "-" }}</div>
+        </small>
+
+        <!-- Blocked -->
+        <small class="row">
+          <div class="col">Bloqueado pelo administrador em:</div>
+          <div class="text-nowrap">{{ (currentRecord.blockedOn | date : "dd/MM/yyyy HH:mm") || "-" }}</div>
+        </small>
+
+      </div>
+      
+
+      <!-- Back and Save buttons -->
+      <button type="button" class="btn btn-sm btn-outline-danger"
+              (click)="goBack()">Cancelar</button>
+      <button type="submit" class="btn btn-sm btn-success" [disabled]="!hasChangedRecord()"
+              (click)="patchRecord()">Salvar</button>
+      
+      <!-- Success feedback -->
+      <span class="mx-2 align-middle text-success" [class.d-none]="hasUpdated == false || hasChangedRecord()">
+        Salvo<fa name="check"></fa>
+      </span>
+    </form>
+
+    <!-- Error alert -->
+    <app-error-alert [errors]="errors"></app-error-alert>
+  </div>
+</div>
