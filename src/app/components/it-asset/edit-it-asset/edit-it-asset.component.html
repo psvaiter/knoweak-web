@@ -14,9 +14,13 @@
             Categoria
           </label>
           <div class="col-9">
-            <select id="category" name="category" [(ngModel)]="currentRecord.categoryId" class="form-control form-control-sm">
-              <option *ngFor="let category of categories" [ngValue]="category.id">{{ category.name }}</option>
-            </select>
+            <ng-select id="category" name="category" class="custom"
+                [items]="categories"
+                [searchable]="false"
+                bindLabel="name"
+                bindValue="id"
+                [(ngModel)]="currentRecord.categoryId">
+            </ng-select>
           </div>
         </div>
 

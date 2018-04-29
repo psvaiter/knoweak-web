@@ -41,9 +41,6 @@
           Roles
         </label>
         <div class="col-9">
-          <!-- <select id="role" name="role" [(ngModel)]="newRecord.roleId" class="form-control form-control-sm">
-            <option *ngFor="let role of roles" [ngValue]="role.id">{{ role.name }}</option>
-          </select> -->
           <ng-select id="role" name="role" class="custom"
               [items]="roles"
               [multiple]="true"

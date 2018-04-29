@@ -25,27 +25,29 @@ h5, .h5 {
  */
 .ng-select.custom .ng-select-container {
   min-height: 0px;
+  height: 31px; // required to override the select-single
   border: 1px solid #ced4da;
   border-radius: 0.2rem;
 }
 
-.ng-select.custom .ng-select-container .ng-value-container {
-  padding: 3px 0px;
-}
-
-// ng-input is where you type
+// Configures spacing for where you type (ng-input)
 .ng-select.custom .ng-select-container .ng-value-container .ng-input {
   margin: 0;
-  padding: 0 8px;
-}
-
-// ng-value is the item after selected
-.ng-select.custom .ng-select-container .ng-value-container .ng-value {
-  margin: 0 0 0 4px;
   padding: 0;
 }
 
-// ng-option is the option in the dropdown
+// Configures spacing for value container (single or multiple)
+.ng-select.custom .ng-select-container .ng-value-container {
+  padding: 3px 8px;
+}
+
+// Configures spacing for the item after selected in select multiple
+.ng-select.ng-select-multiple.custom .ng-select-container .ng-value-container .ng-value {
+  margin: 0 4px 0 0;
+  padding: 0;
+}
+
+// Configures spacing and font-size for ng-option (the option in the dropdown)
 .ng-select.custom .ng-dropdown-panel .ng-option {
   margin: 0;
   padding: 4px 10px;
