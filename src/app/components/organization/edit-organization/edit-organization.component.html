@@ -1,3 +1,56 @@
-<p>
-  edit-organization works!
-</p>
+<div>
+  <div *ngIf="currentRecord.id">
+    <h5>Atualização de organização</h5>
+    <form>
+
+      <div class="entity-metadata my-4">
+        <b>Criado em:</b> {{ currentRecord.createdOn | date : "dd/MM/yyyy HH:mm" }} (UTC)<br>
+        <b>Atualizado em:</b> {{ currentRecord.lastModifiedOn | date : "dd/MM/yyyy HH:mm" }} (UTC)
+      </div>
+
+      <!-- Tax ID -->
+      <div class="form-group row">
+        <label for="taxId" class="col col-form-label col-form-label-sm text-nowrap">
+          Nº de Registro
+        </label>
+        <div class="col-9">
+          <input type="text" [(ngModel)]="currentRecord.taxId" name="taxId" id="taxId" placeholder="CNPJ" class="form-control form-control-sm" />
+        </div>
+      </div>
+
+      <!-- Legal name -->
+      <div class="form-group">
+        <label for="legalName" class="col-form-label col-form-label-sm text-nowrap">
+            Nome Empresarial
+        </label>
+        <div class="">
+          <input type="text" [(ngModel)]="currentRecord.legalName" name="legalName" id="legalName" class="form-control form-control-sm" />
+        </div>
+      </div>
+
+      <!-- Trade name -->
+      <div class="form-group">
+        <label for="tradeName" class="col-form-label col-form-label-sm text-nowrap">
+            Nome Fantasia
+        </label>
+        <div class="">
+          <input type="text" [(ngModel)]="currentRecord.tradeName" name="tradeName" id="tradeName" class="form-control form-control-sm" />
+        </div>
+      </div>
+      
+      <!-- Back and Save buttons -->
+      <button type="button" class="btn btn-sm btn-outline-danger"
+              (click)="goBack()">Cancelar</button>
+      <button type="submit" class="btn btn-sm btn-success" [disabled]="!hasChangedRecord()"
+              (click)="patchRecord()">Salvar</button>
+      
+      <!-- Success feedback -->
+      <span class="mx-2 align-middle text-success" [class.d-none]="hasUpdated == false || hasChangedRecord()">
+        Salvo<fa name="check"></fa>
+      </span>
+    </form>
+
+    <!-- Error alert -->
+    <app-error-alert [errors]="errors"></app-error-alert>
+  </div>
+</div>
