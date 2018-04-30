@@ -29,11 +29,15 @@ import { MitigationControlComponent } from './components/mitigation-control/miti
 import { EditMitigationControlComponent } from './components/mitigation-control/edit-mitigation-control/edit-mitigation-control.component';
 import { UserComponent } from './components/user/user.component';
 import { EditUserComponent } from './components/user/edit-user/edit-user.component';
+import { OrganizationComponent } from './components/organization/organization.component';
+import { EditOrganizationComponent } from './components/organization/edit-organization/edit-organization.component';
 
 
 const appRoutes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
   { path: 'dashboard', component: DashboardComponent },
+  { path: 'organizations', component: OrganizationComponent },
+  { path: 'organizations/:id/edit', component: EditOrganizationComponent },
   { path: 'departments', component: DepartmentComponent },
   { path: 'departments/:id/edit', component: EditDepartmentComponent },
   { path: 'macroprocesses', component: MacroprocessComponent },
@@ -73,7 +77,9 @@ const appRoutes: Routes = [
     EditMitigationControlComponent,
     UserComponent,
     EditUserComponent,
-    ErrorAlertComponent
+    ErrorAlertComponent,
+    OrganizationComponent,
+    EditOrganizationComponent
   ],
   imports: [
     BrowserModule,
