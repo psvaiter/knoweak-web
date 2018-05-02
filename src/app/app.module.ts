@@ -31,6 +31,7 @@ import { UserComponent } from './components/user/user.component';
 import { EditUserComponent } from './components/user/edit-user/edit-user.component';
 import { OrganizationComponent } from './components/organization/organization.component';
 import { EditOrganizationComponent } from './components/organization/edit-organization/edit-organization.component';
+import { OrganizationStructureComponent } from './components/organization/organization-structure/organization-structure.component';
 
 
 const appRoutes: Routes = [
@@ -79,7 +80,8 @@ const appRoutes: Routes = [
     EditUserComponent,
     ErrorAlertComponent,
     OrganizationComponent,
-    EditOrganizationComponent
+    EditOrganizationComponent,
+    OrganizationStructureComponent
   ],
   imports: [
     BrowserModule,
