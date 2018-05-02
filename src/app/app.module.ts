@@ -39,6 +39,7 @@ const appRoutes: Routes = [
   { path: 'dashboard', component: DashboardComponent },
   { path: 'organizations', component: OrganizationComponent },
   { path: 'organizations/:id/edit', component: EditOrganizationComponent },
+  { path: 'organizations/:id/structure', component: OrganizationStructureComponent },
   { path: 'departments', component: DepartmentComponent },
   { path: 'departments/:id/edit', component: EditDepartmentComponent },
   { path: 'macroprocesses', component: MacroprocessComponent },
