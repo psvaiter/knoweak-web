@@ -8,7 +8,21 @@ import { Component, OnInit } from '@angular/core';
 
 export class OrganizationStructureComponent implements OnInit {
 
-  departments = [];
+  departments = [
+    { id: 1, name: "Qualquer" },
+    { id: 1, name: "Outro" },
+    { id: 1, name: "Outro" },
+    { id: 1, name: "Outro" },
+    { id: 1, name: "Outro" },
+    { id: 1, name: "Outro" },
+    { id: 1, name: "Outro" },
+    { id: 1, name: "Outro" },
+    { id: 1, name: "Outro" },
+    { id: 1, name: "Outro" },
+    { id: 1, name: "Outro" },
+    { id: 1, name: "Outro" },
+    { id: 1, name: "Outro" }
+  ];
   organization: Organization;
   sectionExpanded: boolean = false;
 

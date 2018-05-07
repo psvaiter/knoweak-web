@@ -5,55 +5,65 @@
   </div>
   <div>
     <p>
-      Visualização da estrtutura organizacional dividida em:<br>
+      A visualização da estrtutura organizacional dividida em:<br>
       Departamentos / Macroprocessos / Processos / Serviços de TI / Ativos de TI
     </p>
 
     <!-- Select a department to add -->
-    <ng-select id="newDepartment" name="newDepartment" class="custom my-2" 
-      [items]="departments" 
-      [searchable]="true" 
-      bindLabel="name"
-      bindValue="id" 
-      placeholder="Adicionar departamento...">
-    </ng-select>
-
+    <div class="d-flex align-items-center my-2">
+      <ng-select id="newDepartment" name="newDepartment" class="custom flex-grow-1 mr-2" 
+        [items]="departments" 
+        [searchable]="true" 
+        bindLabel="name"
+        bindValue="id" 
+        placeholder="Adicionar departamento...">
+      </ng-select>
+      <button class="btn btn-sm btn-outline-primary" type="button" (click)="addDepartment()">Adicionar</button>
+    </div>
+    
     <!-- List of departments -->
-    <ul class="list-group">
-      <li class="list-group-item" *ngFor="let department of organization.departments">
-        <div class="d-flex justify-content-between align-items-center">
-          {{ department.name }}
-          <small>
-            <a [routerLink]="" (click)="department.expanded = !department.expanded">Expandir</a>
-          </small>
-        </div>
-
-        <div *ngIf="department.expanded">
-          <!-- Select a macroprocess to add -->
-          <ng-select id="newMacroprocess" name="newMacroprocess" class="custom my-2" 
-            [items]="macroprocesses" 
-            [searchable]="true" 
-            bindLabel="name"
-            bindValue="id" 
-            placeholder="Adicionar macroprocesso...">
-          </ng-select>
-
-          <!-- List of macroprocesses -->
-          <div class="my-2" *ngIf="department.macroprocesses">
-            <ul class="list-group">
-              <li class="list-group-item" *ngFor="let macroprocess of department.macroprocesses">
-                <div class="d-flex justify-content-between align-items-center">
-                  {{ macroprocess.name }}
-                  <small>
-                    <a [routerLink]="" (click)="macroprocess.expanded = !macroprocess.expanded">Expandir</a>
-                  </small>
-                </div>
-              </li>
-            </ul>
+    <div *ngIf="organization.departments">
+      <ul class="list-group">
+        <li class="list-group-item" *ngFor="let department of organization.departments">
+          <div class="d-flex justify-content-between align-items-center">
+            <span [style.font-weight]="department.expanded ? 500 : inherit">{{ department.name }}</span>
+            <small>
+              <a [routerLink]="" (click)="department.expanded = !department.expanded">
+                {{ department.expanded ? "Ocultar" : "Expandir" }}
+              </a>
+            </small>
           </div>
-        </div>
-      </li>
 
-    </ul>
+          <div *ngIf="department.expanded">
+            <div class="d-flex align-items-center my-2">
+              <!-- Select a macroprocess to add -->
+              <ng-select id="newMacroprocess" name="newMacroprocess" class="custom flex-grow-1 mr-2" 
+                [items]="macroprocesses" 
+                [searchable]="true" 
+                bindLabel="name"
+                bindValue="id" 
+                placeholder="Adicionar macroprocesso...">
+              </ng-select>
+              <button class="btn btn-sm btn-outline-primary" type="button" (click)="addMacroprocess()">Adicionar</button>
+            </div>
+
+            <!-- List of macroprocesses -->
+            <div *ngIf="department.macroprocesses">
+              <ul class="list-group">
+                <li class="list-group-item" *ngFor="let macroprocess of department.macroprocesses">
+                  <div class="d-flex justify-content-between align-items-center">
+                    {{ macroprocess.name }}
+                    <small>
+                      <a [routerLink]="" (click)="macroprocess.expanded = !macroprocess.expanded">Expandir</a>
+                    </small>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </li>
+
+      </ul>
+    </div>
   </div>
 </div>
