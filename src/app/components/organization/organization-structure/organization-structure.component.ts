@@ -24,7 +24,6 @@ export class OrganizationStructureComponent implements OnInit {
     { id: 1, name: "Outro" }
   ];
   organization: Organization;
-  sectionExpanded: boolean = false;
 
   constructor() { }
 
