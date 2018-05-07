@@ -27,11 +27,16 @@
         <li class="list-group-item" *ngFor="let department of organization.departments">
           <div class="d-flex justify-content-between align-items-center">
             <span [style.font-weight]="department.expanded ? 500 : inherit">{{ department.name }}</span>
-            <small>
-              <a [routerLink]="" (click)="department.expanded = !department.expanded">
-                {{ department.expanded ? "Ocultar" : "Expandir" }}
+            <div>
+              <small>
+                <a [routerLink]="" (click)="department.expanded = !department.expanded">
+                  {{ department.expanded ? "Ocultar" : "Expandir" }}
+                </a>
+              </small>
+              <a [routerLink]="" class="icon-link" title="Excluir">
+                <fa class="mx-1 fa-no-margin text-danger" name="trash"></fa>
               </a>
-            </small>
+            </div>
           </div>
 
           <div *ngIf="department.expanded">
