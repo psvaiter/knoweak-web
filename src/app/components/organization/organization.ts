@@ -1,4 +1,4 @@
-class Organization {
+export class Organization {
     id: number;
     taxId: string;
     legalName: string;
@@ -8,36 +8,47 @@ class Organization {
     departments: OrganizationDepartment[] = [];
 }
 
-class OrganizationDepartment {
+export class OrganizationDepartment {
     id: number;
     name: string;
     macroprocesses: OrganizationMacroprocess[] = [];
+    
     expanded: boolean = false;
+    selectedMacroprocessId: number;
 }
   
-class OrganizationMacroprocess {
+export class OrganizationMacroprocess {
+    instanceId: number;
     id: number;
     name: string;
     processes: OrganizationProcess[] = [];
+    
     expanded: boolean = false;
+    selectedProcessId: number;
 }
   
-class OrganizationProcess {
+export class OrganizationProcess {
+    instanceId: number;
     id: number;
     name: string;
     itServices: OrganizationItService[] = [];
+    
     expanded: boolean = false;
+    selectedItServiceId: number;
 }
   
-class OrganizationItService {
+export class OrganizationItService {
+    instanceId: number;
     id: number;
     name: string;
     itAssets: OrganizationItAsset[] = [];
+    
     expanded: boolean = false;
+    selectedItAssetIt: number;
 }
   
-class OrganizationItAsset {
+export class OrganizationItAsset {
+    instanceId: number;
     id: number;
     name: string;
 }
-  

@@ -47,7 +47,7 @@ export abstract class CrudComponent<TEntity> {
   }
 
   createRecord(newRecord: TEntity) {
-    this._crudService.create(newRecord, this.url).subscribe(
+    this._crudService.post(newRecord, this.url).subscribe(
       data => {
         // Update listing
         this.getRecords(this.paging.currentPage);

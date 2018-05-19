@@ -21,7 +21,7 @@ export class CrudService {
     return this._http.get(url, { params });
   }
 
-  create(resource, url: string) {
+  post(resource, url: string) {
     return this._http.post(url, resource, this.httpOptions);
   }
 
