@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { CrudComponent } from '../../utils/crud/crud.component';
 import { CrudService } from '../../utils/crud/crud.service';
+import { Organization } from '../organization';
 
 @Component({
   selector: 'app-edit-organization',

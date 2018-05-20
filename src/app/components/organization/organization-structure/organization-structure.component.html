@@ -1,11 +1,14 @@
 <div>
   <div>
-    <small>ORGANIZAÇÃO</small>
-    <h5>{{ organization.legalName }} &raquo; {{ organization.tradeName }}</h5>
+    <small>
+      <b>Nº DE REGISTRO</b> {{ organization.taxId }}<br>
+      <span *ngIf="organization.tradeName"><b> NOME FANTASIA</b> {{ organization.tradeName }}</span>
+    </small>
+    <h5>{{ organization.legalName }}</h5>
   </div>
   <div>
     <p>
-      A visualização da estrtutura organizacional dividida em:<br>
+      A visualização da estrtutura organizacional está dividida em:<br>
       Departamentos / Macroprocessos / Processos / Serviços de TI / Ativos de TI
     </p>
 

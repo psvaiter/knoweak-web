@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CrudService } from '../../utils/crud/crud.service';
 import { Organization, OrganizationDepartment, OrganizationMacroprocess } from '../../organization/organization';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-organization-structure',
@@ -12,26 +13,35 @@ export class OrganizationStructureComponent implements OnInit {
   departments = [];
   macroprocesses = [];
 
-  organization: Organization;
+  organization: Organization = new Organization();
   selectedDepartmentId: number;
 
-  constructor(private _crudService: CrudService) { }
-
-  ngOnInit() {
-    this.organization = <Organization> {
-      id: 1,
-      legalName: "Nome Empresarial",
-      tradeName: "Nome Fantasia"
-    };
-
-    this.listDepartments();
-    this.listMacroprocesses();
-    this.getOrganizationDepartments(1);
+  constructor(private _crudService: CrudService, private route: ActivatedRoute) {
+    route.params.subscribe(params => this.organization.id = params['id']);
   }
 
+  ngOnInit() {
+    this.getOrganization();
+    this.listDepartments();
+    this.listMacroprocesses();
+    this.getOrganizationDepartments();
+  }
 
-  getOrganizationDepartments(organizationId) {
-    let url = `${CrudService.BaseUrl}/organizations/${organizationId}/departments`;
+  getOrganization() {
+    let url = `${CrudService.BaseUrl}/organizations/${this.organization.id}`;
+
+    this._crudService.get(url).subscribe(
+      data => {
+        this.organization = data['data'];
+      },
+      err => {
+        console.error(err);
+      }
+    );
+  }
+
+  getOrganizationDepartments() {
+    let url = `${CrudService.BaseUrl}/organizations/${this.organization.id}/departments`;
 
     this._crudService.getPage(url, 1, 100).subscribe(
       data => {
@@ -49,7 +59,7 @@ export class OrganizationStructureComponent implements OnInit {
     this._crudService.post({ id: this.selectedDepartmentId }, url).subscribe(
       data => {
         this.selectedDepartmentId = null; // remove selection
-        this.getOrganizationDepartments(1);
+        this.getOrganizationDepartments();
       },
       err => {
         console.error(err);
@@ -62,7 +72,7 @@ export class OrganizationStructureComponent implements OnInit {
 
     this._crudService.delete(url).subscribe(
       data => {
-        this.getOrganizationDepartments(1);
+        this.getOrganizationDepartments();
       },
       err => {
         console.error(err);
@@ -70,7 +80,7 @@ export class OrganizationStructureComponent implements OnInit {
     );
   }
 
-  toggleDepartmentMacroprocesses(department) {
+  toggleDepartmentMacroprocesses(department: OrganizationDepartment) {
     department.expanded = !department.expanded; 
     if (!department.expanded) {
       return;
@@ -85,7 +95,8 @@ export class OrganizationStructureComponent implements OnInit {
       data => {
         let macroprocesses = data['data'].filter(item => item.department.id == department.id);
         department.macroprocesses = macroprocesses.map(item => {
-          let macroprocess: OrganizationMacroprocess = item.macroprocess;
+          let macroprocess: OrganizationMacroprocess;
+          macroprocess = item.macroprocess;
           macroprocess.instanceId = item.instanceId;
           return macroprocess;
         });
@@ -99,15 +110,20 @@ export class OrganizationStructureComponent implements OnInit {
   addMacroprocess(department: OrganizationDepartment) {
     let url = `${CrudService.BaseUrl}/organizations/${this.organization.id}/macroprocesses`;
 
-    this._crudService.post({ departmentId: department.id, macroprocessId: department.selectedMacroprocessId }, url).subscribe(
-      data => {
-        department.selectedMacroprocessId = null; // remove selection
-        this.getDepartmentMacroprocesses(department);
-      },
-      err => {
-        console.error(err);
-      }
-    );
+    this._crudService
+      .post({ 
+        departmentId: department.id,
+        macroprocessId: department.selectedMacroprocessId 
+      }, url)
+      .subscribe(
+        data => {
+          department.selectedMacroprocessId = null; // remove selection
+          this.getDepartmentMacroprocesses(department);
+        },
+        err => {
+          console.error(err);
+        }
+      );
   }
 
   deleteMacroprocess(macroprocess: OrganizationMacroprocess, department: OrganizationDepartment) {
