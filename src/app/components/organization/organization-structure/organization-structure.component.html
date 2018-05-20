@@ -33,9 +33,7 @@
             <span [style.font-weight]="department.expanded ? 500 : inherit">{{ department.name }}</span>
             <div>
               <small>
-                <a [routerLink]="" (click)="toggleDepartmentMacroprocesses(department);">
-                  {{ department.expanded ? "Ocultar" : "Expandir" }}
-                </a>
+                <a [routerLink]="" (click)="toggleDepartmentMacroprocesses(department);">{{ department.expanded ? "Ocultar" : "Expandir" }}</a>
               </small>
               <a [routerLink]="" class="icon-link" title="Excluir" (click)="deleteDepartment(department)">
                 <fa class="mx-1 fa-no-margin text-danger" name="trash"></fa>
@@ -65,7 +63,7 @@
                     <span [style.font-weight]="macroprocess.expanded ? 500 : inherit">{{ macroprocess.name }}</span>
                     <div>
                       <small>
-                        <a [routerLink]="" (click)="macroprocess.expanded = !macroprocess.expanded">Expandir</a>
+                        <a [routerLink]="" (click)="toggleMacroprocessProcesses(macroprocess)">{{ macroprocess.expanded ? "Ocultar" : "Expandir" }}</a>
                       </small>
                       <a [routerLink]="" class="icon-link" title="Excluir" (click)="deleteMacroprocess(macroprocess, department)">
                         <fa class="mx-1 fa-no-margin text-danger" name="trash"></fa>

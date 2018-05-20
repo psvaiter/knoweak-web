@@ -139,6 +139,14 @@ export class OrganizationStructureComponent implements OnInit {
     );
   }
 
+  toggleMacroprocessProcesses(macroprocess: OrganizationMacroprocess) {
+    macroprocess.expanded = !macroprocess.expanded; 
+    if (!macroprocess.expanded) {
+      return;
+    }
+    //this.getMacroprocessProcesses(macroprocess);
+  }
+
   listDepartments() {
     let url = `${CrudService.BaseUrl}/departments`;
 
