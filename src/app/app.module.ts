@@ -62,6 +62,7 @@ const appRoutes: Routes = [
   declarations: [
     AppComponent,
     DashboardComponent,
+    CrudComponent,
     DepartmentComponent,
     PaginationComponent,
     EditDepartmentComponent,

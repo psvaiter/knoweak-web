@@ -8,11 +8,11 @@ import { Paging } from '../../pagination/pagination.component';
   styleUrls: ['./crud.component.scss']
 })
 
-export abstract class CrudComponent<TEntity> {
+export class CrudComponent<TEntity> {
   
   readonly DefaultRecordsPerPage = 10;
 
-  protected abstract url: string;
+  protected url: string;
   records: TEntity[];
   paging: Paging = new Paging();
   errors = []

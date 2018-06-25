@@ -2,6 +2,7 @@ class User {
     id: number;
     fullName: string;
     email: string;
+    password: string;
     createdOn: DateTimeFormat;
     lastModifiedOn: DateTimeFormat;
     lastLoggedInOn: DateTimeFormat;
