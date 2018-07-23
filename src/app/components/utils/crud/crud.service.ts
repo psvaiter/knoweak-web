@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
+import { environment } from '../../../../environments/environment';
 
 @Injectable()
 export class CrudService {
 
-  static readonly BaseUrl: string = 'http://localhost:8000';
+  static readonly BaseUrl: string = environment.apiBaseUrl;
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
