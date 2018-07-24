@@ -8,6 +8,7 @@ import { HttpClientModule } from '@angular/common/http'
 import { NgSelectModule } from '@ng-select/ng-select'
 
 import { AppComponent } from './app.component';
+import { AuthService } from './services/auth/auth.service';
 import { CrudComponent } from './components/utils/crud/crud.component';
 import { CrudService } from './components/utils/crud/crud.service';
 import { PaginationComponent } from './components/pagination/pagination.component';
@@ -32,10 +33,12 @@ import { EditUserComponent } from './components/user/edit-user/edit-user.compone
 import { OrganizationComponent } from './components/organization/organization.component';
 import { EditOrganizationComponent } from './components/organization/edit-organization/edit-organization.component';
 import { OrganizationStructureComponent } from './components/organization/organization-structure/organization-structure.component';
+import { CallbackComponent } from './components/auth/callback/callback.component';
 
 
 const appRoutes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
+  { path: 'auth-callback', component: CallbackComponent },
   { path: 'dashboard', component: DashboardComponent },
   { path: 'organizations', component: OrganizationComponent },
   { path: 'organizations/:id/edit', component: EditOrganizationComponent },
@@ -83,7 +86,8 @@ const appRoutes: Routes = [
     ErrorAlertComponent,
     OrganizationComponent,
     EditOrganizationComponent,
-    OrganizationStructureComponent
+    OrganizationStructureComponent,
+    CallbackComponent
   ],
   imports: [
     BrowserModule,
@@ -95,7 +99,8 @@ const appRoutes: Routes = [
     NgSelectModule
   ],
   providers: [
-    CrudService
+    CrudService,
+    AuthService
   ],
   bootstrap: [AppComponent]
 })
