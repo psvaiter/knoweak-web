@@ -5,12 +5,17 @@
   <a class="navbar-brand mx-3" href="#">knoweak - A <b>Know Your Weakness</b> Tool</a>
   <ul class="navbar-nav px-3">
     <li class="nav-item text-nowrap">
-      <a class="nav-link" (click)="logout()">Sair</a>
+      <a class="nav-link" [routerLink]="" (click)="login()" *ngIf="!auth.isAuthenticated()">Entrar</a>
+      <a class="nav-link" [routerLink]="" (click)="logout()" *ngIf="auth.isAuthenticated()">Sair</a>
     </li>
   </ul>
 </nav>
 
-<div class="container-fluid">
+<div class="container-fluid py-2" *ngIf="!auth.isAuthenticated()">
+  Você precisa estar logado para ter acesso ao sistema.
+</div>
+
+<div class="container-fluid" *ngIf="auth.isAuthenticated()">
   <div class="row d-flex align-items-strecth flex-nowrap">
     <nav class="sidebar bg-light" [class.sidebar-invisible]="!isOpen">
       

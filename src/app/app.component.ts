@@ -19,7 +19,11 @@ export class AppComponent {
     this.isOpen = !this.isOpen;
   }
 
-  logout() {
+  login() {
     this.auth.login();
+  }
+
+  logout() {
+    this.auth.logout();
   }
 }
