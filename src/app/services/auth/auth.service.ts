@@ -44,21 +44,24 @@ export class AuthService {
 
   private setSession(authResult): void {
     // Set the time that the Access Token will expire at
-    const expiresAt = JSON.stringify((authResult.expiresIn * 1000) + new Date().getTime());
-    
-    localStorage.setItem('id_token', authResult.idToken);
-    localStorage.setItem('access_token', authResult.accessToken);
-    localStorage.setItem('expires_at', expiresAt);
+    // We should not open the Access Token
+    let expiresAt = (authResult.expiresIn * 1000) + new Date().getTime();
 
-    // Get info from ID token
+    // Get some other info from ID token
     let idToken = this.jwt.decodeToken(authResult.idToken);
+
+    // Save them to local storage
+    localStorage.setItem('id_token', authResult.idToken);
     localStorage.setItem('name', idToken.name);
+    localStorage.setItem('access_token', authResult.accessToken);
+    localStorage.setItem('expires_at', expiresAt.toString());
   }
 
   public logout(): void {
     // Remove tokens and expiry time from localStorage
-    localStorage.removeItem('access_token');
     localStorage.removeItem('id_token');
+    localStorage.removeItem('name');
+    localStorage.removeItem('access_token');
     localStorage.removeItem('expires_at');
     
     // Go back to the home route
@@ -68,6 +71,6 @@ export class AuthService {
   public isAuthenticated(): boolean {
     // Check whether the current time is past the Access Token's expiry time
     const expiresAt = JSON.parse(localStorage.getItem('expires_at') || '{}');
-    return new Date().getUTCMilliseconds() < expiresAt;
+    return new Date().getTime() < expiresAt;
   }
 }
