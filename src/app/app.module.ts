@@ -4,7 +4,7 @@ import { RouterModule, Routes } from '@angular/router'
 import { FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
-import { HttpClientModule } from '@angular/common/http'
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'
 import { NgSelectModule } from '@ng-select/ng-select'
 
 import { AppComponent } from './app.component';
@@ -34,6 +34,7 @@ import { OrganizationComponent } from './components/organization/organization.co
 import { EditOrganizationComponent } from './components/organization/edit-organization/edit-organization.component';
 import { OrganizationStructureComponent } from './components/organization/organization-structure/organization-structure.component';
 import { CallbackComponent } from './components/auth/callback/callback.component';
+import { TokenInterceptorService } from './services/auth/token-interceptor.service';
 
 
 const appRoutes: Routes = [
@@ -100,7 +101,12 @@ const appRoutes: Routes = [
   ],
   providers: [
     CrudService,
-    AuthService
+    AuthService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptorService,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })

@@ -46,8 +46,8 @@ export class AuthService {
     // Set the time that the Access Token will expire at
     const expiresAt = JSON.stringify((authResult.expiresIn * 1000) + new Date().getTime());
     
-    localStorage.setItem('access_token', authResult.accessToken);
     localStorage.setItem('id_token', authResult.idToken);
+    localStorage.setItem('access_token', authResult.accessToken);
     localStorage.setItem('expires_at', expiresAt);
 
     // Get info from ID token
@@ -68,6 +68,6 @@ export class AuthService {
   public isAuthenticated(): boolean {
     // Check whether the current time is past the Access Token's expiry time
     const expiresAt = JSON.parse(localStorage.getItem('expires_at') || '{}');
-    return new Date().getTime() < expiresAt;
+    return new Date().getUTCMilliseconds() < expiresAt;
   }
 }
