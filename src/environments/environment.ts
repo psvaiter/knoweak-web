@@ -9,6 +9,6 @@ export const environment = {
   auth0: {
     clientID: 'kC8r2l8yfy398pJuDuAXBudEWe3l7Hlt',
     domain: 'knoweak.auth0.com',
-    redirectUri: 'http://localhost:4200/auth-callback'
+    redirectPath: '/auth-callback'
   }
 };

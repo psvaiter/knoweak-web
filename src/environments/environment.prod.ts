@@ -2,8 +2,8 @@ export const environment = {
   production: true,
   apiBaseUrl: 'https://knoweak-api.herokuapp.com',
   auth0: {
-    clientID: '',
+    clientID: 'kC8r2l8yfy398pJuDuAXBudEWe3l7Hlt',
     domain: 'knoweak.auth0.com',
-    redirectUri: ''
+    redirectPath: '/auth-callback'
   }
 };

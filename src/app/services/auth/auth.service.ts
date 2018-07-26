@@ -14,7 +14,7 @@ export class AuthService {
     domain: environment.auth0.domain,
     audience: 'knoweak-api-localhost',
     responseType: 'token id_token',
-    redirectUri: environment.auth0.redirectUri,
+    redirectUri: window.location.origin + environment.auth0.redirectPath,
     scope: 'openid profile'
   });
 
