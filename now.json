@@ -1,0 +1,9 @@
+{
+    "public": true,
+    "name": "knoweak-web",
+    "static": {
+        "rewrites": [
+            { "source": "**", "destination": "/index.html" }
+        ]
+    }
+}
