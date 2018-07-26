@@ -36,6 +36,7 @@ import { OrganizationStructureComponent } from './components/organization/organi
 import { CallbackComponent } from './components/auth/callback/callback.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { TokenInterceptorService } from './services/auth/token-interceptor.service';
+import { AnalysisComponent } from './components/analysis/analysis.component';
 
 
 const appRoutes: Routes = [
@@ -45,6 +46,7 @@ const appRoutes: Routes = [
   { path: 'organizations', component: OrganizationComponent },
   { path: 'organizations/:id/edit', component: EditOrganizationComponent },
   { path: 'organizations/:id/structure', component: OrganizationStructureComponent },
+  { path: 'organizations/:id/analyses', component: AnalysisComponent },
   { path: 'departments', component: DepartmentComponent },
   { path: 'departments/:id/edit', component: EditDepartmentComponent },
   { path: 'macroprocesses', component: MacroprocessComponent },
@@ -91,7 +93,8 @@ const appRoutes: Routes = [
     EditOrganizationComponent,
     OrganizationStructureComponent,
     CallbackComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    AnalysisComponent
   ],
   imports: [
     BrowserModule,
