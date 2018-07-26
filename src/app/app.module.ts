@@ -34,6 +34,7 @@ import { OrganizationComponent } from './components/organization/organization.co
 import { EditOrganizationComponent } from './components/organization/edit-organization/edit-organization.component';
 import { OrganizationStructureComponent } from './components/organization/organization-structure/organization-structure.component';
 import { CallbackComponent } from './components/auth/callback/callback.component';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { TokenInterceptorService } from './services/auth/token-interceptor.service';
 
 
@@ -59,7 +60,8 @@ const appRoutes: Routes = [
   { path: 'mitigationControls', component: MitigationControlComponent },
   { path: 'mitigationControls/:id/edit', component: EditMitigationControlComponent },
   { path: 'users', component: UserComponent },
-  { path: 'users/:id/edit', component: EditUserComponent }
+  { path: 'users/:id/edit', component: EditUserComponent },
+  { path: '**', component: PageNotFoundComponent }
 ]
 
 @NgModule({
@@ -88,7 +90,8 @@ const appRoutes: Routes = [
     OrganizationComponent,
     EditOrganizationComponent,
     OrganizationStructureComponent,
-    CallbackComponent
+    CallbackComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,
