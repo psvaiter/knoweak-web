@@ -48,11 +48,11 @@ export class AuthService {
     let expiresAt = (authResult.expiresIn * 1000) + new Date().getTime();
 
     // Get some other info from ID token
-    let idToken = this.jwt.decodeToken(authResult.idToken);
+    let idTokenPayload = this.jwt.decodeToken(authResult.idToken);
 
     // Save them to local storage
     localStorage.setItem('id_token', authResult.idToken);
-    localStorage.setItem('name', idToken.name);
+    localStorage.setItem('name', idTokenPayload.name);
     localStorage.setItem('access_token', authResult.accessToken);
     localStorage.setItem('expires_at', expiresAt.toString());
   }
