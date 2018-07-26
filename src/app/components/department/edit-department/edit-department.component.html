@@ -20,6 +20,10 @@
       <button type="submit" class="btn btn-sm btn-success" [disabled]="!hasChangedRecord()"
               (click)="patchRecord()">Salvar</button>
       
+      <span class="mx-2 align-middle text-success" *ngIf="loading">
+        Aguarde...
+      </span>
+
       <!-- Success feedback -->
       <span class="mx-2 align-middle text-success" [class.d-none]="hasUpdated == false || hasChangedRecord()">
         Salvo<fa name="check"></fa>
