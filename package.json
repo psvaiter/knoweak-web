@@ -6,6 +6,8 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build --prod",
+    "build4surge": "npm run build && cp ./dist/index.html ./dist/200.html",
+    "build4now": "npm run build && cp ./now.json ./dist/now.json",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
