@@ -39,26 +39,46 @@
     <app-error-alert [errors]="errors"></app-error-alert>
 
   </div>
-  <!-- <div class="table-container">
+  <div class="table-container">
     <table class="table table-hover">
       <thead>
         <tr>
           <th>ID</th>
-          <th>Descrição</th>
-          <th>Criado em</th>
-          <th></th>
+          <th>Dept.</th>
+          <th>M.Processo</th>
+          <th>Processo</th>
+          <th>Rp</th>
+          <th>Serviço</th>
+          <th>Rs</th>
+          <th>Ativo</th>
+          <th>Ra</th>
+          <th>Ameaça</th>
+          <th>Ga</th>
+          <th>Gv</th>
+          <th>Impacto</th>
+          <th>Probabilidade</th>
+          <th>Risco</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let record of records">
-          <td>{{ record.id }}</td>
-          <td>{{ record.description }}</td>
-          <td>{{ record.createdOn | date : "dd/MM/yyyy HH:mm" }}</td>
-          <td class="actions">
-            <a title="Visualizar detalhes" [routerLink]="['/organizations', record.id, 'edit']" class="icon-link"><fa name="search-plus"></fa></a>
-          </td>
+        <tr *ngFor="let detail of currentRecord.details">
+          <td>{{ detail.id }}</td>
+          <td>{{ detail.departmentName }}</td>
+          <td>{{ detail.macroprocessName }}</td>
+          <td>{{ detail.processName }}</td>
+          <td>{{ detail.processRelevance }}</td>
+          <td>{{ detail.itServiceName }}</td>
+          <td>{{ detail.itServiceRelevance }}</td>
+          <td>{{ detail.itAssetName }}</td>
+          <td>{{ detail.itAssetRelevance }}</td>
+          <td>{{ detail.securityThreatName }}</td>
+          <td>{{ detail.securityThreatLevel }}</td>
+          <td>{{ detail.itAssetVulnerabilityLevel }}</td>
+          <td>{{ detail.calculatedImpact }}</td>
+          <td>{{ detail.calculatedProbability }}</td>
+          <td>{{ detail.calculatedRisk }}</td>
         </tr>
-        <tr *ngIf="!loading && (records == null || records.length == 0)">
+        <tr *ngIf="!loading && (currentRecord.details == null || currentRecord.details.length == 0)">
           <td colspan="4">Nenhum registro encontrado</td>
         </tr>
       </tbody>
@@ -68,5 +88,5 @@
       (goPrevPage)="getPrevPage()"
       (goNextPage)="getNextPage()">
     </app-pagination>
-  </div> -->
+  </div>
 </div>
