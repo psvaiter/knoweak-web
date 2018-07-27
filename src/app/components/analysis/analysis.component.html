@@ -53,6 +53,9 @@
             <a title="Visualizar detalhes" [routerLink]="['/organizations', record.id, 'edit']" class="icon-link"><fa name="search-plus"></fa></a>
           </td>
         </tr>
+        <tr *ngIf="!loading && (records == null || records.length == 0)">
+          <td colspan="4">Nenhum registro encontrado</td>
+        </tr>
       </tbody>
     </table>
     <app-pagination 
