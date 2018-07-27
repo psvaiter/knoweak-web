@@ -12,6 +12,7 @@ import { ActivatedRoute } from '../../../../node_modules/@angular/router';
 export class AnalysisComponent extends CrudComponent<Analysis> implements OnInit {
 
   organizationId: number;
+  organizationLegalName: string;
   
   constructor(
     protected crudService: CrudService,
@@ -24,6 +25,19 @@ export class AnalysisComponent extends CrudComponent<Analysis> implements OnInit
   }
 
   ngOnInit() {
+    // Get the organization legal name
+    this._crudService
+      .get(`${CrudService.BaseUrl}/organizations/${this.organizationId}`)
+      .subscribe(
+        data => {
+          this.organizationLegalName = data['data']['legalName'];
+        },
+        err => {
+          console.log(err);
+        }
+      );
+    
+    // List analyses
     this.getRecords(1);
   }
 
