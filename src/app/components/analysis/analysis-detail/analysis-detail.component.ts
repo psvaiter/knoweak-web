@@ -27,7 +27,7 @@ export class AnalysisDetailComponent extends CrudComponent<Analysis> implements 
   }
 
   ngOnInit() {
-    this.getRecords(1);
+    this.getSingleRecord(this.url);
   }
 
 }
