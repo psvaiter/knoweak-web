@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { CrudComponent } from '../../utils/crud/crud.component';
 import { Analysis, AnalysisDeatil } from '../analysis';
@@ -16,9 +17,12 @@ export class AnalysisDetailComponent extends CrudComponent<Analysis> implements 
 
   constructor(
     private crudService: CrudService,
+    private location: Location,
     private route: ActivatedRoute
   ) { 
     super(crudService);
+
+    // Read route params and build url
     route.paramMap.subscribe(params => {
       this.organizationId = +params.get("id");
       this.analysisId = +params.get("analysisId");
@@ -30,4 +34,11 @@ export class AnalysisDetailComponent extends CrudComponent<Analysis> implements 
     this.getSingleRecord(this.url);
   }
 
+  patchRecord() {
+    super.patchRecord(this.url);
+  }
+
+  goBack(): void {
+    this.location.back();
+  }
 }
