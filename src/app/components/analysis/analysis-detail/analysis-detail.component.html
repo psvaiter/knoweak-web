@@ -1,49 +1,10 @@
 <div *ngIf="analysisId">
-  <div>
-    <h5>Detalhes da análise número {{ analysisId }}</h5>
+  <h5>Relatório</h5>
 
-    <!-- Form to add a new record -->
-    <form>
-      <div class="entity-metadata my-2">
-        <b>Criado em:</b> {{ currentRecord.createdOn | date : "dd/MM/yyyy HH:mm" }} (UTC)<br>
-        <b>Atualizado em:</b> {{ currentRecord.lastModifiedOn | date : "dd/MM/yyyy HH:mm" }} (UTC)
-      </div>
-
-      <!-- Description -->
-      <div class="form-group row">
-        <label for="description" class="col col-form-label col-form-label-sm text-nowrap">
-          Descrição da análise
-        </label>
-        <div class="col-9">
-          <input type="text" [(ngModel)]="currentRecord.description" name="description" id="description" class="form-control form-control-sm" />
-        </div>
-      </div>
-
-      <button type="button" class="btn btn-sm btn-outline-danger"
-              (click)="goBack()">Cancelar</button>
-      <button type="submit" class="btn btn-sm btn-success" [disabled]="!hasChangedRecord()"
-              (click)="patchRecord()">Salvar</button>
-      
-      <span class="mx-2 align-middle text-success" *ngIf="loading">
-        Aguarde...
-      </span>
-
-      <!-- Success feedback -->
-      <span class="mx-2 align-middle text-success" [class.d-none]="hasUpdated == false || hasChangedRecord()">
-        Salvo<fa name="check"></fa>
-      </span>
-
-    </form>
-
-    <!-- Error alert -->
-    <app-error-alert [errors]="errors"></app-error-alert>
-
-  </div>
   <div class="table-container">
     <table class="table table-hover">
       <thead>
         <tr>
-          <th>ID</th>
           <th>Dept.</th>
           <th>M.Processo</th>
           <th>Processo</th>
@@ -56,13 +17,12 @@
           <th>Ga</th>
           <th>Gv</th>
           <th>Impacto</th>
-          <th>Probabilidade</th>
+          <th>Prob.</th>
           <th>Risco</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let detail of currentRecord.details">
-          <td>{{ detail.id }}</td>
+        <tr *ngFor="let detail of records" [attr.data-detail-id]="detail.id">
           <td>{{ detail.departmentName }}</td>
           <td>{{ detail.macroprocessName }}</td>
           <td>{{ detail.processName }}</td>
@@ -78,7 +38,7 @@
           <td>{{ detail.calculatedProbability }}</td>
           <td>{{ detail.calculatedRisk }}</td>
         </tr>
-        <tr *ngIf="!loading && (currentRecord.details == null || currentRecord.details.length == 0)">
+        <tr *ngIf="!loading && (records == null || records.length == 0)">
           <td colspan="4">Nenhum registro encontrado</td>
         </tr>
       </tbody>
