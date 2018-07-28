@@ -1,11 +1,11 @@
 <!-- Error alert -->
-<div class="alert alert-danger my-3" *ngIf="errors.length > 0">
+<div class="alert alert-danger my-3" *ngIf="errors?.length > 0">
 
-  <h6>Ocorreu um ou mais erros</h6>
-  <ul class="m-0">
+  <h6 class="pb-1" style="border-bottom: thin solid">Erros</h6>
+  <ul class="m-0 p-0" style="list-style-type: none">
     <li style="font-size: 0.8rem;" *ngFor="let error of errors">
-      <strong>Field:</strong> {{ error.field }}<br>
-      <strong>Message:</strong> {{ error.message }}
+      <strong>Campo:</strong> {{ error.field || "N/A" }}<br>
+      <strong>Mensagem:</strong> {{ error.message }}
     </li>
   </ul>
 

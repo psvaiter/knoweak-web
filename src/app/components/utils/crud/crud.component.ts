@@ -15,7 +15,7 @@ export class CrudComponent<TEntity> {
   protected url: string;
   records: TEntity[];
   paging: Paging = new Paging();
-  errors = []
+  errors = [];
   newRecord = <TEntity> {};
   currentRecord = <TEntity> {};
   persistedRecord = <TEntity> {};
@@ -72,9 +72,15 @@ export class CrudComponent<TEntity> {
       },
       err => {
         this.loading = false;
-        console.error(err);
         this.hasCreated = false;
+        
+        console.error(err);
         this.errors = err['error'].errors;
+        if (!this.errors) {
+          this.errors = [{
+            message: JSON.stringify(err['error'])
+          }];
+        }
       }
     );
   }
@@ -95,9 +101,15 @@ export class CrudComponent<TEntity> {
       },
       err => {
         this.loading = false;
-        console.error(err);
         this.hasUpdated = true;
+        
+        console.error(err);
         this.errors = err['error'].errors;
+        if (!this.errors) {
+          this.errors = [{
+            message: JSON.stringify(err['error'])
+          }];
+        }
       }
     );
   }
