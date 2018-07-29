@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CrudService } from '../../utils/crud/crud.service';
-import { Organization, OrganizationDepartment, OrganizationMacroprocess } from '../../organization/organization';
+import { Organization, OrganizationDepartment, OrganizationMacroprocess } from '../organization';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({

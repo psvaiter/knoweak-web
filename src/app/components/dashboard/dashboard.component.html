@@ -1,6 +1,4 @@
 <div>
-  <p>
-    dashboard works!
-  </p>
-      
+  <p>Olá, {{ getUserName() }}.</p>
+  <p>Sua sessão expira em {{ getExpirationIsoDate() | date: "dd/MM/yyyy 'às' HH:mm:ss" }} (hora local).</p>
 </div>

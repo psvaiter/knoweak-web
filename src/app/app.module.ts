@@ -4,10 +4,11 @@ import { RouterModule, Routes } from '@angular/router'
 import { FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
-import { HttpClientModule } from '@angular/common/http'
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'
 import { NgSelectModule } from '@ng-select/ng-select'
 
 import { AppComponent } from './app.component';
+import { AuthService } from './services/auth/auth.service';
 import { CrudComponent } from './components/utils/crud/crud.component';
 import { CrudService } from './components/utils/crud/crud.service';
 import { PaginationComponent } from './components/pagination/pagination.component';
@@ -32,14 +33,23 @@ import { EditUserComponent } from './components/user/edit-user/edit-user.compone
 import { OrganizationComponent } from './components/organization/organization.component';
 import { EditOrganizationComponent } from './components/organization/edit-organization/edit-organization.component';
 import { OrganizationStructureComponent } from './components/organization/organization-structure/organization-structure.component';
+import { CallbackComponent } from './components/auth/callback/callback.component';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { TokenInterceptorService } from './services/auth/token-interceptor.service';
+import { AnalysisComponent } from './components/analysis/analysis.component';
+import { AnalysisDetailComponent } from './components/analysis/analysis-detail/analysis-detail.component';
+import { EditAnalysisComponent } from './components/analysis/edit-analysis/edit-analysis.component';
 
 
 const appRoutes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
+  { path: 'auth-callback', component: CallbackComponent },
   { path: 'dashboard', component: DashboardComponent },
   { path: 'organizations', component: OrganizationComponent },
   { path: 'organizations/:id/edit', component: EditOrganizationComponent },
   { path: 'organizations/:id/structure', component: OrganizationStructureComponent },
+  { path: 'organizations/:id/analyses', component: AnalysisComponent },
+  { path: 'organizations/:id/analyses/:analysisId/details', component: EditAnalysisComponent },
   { path: 'departments', component: DepartmentComponent },
   { path: 'departments/:id/edit', component: EditDepartmentComponent },
   { path: 'macroprocesses', component: MacroprocessComponent },
@@ -55,7 +65,8 @@ const appRoutes: Routes = [
   { path: 'mitigationControls', component: MitigationControlComponent },
   { path: 'mitigationControls/:id/edit', component: EditMitigationControlComponent },
   { path: 'users', component: UserComponent },
-  { path: 'users/:id/edit', component: EditUserComponent }
+  { path: 'users/:id/edit', component: EditUserComponent },
+  { path: '**', component: PageNotFoundComponent }
 ]
 
 @NgModule({
@@ -83,7 +94,12 @@ const appRoutes: Routes = [
     ErrorAlertComponent,
     OrganizationComponent,
     EditOrganizationComponent,
-    OrganizationStructureComponent
+    OrganizationStructureComponent,
+    CallbackComponent,
+    PageNotFoundComponent,
+    AnalysisComponent,
+    AnalysisDetailComponent,
+    EditAnalysisComponent
   ],
   imports: [
     BrowserModule,
@@ -95,7 +111,13 @@ const appRoutes: Routes = [
     NgSelectModule
   ],
   providers: [
-    CrudService
+    CrudService,
+    AuthService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptorService,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })

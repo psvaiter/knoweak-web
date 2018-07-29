@@ -12,4 +12,11 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
   }
 
+  getUserName() : string {
+    return localStorage.getItem('name');
+  }
+
+  getExpirationIsoDate() : string {
+    return localStorage.getItem('expires_at');
+  }
 }

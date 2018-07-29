@@ -1,0 +1,67 @@
+<div *ngIf="organizationLegalName">
+  <div>
+    <h5>Análises de {{ organizationLegalName }}</h5>
+
+    <!-- Form to add a new record -->
+    <form>
+
+      <!-- Description -->
+      <div class="form-group row">
+        <label for="description" class="col col-form-label col-form-label-sm text-nowrap">
+          Descrição da análise
+        </label>
+        <div class="col-9">
+          <input type="text" [(ngModel)]="newRecord.description" name="description" id="description" class="form-control form-control-sm" />
+        </div>
+      </div>
+
+      <!-- Select scopes to analyze -->
+
+
+      <!-- Add button -->
+      <input type="submit" class="btn btn-sm btn-outline-secondary" value="Criar nova análise" (click)="createRecord(newRecord)" />
+      <span class="mx-2 align-middle text-success" *ngIf="loading">
+        Aguarde...
+      </span>
+
+      <!-- Success feedback -->
+      <span class="mx-2 align-middle text-success" [class.d-none]="hasCreated == false">
+        Análise criada<fa name="check"></fa>
+      </span>
+    </form>
+
+    <!-- Error alert -->
+    <app-error-alert [errors]="errors"></app-error-alert>
+
+  </div>
+  <div class="table-container">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Descrição</th>
+          <th>Criado em</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let record of records">
+          <td>{{ record.id }}</td>
+          <td>{{ record.description }}</td>
+          <td>{{ record.createdOn | date : "dd/MM/yyyy HH:mm" }}</td>
+          <td class="actions">
+            <a title="Visualizar detalhes" [routerLink]="['/organizations', organizationId, 'analyses', record.id, 'details']" class="icon-link"><fa name="search-plus"></fa></a>
+          </td>
+        </tr>
+        <tr *ngIf="!loading && (records == null || records.length == 0)">
+          <td colspan="4">Nenhum registro encontrado</td>
+        </tr>
+      </tbody>
+    </table>
+    <app-pagination 
+      [paging]="paging"
+      (goPrevPage)="getPrevPage()"
+      (goNextPage)="getNextPage()">
+    </app-pagination>
+  </div>
+</div>

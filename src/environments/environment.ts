@@ -5,5 +5,10 @@
 
 export const environment = {
   production: false,
-  apiBaseUrl: 'http://localhost:8000'
+  apiBaseUrl: 'http://localhost:8000',
+  auth0: {
+    clientID: 'kC8r2l8yfy398pJuDuAXBudEWe3l7Hlt',
+    domain: 'knoweak.auth0.com',
+    redirectPath: '/auth-callback'
+  }
 };

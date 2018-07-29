@@ -3,8 +3,8 @@ export class Organization {
     taxId: string;
     legalName: string;
     tradeName: string;
-    createdOn: DateTimeFormat;
-    lastModifiedOn: DateTimeFormat;
+    createdOn: Date;
+    lastModifiedOn: Date;
     departments: OrganizationDepartment[] = [];
 }
 

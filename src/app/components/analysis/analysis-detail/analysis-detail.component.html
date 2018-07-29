@@ -1,0 +1,52 @@
+<div *ngIf="analysisId">
+  <h5>Relatório</h5>
+
+  <div class="table-container">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>Dept.</th>
+          <th>M.Processo</th>
+          <th>Processo</th>
+          <th>Rp</th>
+          <th>Serviço</th>
+          <th>Rs</th>
+          <th>Ativo</th>
+          <th>Ra</th>
+          <th>Ameaça</th>
+          <th>Ga</th>
+          <th>Gv</th>
+          <th>Impacto</th>
+          <th>Prob.</th>
+          <th>Risco</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let detail of records" [attr.data-detail-id]="detail.id">
+          <td>{{ detail.departmentName }}</td>
+          <td>{{ detail.macroprocessName }}</td>
+          <td>{{ detail.processName }}</td>
+          <td>{{ detail.processRelevance }}</td>
+          <td>{{ detail.itServiceName }}</td>
+          <td>{{ detail.itServiceRelevance }}</td>
+          <td>{{ detail.itAssetName }}</td>
+          <td>{{ detail.itAssetRelevance }}</td>
+          <td>{{ detail.securityThreatName }}</td>
+          <td>{{ detail.securityThreatLevel }}</td>
+          <td>{{ detail.itAssetVulnerabilityLevel }}</td>
+          <td>{{ detail.calculatedImpact }}</td>
+          <td>{{ detail.calculatedProbability }}</td>
+          <td>{{ detail.calculatedRisk }}</td>
+        </tr>
+        <tr *ngIf="!loading && (records == null || records.length == 0)">
+          <td colspan="4">Nenhum registro encontrado</td>
+        </tr>
+      </tbody>
+    </table>
+    <app-pagination 
+      [paging]="paging"
+      (goPrevPage)="getPrevPage()"
+      (goNextPage)="getNextPage()">
+    </app-pagination>
+  </div>
+</div>

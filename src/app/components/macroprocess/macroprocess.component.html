@@ -15,7 +15,10 @@
 
         <!-- Add button -->
         <input type="submit" class="btn btn-sm btn-outline-secondary" value="Adicionar" (click)="createRecord(newRecord)" />
-  
+        <span class="mx-2 align-middle text-success" *ngIf="loading">
+          Aguarde...
+        </span>
+        
         <!-- Success feedback -->
         <span class="mx-2 align-middle text-success" [class.d-none]="hasCreated == false">
           Macroprocesso adicionado<fa name="check"></fa>
