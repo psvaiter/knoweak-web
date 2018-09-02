@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CrudService } from './crud.service';
 import { Paging } from '../../pagination/pagination.component';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-crud',
@@ -27,14 +28,14 @@ export class CrudComponent<TEntity> {
 
   getRecords(page: number, recordsPerPage: number = this.DefaultRecordsPerPage) {
     this.loading = true;
-    this._crudService.getPage(this.url, page, recordsPerPage).subscribe(
+    this._crudService.getPage(this.url, page, recordsPerPage)
+    .pipe(finalize(() => {this.loading = false;}))
+    .subscribe(
       data => {
-        this.loading = false;
         this.records = data['data'];
         this.paging = Object.assign(this.paging, data['paging']);
       },
       err => {
-        this.loading = false;
         console.error(err);
       }
     );
