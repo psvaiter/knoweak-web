@@ -1,10 +1,10 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router'
-import { FormsModule } from '@angular/forms';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'
+import { FormsModule } from '@angular/forms';
+
+import { AngularFontAwesomeModule } from 'angular-font-awesome';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgSelectModule } from '@ng-select/ng-select'
 
 import { AppComponent } from './app.component';
@@ -28,15 +28,9 @@ import { MitigationControlComponent } from './components/mitigation-control/miti
 import { EditMitigationControlComponent } from './components/mitigation-control/edit-mitigation-control/edit-mitigation-control.component';
 import { UserComponent } from './components/user/user.component';
 import { EditUserComponent } from './components/user/edit-user/edit-user.component';
-import { OrganizationComponent } from './components/organization/organization.component';
-import { EditOrganizationComponent } from './components/organization/edit-organization/edit-organization.component';
-import { OrganizationStructureComponent } from './components/organization/organization-structure/organization-structure.component';
 import { CallbackComponent } from './components/auth/callback/callback.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { TokenInterceptorService } from './services/auth/token-interceptor.service';
-import { AnalysisComponent } from './components/analysis/analysis.component';
-import { AnalysisDetailComponent } from './components/analysis/analysis-detail/analysis-detail.component';
-import { EditAnalysisComponent } from './components/analysis/edit-analysis/edit-analysis.component';
 import { SharedModule } from './shared/shared.module';
 import { AppRoutingModule } from './app-routing.module';
 
@@ -62,14 +56,8 @@ import { AppRoutingModule } from './app-routing.module';
     EditMitigationControlComponent,
     UserComponent,
     EditUserComponent,
-    // OrganizationComponent,
-    // EditOrganizationComponent,
-    // OrganizationStructureComponent,
     CallbackComponent,
     PageNotFoundComponent,
-    // AnalysisComponent,
-    // AnalysisDetailComponent,
-    // EditAnalysisComponent
   ],
   imports: [
     BrowserModule,
