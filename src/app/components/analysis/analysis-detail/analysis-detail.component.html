@@ -1,7 +1,7 @@
 <div *ngIf="analysisId">
   <h5>Relatório</h5>
 
-  <div class="table-container">
+  <div class="table-container table-responsive">
     <table class="table table-hover">
       <thead>
         <tr>
@@ -43,10 +43,10 @@
         </tr>
       </tbody>
     </table>
-    <app-pagination 
-      [paging]="paging"
-      (goPrevPage)="getPrevPage()"
-      (goNextPage)="getNextPage()">
-    </app-pagination>
   </div>
+  <app-pagination 
+    [paging]="paging"
+    (goPrevPage)="getPrevPage()"
+    (goNextPage)="getNextPage()">
+  </app-pagination>
 </div>

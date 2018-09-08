@@ -133,8 +133,8 @@ h5, .h5 {
  */
 
 .table-container {
-  overflow: hidden;
-  margin: 20px 0px;
+  // overflow: hidden;
+  margin: 20px 0px 0px 0px;
   padding: 0;
   border-radius: 0.2rem;
   //border: 1px solid #c2c2c2;
@@ -172,4 +172,8 @@ h5, .h5 {
 
 .fa-no-margin .fa {
   margin: 0;
+}
+
+main {
+  overflow: hidden;
 }
