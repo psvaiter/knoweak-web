@@ -2,20 +2,20 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 
+import { Organization } from '../organization';
 import { CrudComponent } from '../../../shared/crud/crud.component';
 import { CrudService } from '../../../shared/crud/crud.service';
 
 @Component({
-  selector: 'app-edit-user',
-  templateUrl: './edit-user.component.html',
-  styleUrls: ['./edit-user.component.scss']
+  selector: 'app-edit-organization',
+  templateUrl: './edit-organization.component.html',
+  styleUrls: ['./edit-organization.component.scss']
 })
 
-export class EditUserComponent extends CrudComponent<User> implements OnInit {
-
-  url = CrudService.BaseUrl + '/management/users';
+export class EditOrganizationComponent extends CrudComponent<Organization> implements OnInit {
+  
+  url = CrudService.BaseUrl + '/organizations';
   id: number;
-  roles: SystemRole[] = [];
 
   constructor(
     protected _crudService: CrudService,
@@ -27,16 +27,7 @@ export class EditUserComponent extends CrudComponent<User> implements OnInit {
   }
 
   ngOnInit() {
-    this.getSystemRoles();
     this.getSingleRecord(this.url + `/${this.id}`);
-  }
-
-  getSystemRoles() {
-    this._crudService.getPage(CrudService.BaseUrl + '/management/roles', 1, 100).subscribe(
-      data => {
-        this.roles = data['data'];
-      }
-    );
   }
 
   patchRecord() {

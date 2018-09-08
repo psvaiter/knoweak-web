@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { CrudComponent } from '../utils/crud/crud.component';
-import { CrudService } from '../utils/crud/crud.service';
+import { ActivatedRoute } from '@angular/router';
+
+import { CrudComponent } from '../../shared/crud/crud.component';
+import { CrudService } from '../../shared/crud/crud.service';
 import { Analysis } from './analysis';
-import { ActivatedRoute } from '../../../../node_modules/@angular/router';
 
 @Component({
   selector: 'app-analysis',

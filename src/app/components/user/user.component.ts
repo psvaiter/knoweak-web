@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { CrudComponent } from '../utils/crud/crud.component';
-import { CrudService } from '../utils/crud/crud.service';
+
+import { CrudComponent } from '../../shared/crud/crud.component';
+import { CrudService } from '../../shared/crud/crud.service';
 
 @Component({
   selector: 'app-user',

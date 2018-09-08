@@ -6,16 +6,14 @@ import { CrudComponent } from '../../../shared/crud/crud.component';
 import { CrudService } from '../../../shared/crud/crud.service';
 
 @Component({
-  selector: 'app-edit-user',
-  templateUrl: './edit-user.component.html',
-  styleUrls: ['./edit-user.component.scss']
+  selector: 'app-edit-security-threat',
+  templateUrl: './edit-security-threat.component.html',
+  styleUrls: ['./edit-security-threat.component.scss']
 })
+export class EditSecurityThreatComponent extends CrudComponent<SecurityThreat> implements OnInit {
 
-export class EditUserComponent extends CrudComponent<User> implements OnInit {
-
-  url = CrudService.BaseUrl + '/management/users';
+  url = CrudService.BaseUrl + '/securityThreats';
   id: number;
-  roles: SystemRole[] = [];
 
   constructor(
     protected _crudService: CrudService,
@@ -27,16 +25,7 @@ export class EditUserComponent extends CrudComponent<User> implements OnInit {
   }
 
   ngOnInit() {
-    this.getSystemRoles();
     this.getSingleRecord(this.url + `/${this.id}`);
-  }
-
-  getSystemRoles() {
-    this._crudService.getPage(CrudService.BaseUrl + '/management/roles', 1, 100).subscribe(
-      data => {
-        this.roles = data['data'];
-      }
-    );
   }
 
   patchRecord() {

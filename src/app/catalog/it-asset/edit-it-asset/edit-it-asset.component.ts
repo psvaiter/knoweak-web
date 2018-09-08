@@ -1,21 +1,20 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
 
 import { CrudComponent } from '../../../shared/crud/crud.component';
 import { CrudService } from '../../../shared/crud/crud.service';
 
 @Component({
-  selector: 'app-edit-user',
-  templateUrl: './edit-user.component.html',
-  styleUrls: ['./edit-user.component.scss']
+  selector: 'app-edit-it-asset',
+  templateUrl: './edit-it-asset.component.html',
+  styleUrls: ['./edit-it-asset.component.scss']
 })
+export class EditItAssetComponent extends CrudComponent<ItAsset> implements OnInit {
 
-export class EditUserComponent extends CrudComponent<User> implements OnInit {
-
-  url = CrudService.BaseUrl + '/management/users';
+  url = CrudService.BaseUrl + '/itAssets';
   id: number;
-  roles: SystemRole[] = [];
+  categories = [];
 
   constructor(
     protected _crudService: CrudService,
@@ -27,14 +26,14 @@ export class EditUserComponent extends CrudComponent<User> implements OnInit {
   }
 
   ngOnInit() {
-    this.getSystemRoles();
+    this.getCategories();
     this.getSingleRecord(this.url + `/${this.id}`);
   }
 
-  getSystemRoles() {
-    this._crudService.getPage(CrudService.BaseUrl + '/management/roles', 1, 100).subscribe(
+  getCategories() {
+    this._crudService.getPage(CrudService.BaseUrl + '/itAssetCategories', 1, 100).subscribe(
       data => {
-        this.roles = data['data'];
+        this.categories = data['data'];
       }
     );
   }

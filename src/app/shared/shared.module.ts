@@ -1,8 +1,9 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 
-import { ErrorAlertComponent } from "../components/utils/error-alert/error-alert.component";
-import { PaginationComponent } from "../components/pagination/pagination.component";
+import { ErrorAlertComponent } from "./error-alert/error-alert.component";
+import { PaginationComponent } from "./pagination/pagination.component";
+
 
 @NgModule({
     declarations: [

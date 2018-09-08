@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-import { CrudComponent } from '../../utils/crud/crud.component';
+
+import { CrudComponent } from '../../../shared/crud/crud.component';
+import { CrudService } from '../../../shared/crud/crud.service';
 import { Analysis, AnalysisDeatil } from '../analysis';
-import { CrudService } from '../../utils/crud/crud.service';
 
 @Component({
   selector: 'app-analysis-detail',

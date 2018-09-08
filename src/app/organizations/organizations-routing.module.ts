@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { OrganizationComponent } from '../components/organization/organization.component';
-import { EditOrganizationComponent } from '../components/organization/edit-organization/edit-organization.component';
-import { OrganizationStructureComponent } from '../components/organization/organization-structure/organization-structure.component';
+import { OrganizationComponent } from './organization/organization.component';
+import { EditOrganizationComponent } from './organization/edit-organization/edit-organization.component';
+import { OrganizationStructureComponent } from './organization/organization-structure/organization-structure.component';
 import { AnalysisComponent } from '../components/analysis/analysis.component';
 import { EditAnalysisComponent } from '../components/analysis/edit-analysis/edit-analysis.component';
 

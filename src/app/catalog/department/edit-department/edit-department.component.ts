@@ -1,42 +1,33 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
 
 import { CrudComponent } from '../../../shared/crud/crud.component';
 import { CrudService } from '../../../shared/crud/crud.service';
+import { Department } from '../department';
 
 @Component({
-  selector: 'app-edit-user',
-  templateUrl: './edit-user.component.html',
-  styleUrls: ['./edit-user.component.scss']
+  selector: 'app-edit-department',
+  templateUrl: './edit-department.component.html',
+  styleUrls: ['./edit-department.component.scss']
 })
 
-export class EditUserComponent extends CrudComponent<User> implements OnInit {
+export class EditDepartmentComponent extends CrudComponent<Department> implements OnInit {
 
-  url = CrudService.BaseUrl + '/management/users';
+  url = CrudService.BaseUrl + '/departments';
   id: number;
-  roles: SystemRole[] = [];
 
   constructor(
     protected _crudService: CrudService,
     private location: Location,
-    private route: ActivatedRoute) {
-      
+    private route: ActivatedRoute) { 
+    
       super(_crudService);
       route.params.subscribe(params => this.id = params['id']);
   }
 
   ngOnInit() {
-    this.getSystemRoles();
     this.getSingleRecord(this.url + `/${this.id}`);
-  }
-
-  getSystemRoles() {
-    this._crudService.getPage(CrudService.BaseUrl + '/management/roles', 1, 100).subscribe(
-      data => {
-        this.roles = data['data'];
-      }
-    );
   }
 
   patchRecord() {
