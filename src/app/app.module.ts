@@ -11,8 +11,6 @@ import { AppComponent } from './app.component';
 import { AuthService } from './services/auth/auth.service';
 import { CrudComponent } from './components/utils/crud/crud.component';
 import { CrudService } from './components/utils/crud/crud.service';
-import { PaginationComponent } from './components/pagination/pagination.component';
-import { ErrorAlertComponent } from './components/utils/error-alert/error-alert.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { DepartmentComponent } from './components/department/department.component';
 import { EditDepartmentComponent } from './components/department/edit-department/edit-department.component';
@@ -39,35 +37,9 @@ import { TokenInterceptorService } from './services/auth/token-interceptor.servi
 import { AnalysisComponent } from './components/analysis/analysis.component';
 import { AnalysisDetailComponent } from './components/analysis/analysis-detail/analysis-detail.component';
 import { EditAnalysisComponent } from './components/analysis/edit-analysis/edit-analysis.component';
+import { SharedModule } from './shared/shared.module';
+import { AppRoutingModule } from './app-routing.module';
 
-
-const appRoutes: Routes = [
-  { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
-  { path: 'auth-callback', component: CallbackComponent },
-  { path: 'dashboard', component: DashboardComponent },
-  { path: 'organizations', component: OrganizationComponent },
-  { path: 'organizations/:id/edit', component: EditOrganizationComponent },
-  { path: 'organizations/:id/structure', component: OrganizationStructureComponent },
-  { path: 'organizations/:id/analyses', component: AnalysisComponent },
-  { path: 'organizations/:id/analyses/:analysisId/details', component: EditAnalysisComponent },
-  { path: 'departments', component: DepartmentComponent },
-  { path: 'departments/:id/edit', component: EditDepartmentComponent },
-  { path: 'macroprocesses', component: MacroprocessComponent },
-  { path: 'macroprocesses/:id/edit', component: EditMacroprocessComponent },
-  { path: 'processes', component: ProcessComponent },
-  { path: 'processes/:id/edit', component: EditProcessComponent },
-  { path: 'services', component: ItServiceComponent },
-  { path: 'services/:id/edit', component: EditItServiceComponent },
-  { path: 'assets', component: ItAssetComponent },
-  { path: 'assets/:id/edit', component: EditItAssetComponent },
-  { path: 'securityThreats', component: SecurityThreatComponent },
-  { path: 'securityThreats/:id/edit', component: EditSecurityThreatComponent },
-  { path: 'mitigationControls', component: MitigationControlComponent },
-  { path: 'mitigationControls/:id/edit', component: EditMitigationControlComponent },
-  { path: 'users', component: UserComponent },
-  { path: 'users/:id/edit', component: EditUserComponent },
-  { path: '**', component: PageNotFoundComponent }
-]
 
 @NgModule({
   declarations: [
@@ -75,7 +47,6 @@ const appRoutes: Routes = [
     DashboardComponent,
     CrudComponent,
     DepartmentComponent,
-    PaginationComponent,
     EditDepartmentComponent,
     MacroprocessComponent,
     EditMacroprocessComponent,
@@ -91,24 +62,24 @@ const appRoutes: Routes = [
     EditMitigationControlComponent,
     UserComponent,
     EditUserComponent,
-    ErrorAlertComponent,
-    OrganizationComponent,
-    EditOrganizationComponent,
-    OrganizationStructureComponent,
+    // OrganizationComponent,
+    // EditOrganizationComponent,
+    // OrganizationStructureComponent,
     CallbackComponent,
     PageNotFoundComponent,
-    AnalysisComponent,
-    AnalysisDetailComponent,
-    EditAnalysisComponent
+    // AnalysisComponent,
+    // AnalysisDetailComponent,
+    // EditAnalysisComponent
   ],
   imports: [
     BrowserModule,
-    RouterModule.forRoot(appRoutes),
     FormsModule,
     NgbModule.forRoot(),
     AngularFontAwesomeModule,
     HttpClientModule,
-    NgSelectModule
+    NgSelectModule,
+    AppRoutingModule,
+    SharedModule
   ],
   providers: [
     CrudService,
