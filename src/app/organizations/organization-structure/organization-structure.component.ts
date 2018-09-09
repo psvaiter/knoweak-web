@@ -71,8 +71,12 @@ export class OrganizationStructureComponent implements OnInit {
   }
 
   deleteDepartment(department: OrganizationDepartment) {
-    let url = `${CrudService.BaseUrl}/organizations/${this.organization.id}/departments/${department.id}`;
+    if (!confirm(`Deseja remover o departamento "${department.name}" da organização?`)) {
+      return;
+    }
 
+    let url = `${CrudService.BaseUrl}/organizations/${this.organization.id}/departments/${department.id}`;
+    
     this._crudService.delete(url).subscribe(
       data => {
         this.getOrganizationDepartments();
@@ -130,6 +134,10 @@ export class OrganizationStructureComponent implements OnInit {
   }
 
   deleteMacroprocess(macroprocess: OrganizationMacroprocess, department: OrganizationDepartment) {
+    if (!confirm(`Deseja remover o macroprocesso "${macroprocess.name}" do departamento "${department.name}"?`)) {
+      return;
+    }
+    
     let url = `${CrudService.BaseUrl}/organizations/${this.organization.id}/macroprocesses/${macroprocess.instanceId}`;
 
     this._crudService.delete(url).subscribe(
