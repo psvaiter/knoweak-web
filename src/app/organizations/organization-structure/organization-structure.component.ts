@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { Organization, OrganizationDepartment, OrganizationMacroprocess } from '../organization';
-import { CrudService } from '../../../shared/crud/crud.service';
+import { Organization, OrganizationDepartment, OrganizationMacroprocess } from '../organization/organization';
+import { CrudService } from '../../shared/crud/crud.service';
+
 
 @Component({
   selector: 'app-organization-structure',
@@ -14,7 +15,8 @@ export class OrganizationStructureComponent implements OnInit {
   departments = [];
   macroprocesses = [];
 
-  organization: Organization = new Organization();
+  organization: 
+  Organization = new Organization();
   selectedDepartmentId: number;
 
   constructor(private _crudService: CrudService, private route: ActivatedRoute) {

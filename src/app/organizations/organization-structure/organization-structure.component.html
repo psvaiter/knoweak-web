@@ -22,6 +22,7 @@
     
     <!-- List of departments -->
     <div *ngIf="organization.departments">
+      <h6 class="pl-3 pt-1" style="color:brown">Departamentos</h6>
       <ul class="list-group">
         <li class="list-group-item" *ngFor="let department of organization.departments">
           <div class="d-flex justify-content-between align-items-center">
@@ -52,6 +53,7 @@
 
             <!-- List of macroprocesses -->
             <div *ngIf="department.macroprocesses">
+              <h6 class="pl-3 pt-1" style="color:brown">Macroprocessos</h6>
               <ul class="list-group">
                 <li class="list-group-item" *ngFor="let macroprocess of department.macroprocesses">
                   <div class="d-flex justify-content-between align-items-center">
