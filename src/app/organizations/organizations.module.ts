@@ -1,7 +1,4 @@
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { AngularFontAwesomeModule } from 'angular-font-awesome';
-import { NgSelectModule } from '@ng-select/ng-select';
 
 import { OrganizationsRoutingModule } from './organizations-routing.module';
 import { OrganizationComponent } from '../organizations/organization/organization.component';
@@ -13,14 +10,6 @@ import { EditAnalysisComponent } from '../components/analysis/edit-analysis/edit
 import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
-    imports: [
-        FormsModule,
-        OrganizationsRoutingModule,
-        AngularFontAwesomeModule,
-        NgSelectModule,
-        SharedModule
-    ],
-    exports: [],
     declarations: [
         OrganizationComponent,
         EditOrganizationComponent,
@@ -29,6 +18,11 @@ import { SharedModule } from '../shared/shared.module';
         AnalysisDetailComponent,
         EditAnalysisComponent,
     ],
+    imports: [
+        OrganizationsRoutingModule,
+        SharedModule
+    ],
+    exports: [],
     providers: [],
 })
 export class OrganizationsModule { }

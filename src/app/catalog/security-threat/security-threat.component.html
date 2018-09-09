@@ -56,7 +56,7 @@
           <td>{{ record.name }}</td>
           <td>{{ record.createdOn | date : "dd/MM/yyyy HH:mm" }}</td>
           <td>{{ record.lastModifiedOn | date : "dd/MM/yyyy HH:mm" }}</td>
-          <td><a [routerLink]="['/securityThreats', record.id, 'edit']"><fa name="edit"></fa></a></td>
+          <td><a [routerLink]="['/catalog/securityThreats', record.id, 'edit']"><fa name="edit"></fa></a></td>
         </tr>
       </tbody>
     </table>
