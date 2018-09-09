@@ -69,13 +69,110 @@
                       <span>{{ macroprocess.name }}</span>
                     </div>
                   </div>
+
+                  <div *ngIf="macroprocess.expanded">
+                    <div class="d-flex align-items-center my-2">
+                      <!-- Select a process to add -->
+                      <ng-select id="newProcess" name="newProcess" class="custom flex-grow-1 mr-2" 
+                        [items]="processes" 
+                        [searchable]="true" 
+                        bindLabel="name"
+                        bindValue="id" 
+                        [(ngModel)]="macroprocess.selectedProcessId"
+                        placeholder="Adicionar processo...">
+                      </ng-select>
+                      <ng-select id="processRelevance" name="processRelevance" class="custom flex-grow-1 mr-2" 
+                        [items]="ratingLevels" 
+                        [searchable]="true" 
+                        bindLabel="name"
+                        bindValue="id" 
+                        [(ngModel)]="macroprocess.selectedProcessRelevanceId"
+                        placeholder="Relevância">
+                      </ng-select>
+                      <button class="btn btn-sm btn-outline-primary" type="button" (click)="addProcess(macroprocess)">Adicionar</button>
+                    </div>
+        
+                    <!-- List of processes -->
+                    <div *ngIf="macroprocess.processes">
+                      <ul class="list-group">
+                        <li class="list-group-item" *ngFor="let process of macroprocess.processes">
+                          <div class="d-flex align-items-center">
+                            <span style="cursor: pointer;"
+                                  class="mx-1 badge badge-default" [class.badge-outlined]="process.expanded"
+                                  (click)="toggleProcessItServices(process);">
+                              Processo
+                            </span>
+                            <div class="d-flex align-items-center">
+                              <span class="mx-1 badge badge-primary" title="Relevância: {{ process.relevance?.name || 'Indefinida' }} ">
+                                {{ process.relevance?.id || "?" }}
+                              </span>
+                              <span class="icon-link" title="Excluir" (click)="deleteProcess(process, macroprocess)">
+                                <fa class="mx-1 fa-no-margin text-danger" name="trash"></fa>
+                              </span>
+                              <span>{{ process.name }}</span>
+                            </div>
+                          </div>
+                          
+                          <div *ngIf="process.expanded">
+                            <div class="d-flex align-items-center my-2">
+                              <!-- Select an IT service to add -->
+                              <ng-select id="newItService" name="newItService" class="custom flex-grow-1 mr-2" 
+                                [items]="itServices" 
+                                [searchable]="true" 
+                                bindLabel="name"
+                                bindValue="id" 
+                                [(ngModel)]="process.selectedItServiceId"
+                                placeholder="Adicionar serviço de TI...">
+                              </ng-select>
+                              <ng-select id="itServiceRelevance" name="itServiceRelevance" class="custom flex-grow-1 mr-2" 
+                                [items]="ratingLevels" 
+                                [searchable]="true" 
+                                bindLabel="name"
+                                bindValue="id" 
+                                [(ngModel)]="process.selectedItServiceRelevanceId"
+                                placeholder="Relevância">
+                              </ng-select>
+                              <button class="btn btn-sm btn-outline-primary" type="button" (click)="addItService(process)">Adicionar</button>
+                            </div>
+                
+                            <!-- List of IT services -->
+                            <div *ngIf="process.itServices">
+                              <ul class="list-group">
+                                <li class="list-group-item" *ngFor="let itService of process.itServices">
+                                  <div class="d-flex align-items-center">
+                                    <span style="cursor: pointer;"
+                                          class="mx-1 badge badge-default" [class.badge-outlined]="itService.expanded"
+                                          (click)="toggleItServicesItAssets(itService);">
+                                      Serviço de TI
+                                    </span>
+                                    <div class="d-flex align-items-center">
+                                      <span class="mx-1 badge badge-primary" title="Relevância: {{ itService.relevance?.name || 'Indefinida' }} ">
+                                        {{ itService.relevance?.id || "?" }}
+                                      </span>
+                                      <span class="icon-link" title="Excluir" (click)="deleteItService(itService, process)">
+                                        <fa class="mx-1 fa-no-margin text-danger" name="trash"></fa>
+                                      </span>
+                                      <span>{{ itService.name }}</span>
+                                    </div>
+                                  </div>
+                                </li>
+                              </ul>
+                            </div>
+                          </div>
+
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+
                 </li>
               </ul>
             </div>
           </div>
-        </li>
 
+        </li>
       </ul>
     </div>
+
   </div>
 </div>

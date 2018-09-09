@@ -25,6 +25,7 @@ export class OrganizationMacroprocess {
     
     expanded: boolean = false;
     selectedProcessId: number;
+    selectedProcessRelevanceId: number;
 }
   
 export class OrganizationProcess {
@@ -32,9 +33,11 @@ export class OrganizationProcess {
     id: number;
     name: string;
     itServices: OrganizationItService[] = [];
-    
+    relevance: RatingLevel;
+
     expanded: boolean = false;
     selectedItServiceId: number;
+    selectedItServiceRelevanceId: number;
 }
   
 export class OrganizationItService {
@@ -42,13 +45,21 @@ export class OrganizationItService {
     id: number;
     name: string;
     itAssets: OrganizationItAsset[] = [];
+    relevance: RatingLevel;
     
     expanded: boolean = false;
-    selectedItAssetIt: number;
+    selectedItAssetId: number;
+    selectedItAssetRelevanceId: number;
 }
   
 export class OrganizationItAsset {
     instanceId: number;
+    id: number;
+    name: string;
+    relevance: RatingLevel;
+}
+
+export class RatingLevel {
     id: number;
     name: string;
 }
