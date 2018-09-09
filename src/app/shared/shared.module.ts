@@ -1,12 +1,12 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
+import { FormsModule } from "@angular/forms";
+
+import { AngularFontAwesomeModule } from "angular-font-awesome";
+import { NgSelectModule } from "@ng-select/ng-select";
 
 import { ErrorAlertComponent } from "./error-alert/error-alert.component";
 import { PaginationComponent } from "./pagination/pagination.component";
-import { FormsModule } from "../../../node_modules/@angular/forms";
-import { AngularFontAwesomeModule } from "../../../node_modules/angular-font-awesome";
-import { NgSelectModule } from "../../../node_modules/@ng-select/ng-select";
-
 
 @NgModule({
     declarations: [
