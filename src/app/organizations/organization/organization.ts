@@ -56,6 +56,7 @@ export class OrganizationItAsset {
     instanceId: number;
     id: number;
     name: string;
+    externalIdentifier: string;
     relevance: RatingLevel;
 }
 

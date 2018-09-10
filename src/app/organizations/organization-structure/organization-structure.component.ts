@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { Organization, OrganizationDepartment, OrganizationMacroprocess, OrganizationProcess, RatingLevel, OrganizationItService } from '../organization/organization';
+import { Organization, OrganizationDepartment, OrganizationMacroprocess, OrganizationProcess, RatingLevel, OrganizationItService, OrganizationItAsset } from '../organization/organization';
 import { CrudService } from '../../shared/crud/crud.service';
 
 
@@ -300,6 +300,75 @@ export class OrganizationStructureComponent implements OnInit {
     );
   }
 
+  toggleItServiceItAssets(itService: OrganizationItService) {
+    itService.expanded = !itService.expanded; 
+    if (!itService.expanded) {
+      return;
+    }
+    this.getItServiceItAssets(itService);
+  }
+
+  getItServiceItAssets(itService) {
+    let url = `${CrudService.BaseUrl}/organizations/${this.organization.id}/itServices/${itService.instanceId}/itAssets`;
+
+    this._crudService.getPage(url, 1, 100).subscribe(
+      data => {
+        let itAssets = data['data'].filter(item => item.itServiceInstanceId == itService.instanceId);
+        itService.itAssets = itAssets.map(item => {
+          let itAsset = new OrganizationItAsset();
+          itAsset.instanceId = item.itAssetInstanceId;
+          itAsset.id = item.itAssetInstance.itAsset.id;
+          itAsset.name = item.itAssetInstance.itAsset.name;
+          itAsset.externalIdentifier = item.itAssetInstance.externalIdentifier
+          itAsset.relevance = this.ratingLevels.find(lvl => lvl.id == item.relevanceLevelId);
+          return itAsset;
+        });
+      },
+      err => {
+        console.error(err);
+      }
+    );
+  }
+
+  addItAsset(itService: OrganizationItService) {
+    let url = `${CrudService.BaseUrl}/organizations/${this.organization.id}/itServices/${itService.instanceId}/itAssets`;
+    console.log(itService);
+    this._crudService
+      .post({ 
+        itAssetInstanceId: itService.selectedItAssetId,
+        relevanceLevelId: itService.selectedItAssetRelevanceId
+      }, url)
+      .subscribe(
+        data => {
+          // remove selection
+          itService.selectedItAssetId = null;
+          itService.selectedItAssetRelevanceId = null;
+          
+          this.getItServiceItAssets(itService);
+        },
+        err => {
+          console.error(err);
+        }
+      );
+  }
+
+  deleteItAsset(itAsset: OrganizationItAsset, itService: OrganizationItService) {
+    if (!confirm(`Deseja remover o ativo "${itAsset.name}" do serviço "${itService.name}"?`)) {
+      return;
+    }
+    
+    let url = `${CrudService.BaseUrl}/organizations/${this.organization.id}/itServices/${itService.instanceId}/itAssets/${itAsset.instanceId}`;
+
+    this._crudService.delete(url).subscribe(
+      data => {
+        this.getItServiceItAssets(itService);
+      },
+      err => {
+        console.error(err);
+      }
+    );
+  }
+
   listDepartments() {
     let url = `${CrudService.BaseUrl}/departments`;
 
@@ -358,6 +427,31 @@ export class OrganizationStructureComponent implements OnInit {
     this._crudService.get(url).subscribe(
       data => {
         this.itAssets = data['data'];
+        
+        // Union with organization it assets
+        this._crudService.get(`${CrudService.BaseUrl}/organizations/${this.organization.id}/itAssets`).subscribe(
+          data => {
+            // Map to a format compatible with the existing one in this.itAssets
+            let organizationItAssets = data['data'].map(item => {
+              let matchedItAsset = this.itAssets.find(asset => asset.id == item.itAsset.id);
+              let itAssetCopy = Object.assign({}, matchedItAsset);
+              itAssetCopy.instanceId = item.instanceId;
+              itAssetCopy.externalIdentifier = item.externalIdentifier;
+              if (itAssetCopy.externalIdentifier) {
+                itAssetCopy.name = `${itAssetCopy.name} (${itAssetCopy.externalIdentifier})`;
+              }
+              return itAssetCopy;
+            });
+
+            // Concatenate and sort
+            this.itAssets = this.itAssets
+              .concat(organizationItAssets)
+              .sort((a, b) => (a.name < b.name) ? -1 : 1);
+          },
+          err => {
+            console.error(err);
+          }
+        );
       },
       err => {
         console.error(err);

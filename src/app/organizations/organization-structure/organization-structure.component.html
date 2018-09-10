@@ -142,7 +142,7 @@
                                   <div class="d-flex align-items-center">
                                     <span style="cursor: pointer;"
                                           class="mx-1 badge badge-default" [class.badge-outlined]="itService.expanded"
-                                          (click)="toggleItServicesItAssets(itService);">
+                                          (click)="toggleItServiceItAssets(itService);">
                                       Serviço de TI
                                     </span>
                                     <div class="d-flex align-items-center">
@@ -155,6 +155,54 @@
                                       <span>{{ itService.name }}</span>
                                     </div>
                                   </div>
+
+                                  <div *ngIf="itService.expanded">
+                                    <div class="d-flex align-items-center my-2">
+                                      <!-- Select an IT asset to add -->
+                                      <ng-select id="newItAsset" name="newItAsset" class="custom flex-grow-1 mr-2" 
+                                        [items]="itAssets" 
+                                        [searchable]="true" 
+                                        bindLabel="name"
+                                        bindValue="instanceId" 
+                                        [(ngModel)]="itService.selectedItAssetId"
+                                        placeholder="Adicionar ativo de TI...">
+                                      </ng-select>
+                                      <ng-select id="itServiceRelevance" name="itServiceRelevance" class="custom flex-grow-1 mr-2" 
+                                        [items]="ratingLevels" 
+                                        [searchable]="true" 
+                                        bindLabel="name"
+                                        bindValue="id" 
+                                        [(ngModel)]="itService.selectedItAssetRelevanceId"
+                                        placeholder="Relevância">
+                                      </ng-select>
+                                      <button class="btn btn-sm btn-outline-primary" type="button" (click)="addItAsset(itService)">Adicionar</button>
+                                    </div>
+                        
+                                    <!-- List of IT assets -->
+                                    <div *ngIf="itService.itAssets">
+                                      <ul class="list-group">
+                                        <li class="list-group-item" *ngFor="let itAsset of itService.itAssets">
+                                          <div class="d-flex align-items-center">
+                                            <span style="cursor: pointer;"
+                                                  class="mx-1 badge badge-default">
+                                              Ativo de TI
+                                            </span>
+                                            <div class="d-flex align-items-center">
+                                              <span class="mx-1 badge badge-primary" title="Relevância: {{ itAsset.relevance?.name || 'Indefinida' }} ">
+                                                {{ itAsset.relevance?.id || "?" }}
+                                              </span>
+                                              <span class="icon-link" title="Excluir" (click)="deleteItAsset(itAsset, itService)">
+                                                <fa class="mx-1 fa-no-margin text-danger" name="trash"></fa>
+                                              </span>
+                                              <span>{{ itAsset.name }}<span *ngIf="itAsset.externalIdentifier"> ({{ itAsset.externalIdentifier }})</span></span>
+                                            </div>
+                                          </div>
+
+                                        </li>
+                                      </ul>
+                                    </div>
+                                  </div>
+
                                 </li>
                               </ul>
                             </div>
