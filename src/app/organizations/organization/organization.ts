@@ -48,7 +48,8 @@ export class OrganizationItService {
     relevance: RatingLevel;
     
     expanded: boolean = false;
-    selectedItAssetId: number;
+    selectedItem: any;
+    selectedExternalIdentifier: string;
     selectedItAssetRelevanceId: number;
 }
   

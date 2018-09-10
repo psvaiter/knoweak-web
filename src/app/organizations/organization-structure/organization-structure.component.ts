@@ -331,25 +331,70 @@ export class OrganizationStructureComponent implements OnInit {
   }
 
   addItAsset(itService: OrganizationItService) {
-    let url = `${CrudService.BaseUrl}/organizations/${this.organization.id}/itServices/${itService.instanceId}/itAssets`;
-    console.log(itService);
-    this._crudService
-      .post({ 
-        itAssetInstanceId: itService.selectedItAssetId,
+    let urlAddServiceAsset = `${CrudService.BaseUrl}/organizations/${this.organization.id}/itServices/${itService.instanceId}/itAssets`;
+
+    let matchedItAsset = this.itAssets.find(asset => asset == itService.selectedItem);
+    if (matchedItAsset && !matchedItAsset.instanceId) {
+
+      // Add IT asset to organization first
+      let urlAddOrganizationAsset = `${CrudService.BaseUrl}/organizations/${this.organization.id}/itAssets`;
+      let requestAddOrganizationAsset = { 
+        itAssetId: itService.selectedItem.id,
+        externalIdentifier: itService.selectedExternalIdentifier
+      };
+
+      this._crudService
+        .post(requestAddOrganizationAsset, urlAddOrganizationAsset)
+        .subscribe(
+          data => {
+            let requestAddServiceAsset = { 
+              itAssetInstanceId: data['data'].instanceId,
+              relevanceLevelId: itService.selectedItAssetRelevanceId
+            };
+      
+            this._crudService
+              .post(requestAddServiceAsset, urlAddServiceAsset)
+              .subscribe(
+                data => {
+                  // remove selection
+                  itService.selectedItem = null;
+                  itService.selectedExternalIdentifier = null;
+                  itService.selectedItAssetRelevanceId = null;
+                  
+                  this.getItServiceItAssets(itService);
+                },
+                err => {
+                  console.error(err);
+                }
+              );
+          },
+          err => {
+            console.error(err);
+          }
+        );
+    }
+    else {
+      let requestAddServiceAsset = { 
+        itAssetInstanceId: matchedItAsset.instanceId,
         relevanceLevelId: itService.selectedItAssetRelevanceId
-      }, url)
-      .subscribe(
-        data => {
-          // remove selection
-          itService.selectedItAssetId = null;
-          itService.selectedItAssetRelevanceId = null;
-          
-          this.getItServiceItAssets(itService);
-        },
-        err => {
-          console.error(err);
-        }
-      );
+      };
+
+      this._crudService
+        .post(requestAddServiceAsset, urlAddServiceAsset)
+        .subscribe(
+          data => {
+            // remove selection
+            itService.selectedItem = null;
+            itService.selectedExternalIdentifier = null;
+            itService.selectedItAssetRelevanceId = null;
+            
+            this.getItServiceItAssets(itService);
+          },
+          err => {
+            console.error(err);
+          }
+        );
+    }
   }
 
   deleteItAsset(itAsset: OrganizationItAsset, itService: OrganizationItService) {
@@ -443,9 +488,9 @@ export class OrganizationStructureComponent implements OnInit {
               return itAssetCopy;
             });
 
-            // Concatenate and sort
+            // Concatenate and sort (those with external identifiers to avoid duplicate)
             this.itAssets = this.itAssets
-              .concat(organizationItAssets)
+              .concat(organizationItAssets.filter(asset => asset && asset.externalIdentifier))
               .sort((a, b) => (a.name < b.name) ? -1 : 1);
           },
           err => {
