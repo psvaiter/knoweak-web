@@ -18,7 +18,11 @@ h5, .h5 {
 .fa {
   width: 22px;
   text-align: center;
-  margin-right: 0.5rem;
+  // margin-right: 0.5rem;
+}
+
+.link {
+  cursor: pointer;
 }
 
 /*
@@ -180,4 +184,30 @@ h5, .h5 {
 
 main {
   overflow: hidden;
+}
+
+.my-structured-list ul {
+  li {
+    position: relative;
+  }
+
+  li.expanded::before {
+    content: "";
+    position: absolute;
+    width: 0;
+    top: 25px;
+    left: 18px;
+    bottom: 29px;
+    border-right: 1px solid #CCC;
+    z-index: 10;
+  }
+
+  ul {
+    margin: 6px 0 6px 6px;
+
+    li {
+      border: 0;
+      padding-right: 0 !important;
+    }
+  }  
 }

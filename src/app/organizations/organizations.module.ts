@@ -8,6 +8,7 @@ import { AnalysisComponent } from '../components/analysis/analysis.component';
 import { AnalysisDetailComponent } from '../components/analysis/analysis-detail/analysis-detail.component';
 import { EditAnalysisComponent } from '../components/analysis/edit-analysis/edit-analysis.component';
 import { SharedModule } from '../shared/shared.module';
+import { DepartmentsLookupModalComponent } from './organization-structure/departments-lookup-modal/departments-lookup-modal.component';
 
 @NgModule({
     declarations: [
@@ -17,6 +18,10 @@ import { SharedModule } from '../shared/shared.module';
         AnalysisComponent,
         AnalysisDetailComponent,
         EditAnalysisComponent,
+        DepartmentsLookupModalComponent,
+    ],
+    entryComponents: [
+        DepartmentsLookupModalComponent
     ],
     imports: [
         OrganizationsRoutingModule,

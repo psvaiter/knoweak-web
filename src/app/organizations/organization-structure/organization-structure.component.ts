@@ -3,6 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 
 import { Organization, OrganizationDepartment, OrganizationMacroprocess, OrganizationProcess, RatingLevel, OrganizationItService, OrganizationItAsset } from '../organization/organization';
 import { CrudService } from '../../shared/crud/crud.service';
+import { BsModalService } from 'ngx-bootstrap/modal';
+import { DepartmentsLookupModalComponent } from './departments-lookup-modal/departments-lookup-modal.component';
 
 
 @Component({
@@ -28,9 +30,13 @@ export class OrganizationStructureComponent implements OnInit {
 
   organization: 
   Organization = new Organization();
-  selectedDepartmentId: number;
+  // selectedDepartmentId: number;
 
-  constructor(private _crudService: CrudService, private route: ActivatedRoute) {
+  constructor(
+    private _crudService: CrudService, 
+    private route: ActivatedRoute,
+    private modalService: BsModalService
+    ) {
     route.params.subscribe(params => this.organization.id = params['id']);
   }
 
@@ -70,18 +76,23 @@ export class OrganizationStructureComponent implements OnInit {
     );
   }
 
-  addDepartment(selectedDepartmentId) {
-    let url = `${CrudService.BaseUrl}/organizations/${this.organization.id}/departments`;
+  private addDepartment(selectedDepartmentId): Promise<void> {
+    let promise = new Promise<void>((resolve, reject) => {
+      let url = `${CrudService.BaseUrl}/organizations/${this.organization.id}/departments`;
 
-    this._crudService.post({ id: this.selectedDepartmentId }, url).subscribe(
-      data => {
-        this.selectedDepartmentId = null; // remove selection
-        this.getOrganizationDepartments();
-      },
-      err => {
-        console.error(err);
-      }
-    );
+      this._crudService.post({ id: selectedDepartmentId }, url).subscribe(
+        data => {
+          this.getOrganizationDepartments();
+          resolve();
+        },
+        err => {
+          console.error(err);
+          reject(err);
+        }
+      );
+    });
+
+    return promise;
   }
 
   deleteDepartment(department: OrganizationDepartment) {
@@ -502,5 +513,21 @@ export class OrganizationStructureComponent implements OnInit {
         console.error(err);
       }
     );
+  }
+
+  AddOrEditDepartment(departmentId?: number): void {
+    let modalRef = this.modalService.show(DepartmentsLookupModalComponent, {
+      class: 'modal-md', // sm, lg
+      initialState: {
+        departmentId
+      }
+    });
+
+    modalRef.content.confirmed.subscribe(departmentId => {
+      this.addDepartment(departmentId)
+        .then(() => {
+          modalRef.hide();
+        });
+    });
   }
 }
