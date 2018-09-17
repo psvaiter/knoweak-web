@@ -9,6 +9,9 @@ import { AnalysisDetailComponent } from '../components/analysis/analysis-detail/
 import { EditAnalysisComponent } from '../components/analysis/edit-analysis/edit-analysis.component';
 import { SharedModule } from '../shared/shared.module';
 import { DepartmentsLookupModalComponent } from './organization-structure/departments-lookup-modal/departments-lookup-modal.component';
+import { MacroprocessesLookupModalComponent } from './organization-structure/macroprocesses-lookup-modal/macroprocesses-lookup-modal.component';
+import { DepartmentListComponent } from './organization-structure/department-list/department-list.component';
+import { MacroprocessListComponent } from './organization-structure/macroprocess-list/macroprocess-list.component';
 
 @NgModule({
     declarations: [
@@ -19,9 +22,13 @@ import { DepartmentsLookupModalComponent } from './organization-structure/depart
         AnalysisDetailComponent,
         EditAnalysisComponent,
         DepartmentsLookupModalComponent,
+        MacroprocessesLookupModalComponent,
+        DepartmentListComponent,
+        MacroprocessListComponent,
     ],
     entryComponents: [
-        DepartmentsLookupModalComponent
+        DepartmentsLookupModalComponent,
+        MacroprocessesLookupModalComponent
     ],
     imports: [
         OrganizationsRoutingModule,

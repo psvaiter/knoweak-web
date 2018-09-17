@@ -1,0 +1,28 @@
+<div class="text-right mb-2">
+  <button class="btn btn-primary btn-sm mr-2" (click)="openAddDepartment()">
+    <fa name="plus"></fa> Novo Departamento
+  </button>
+</div>
+  
+<div class="my-structured-list">
+  <ul class="list-group" *ngIf="departments?.length > 0">
+    <li class="list-group-item" *ngFor="let department of departments" [ngClass]="{'expanded': department.expanded}">
+      <div class="d-flex justify-content-between align-items-center">
+        <i class="fa pointer" (click)="department.expanded = !department.expanded;" [ngClass]="{
+          'fa-plus-square-o': !department.expanded,
+          'fa-minus-square-o': department.expanded
+        }"></i>
+
+        <label class="mb-0">{{department.name}}</label>
+        <span class="badge badge-default ml-2" [class.badge-outlined]="department.expanded">Departamento</span>
+
+        <button class="btn btn-outline-danger btn-sm ml-auto" (click)="deleteDepartment(department)" title="Excluir"><fa name="trash"></fa></button>
+        <button class="btn btn-primary btn-sm ml-1" title="Adicionar macroprocesso..." (click)="openAddMacroprocess(department)"><fa name="plus"></fa></button>
+      </div>
+
+      <div *ngIf="department.expanded">
+        <app-macroprocess-list [organizationId]="organizationId" [department]="department"></app-macroprocess-list>
+      </div>
+    </li>
+  </ul>
+</div>

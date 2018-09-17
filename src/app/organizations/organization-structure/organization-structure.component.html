@@ -1,55 +1,12 @@
 <div>
   <div class="mb-3">
-    <h5 class="mb-1">{{ organization.legalName }}</h5>
+    <h5 class="mb-1">{{organization.legalName}}</h5>
     <small class="text-muted">
-      <b>Nº DE REGISTRO:</b> {{ organization.taxId }}<br>
-      <b> NOME FANTASIA:</b> {{ organization.tradeName }}<br>
+      <b>Nº DE REGISTRO:</b> {{organization.taxId}}<br>
+      <b>NOME FANTASIA:</b> {{organization.tradeName}}<br>
     </small>
   </div>
 
-  <div class="text-right mb-2">
-    <button class="btn btn-primary btn-sm mr-2" (click)="AddOrEditDepartment()"><fa name="plus"></fa> Novo Departamento</button>
-  </div>
+  <app-department-list [organizationId]="organization.id"></app-department-list>
   
-  <div class="my-structured-list">
-    <ul class="list-group" *ngIf="organization?.departments?.length > 0">
-      <li class="list-group-item" *ngFor="let department of organization.departments" [ngClass]="{'expanded': department.expanded}">
-        <div class="d-flex justify-content-between align-items-center">
-          <i class="fa link" (click)="toggleDepartmentMacroprocesses(department)" [ngClass]="{
-            'fa-plus-square-o': !department.expanded,
-            'fa-minus-square-o': department.expanded
-          }"></i>
-
-          <label class="mb-0">{{ department.name }}</label>
-          <span style="cursor: pointer;"
-                class="badge badge-default ml-2" [class.badge-outlined]="department.expanded">
-            Departamento
-          </span>
-
-          <button class="btn btn-outline-danger btn-sm ml-auto" (click)="deleteDepartment(department)"><fa name="trash"></fa></button>
-          <!-- <button class="btn btn-outline-primary btn-sm ml-1" (click)="AddOrEditDepartment(department.id)"><fa name="edit"></fa></button> -->
-          <button class="btn btn-primary btn-sm ml-1"><fa name="plus"></fa></button>
-        </div>
-
-        <ul class="list-group" *ngIf="department.expanded">
-          <li class="list-group-item" *ngFor="let macroprocess of department.macroprocesses">
-            <div class="d-flex justify-content-between align-items-center">
-              <fa name="plus-square-o" class="link" (click)="toggleDepartmentMacroprocesses(macroprocess)"></fa>
-              <label class="mb-0">{{ macroprocess.name }}</label>
-              <span style="cursor: pointer;"
-                    class="badge badge-default ml-2" [class.badge-outlined]="macroprocess.expanded">
-                    Macroprocesso
-              </span>
-    
-              <button class="btn btn-outline-danger btn-sm ml-auto" (click)="deleteMacroprocess(macroprocess)"><fa name="trash"></fa></button>
-              <!-- <button class="btn btn-outline-primary btn-sm ml-1" (click)="AddOrEditDepartment(department.id)"><fa name="edit"></fa></button> -->
-              <button class="btn btn-primary btn-sm ml-1"><fa name="plus"></fa></button>
-            </div>
-    
-            
-          </li>
-        </ul>
-      </li>
-    </ul>
-  </div>
 </div>

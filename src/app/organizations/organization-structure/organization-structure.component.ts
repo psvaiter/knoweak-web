@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
+import { BsModalService } from 'ngx-bootstrap/modal';
+
 import { Organization, OrganizationDepartment, OrganizationMacroprocess, OrganizationProcess, RatingLevel, OrganizationItService, OrganizationItAsset } from '../organization/organization';
 import { CrudService } from '../../shared/crud/crud.service';
-import { BsModalService } from 'ngx-bootstrap/modal';
-import { DepartmentsLookupModalComponent } from './departments-lookup-modal/departments-lookup-modal.component';
-
 
 @Component({
   selector: 'app-organization-structure',
@@ -28,9 +27,7 @@ export class OrganizationStructureComponent implements OnInit {
     {id: 5, name: "Muito alta"}
   ]
 
-  organization: 
-  Organization = new Organization();
-  // selectedDepartmentId: number;
+  organization: Organization = new Organization();
 
   constructor(
     private _crudService: CrudService, 
@@ -42,12 +39,6 @@ export class OrganizationStructureComponent implements OnInit {
 
   ngOnInit() {
     this.getOrganization();
-    this.listDepartments();
-    this.listMacroprocesses();
-    this.listProcesses();
-    this.listItServices();
-    this.listItAssets();
-    this.getOrganizationDepartments();
   }
 
   getOrganization() {
@@ -61,126 +52,6 @@ export class OrganizationStructureComponent implements OnInit {
         console.error(err);
       }
     );
-  }
-
-  getOrganizationDepartments() {
-    let url = `${CrudService.BaseUrl}/organizations/${this.organization.id}/departments`;
-
-    this._crudService.getPage(url, 1, 100).subscribe(
-      data => {
-        this.organization.departments = data['data'].map(item => item.department);
-      },
-      err => {
-        console.error(err);
-      }
-    );
-  }
-
-  private addDepartment(selectedDepartmentId): Promise<void> {
-    let promise = new Promise<void>((resolve, reject) => {
-      let url = `${CrudService.BaseUrl}/organizations/${this.organization.id}/departments`;
-
-      this._crudService.post({ id: selectedDepartmentId }, url).subscribe(
-        data => {
-          this.getOrganizationDepartments();
-          resolve();
-        },
-        err => {
-          console.error(err);
-          reject(err);
-        }
-      );
-    });
-
-    return promise;
-  }
-
-  deleteDepartment(department: OrganizationDepartment) {
-    if (!confirm(`Deseja remover o departamento "${department.name}" da organização?`)) {
-      return;
-    }
-
-    let url = `${CrudService.BaseUrl}/organizations/${this.organization.id}/departments/${department.id}`;
-    
-    this._crudService.delete(url).subscribe(
-      data => {
-        this.getOrganizationDepartments();
-      },
-      err => {
-        console.error(err);
-      }
-    );
-  }
-
-  toggleDepartmentMacroprocesses(department: OrganizationDepartment) {
-    department.expanded = !department.expanded; 
-    if (!department.expanded) {
-      return;
-    }
-    this.getDepartmentMacroprocesses(department);
-  }
-
-  getDepartmentMacroprocesses(department) {
-    let url = `${CrudService.BaseUrl}/organizations/${this.organization.id}/macroprocesses`;
-
-    this._crudService.getPage(url, 1, 100).subscribe(
-      data => {
-        let macroprocesses = data['data'].filter(item => item.department.id == department.id);
-        department.macroprocesses = macroprocesses.map(item => {
-          let macroprocess: OrganizationMacroprocess;
-          macroprocess = item.macroprocess;
-          macroprocess.instanceId = item.instanceId;
-          return macroprocess;
-        });
-      },
-      err => {
-        console.error(err);
-      }
-    );
-  }
-
-  addMacroprocess(department: OrganizationDepartment) {
-    let url = `${CrudService.BaseUrl}/organizations/${this.organization.id}/macroprocesses`;
-
-    this._crudService
-      .post({ 
-        departmentId: department.id,
-        macroprocessId: department.selectedMacroprocessId 
-      }, url)
-      .subscribe(
-        data => {
-          department.selectedMacroprocessId = null; // remove selection
-          this.getDepartmentMacroprocesses(department);
-        },
-        err => {
-          console.error(err);
-        }
-      );
-  }
-
-  deleteMacroprocess(macroprocess: OrganizationMacroprocess, department: OrganizationDepartment) {
-    if (!confirm(`Deseja remover o macroprocesso "${macroprocess.name}" do departamento "${department.name}"?`)) {
-      return;
-    }
-    
-    let url = `${CrudService.BaseUrl}/organizations/${this.organization.id}/macroprocesses/${macroprocess.instanceId}`;
-
-    this._crudService.delete(url).subscribe(
-      data => {
-        this.getDepartmentMacroprocesses(department);
-      },
-      err => {
-        console.error(err);
-      }
-    );
-  }
-
-  toggleMacroprocessProcesses(macroprocess: OrganizationMacroprocess) {
-    macroprocess.expanded = !macroprocess.expanded; 
-    if (!macroprocess.expanded) {
-      return;
-    }
-    this.getMacroprocessProcesses(macroprocess);
   }
 
   getMacroprocessProcesses(macroprocess) {
@@ -515,19 +386,4 @@ export class OrganizationStructureComponent implements OnInit {
     );
   }
 
-  AddOrEditDepartment(departmentId?: number): void {
-    let modalRef = this.modalService.show(DepartmentsLookupModalComponent, {
-      class: 'modal-md', // sm, lg
-      initialState: {
-        departmentId
-      }
-    });
-
-    modalRef.content.confirmed.subscribe(departmentId => {
-      this.addDepartment(departmentId)
-        .then(() => {
-          modalRef.hide();
-        });
-    });
-  }
 }

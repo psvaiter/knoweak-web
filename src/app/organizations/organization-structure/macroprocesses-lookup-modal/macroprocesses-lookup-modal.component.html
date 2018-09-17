@@ -1,0 +1,16 @@
+<app-modal modalTitle="Adicionar macroprocesso">
+  <div class="body">
+    <div class="ml-2 mb-2">Departamento: {{department.name}}</div>
+    <ng-select  
+      [items]="macroprocesses"
+      [searchable]="true"
+      bindLabel="name"
+      bindValue="id" 
+      [(ngModel)]="selectedMacroprocessId"
+      placeholder="Selecione um macroprocesso...">
+    </ng-select>
+  </div>
+  <div class="actions">
+    <button class="btn btn-outline-success" (click)="Confirm()" [disabled]="!selectedMacroprocessId">Salvar</button>
+  </div>
+</app-modal>

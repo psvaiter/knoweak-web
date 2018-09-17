@@ -13,7 +13,7 @@ export class DepartmentsLookupModalComponent implements OnInit {
   confirmed = new EventEmitter<number>();
 
   constructor(
-    private modalService: BsModalService,
+    private _modalService: BsModalService,
     private _crudService: CrudService,
   ) { }
 
