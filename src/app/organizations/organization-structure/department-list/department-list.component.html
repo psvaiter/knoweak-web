@@ -20,7 +20,7 @@
         <button class="btn btn-primary btn-sm ml-1" title="Adicionar macroprocesso..." (click)="openAddMacroprocess(department)"><fa name="plus"></fa></button>
       </div>
 
-      <div *ngIf="department.expanded">
+      <div *ngIf="department.expanded;">
         <app-macroprocess-list [organizationId]="organizationId" [department]="department"></app-macroprocess-list>
       </div>
     </li>

@@ -1,6 +1,7 @@
 import { Component, OnInit, EventEmitter } from '@angular/core';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { CrudService } from '../../../shared/crud/crud.service';
+import { OrganizationDepartment } from '../../organization/organization';
 
 @Component({
   selector: 'app-macroprocesses-lookup-modal',
@@ -9,12 +10,13 @@ import { CrudService } from '../../../shared/crud/crud.service';
 })
 export class MacroprocessesLookupModalComponent implements OnInit {
   selectedMacroprocessId: number;
+  department: OrganizationDepartment;
   macroprocesses = [];
-  confirmed = new EventEmitter<number>();
+  confirmed = new EventEmitter<OrganizationDepartment>();
 
   constructor(
     private _modalService: BsModalService,
-    private _crudService: CrudService
+    private crudService: CrudService
   ) { }
 
   ngOnInit() {
@@ -22,13 +24,14 @@ export class MacroprocessesLookupModalComponent implements OnInit {
   }
   
   Confirm(): void {
-    this.confirmed.emit(this.selectedMacroprocessId);
+    this.department.selectedMacroprocessId = this.selectedMacroprocessId;
+    this.confirmed.emit(this.department);
   }
 
   private loadMacroprocesses(): void {
     let url = `${CrudService.BaseUrl}/macroprocesses`;
 
-    this._crudService.get(url).subscribe(
+    this.crudService.get(url).subscribe(
       data => {
         this.macroprocesses = data['data'];
       },

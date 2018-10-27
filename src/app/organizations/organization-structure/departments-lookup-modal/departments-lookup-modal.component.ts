@@ -1,5 +1,4 @@
 import { Component, OnInit, EventEmitter } from '@angular/core';
-import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { CrudService } from '../../../shared/crud/crud.service';
 
 @Component({
@@ -13,7 +12,6 @@ export class DepartmentsLookupModalComponent implements OnInit {
   confirmed = new EventEmitter<number>();
 
   constructor(
-    private _modalService: BsModalService,
     private _crudService: CrudService,
   ) { }
 
@@ -29,13 +27,12 @@ export class DepartmentsLookupModalComponent implements OnInit {
     let url = `${CrudService.BaseUrl}/departments`;
 
     this._crudService.get(url).subscribe(
-      data => {
-        this.departments = data['data'];
+      response => {
+        this.departments = response['data'];
       },
       err => {
         console.error(err);
       }
     );
   }
-
 }

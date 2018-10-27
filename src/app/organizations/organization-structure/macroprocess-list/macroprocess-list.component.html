@@ -1,14 +1,20 @@
-<ul class="list-group" *ngIf="macroprocesses?.length > 0">
+<ul class="list-group" *ngIf="macroprocesses?.length > 0; else emptyList">
   <li class="list-group-item" *ngFor="let macroprocess of macroprocesses">
     <div class="d-flex justify-content-between align-items-center">
       <fa name="plus-square-o" class="pointer" (click)="toggleDepartmentMacroprocesses(macroprocess)"></fa>
       <label class="mb-0">{{macroprocess.name}}</label>
       <span class="badge badge-default ml-2" [class.badge-outlined]="macroprocess.expanded">Macroprocesso</span>
 
-      <button class="btn btn-outline-danger btn-sm ml-auto" (click)="deleteMacroprocess(macroprocess)"><fa name="trash"></fa></button>
-      <button class="btn btn-primary btn-sm ml-1"><fa name="plus"></fa></button>
+      <button class="btn btn-outline-danger btn-sm ml-auto" title="Excluir" (click)="deleteMacroprocess(macroprocess)"><fa name="trash"></fa></button>
+      <button class="btn btn-primary btn-sm ml-1" title="Adicionar processo..."><fa name="plus"></fa></button>
     </div>
 
     
   </li>
 </ul>
+
+<ng-template #emptyList>
+  <div class="ml-4">
+    Nenhum macroprocesso cadastrado
+  </div>
+</ng-template>
