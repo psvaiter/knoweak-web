@@ -1,5 +1,8 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
+import { BsModalService } from 'ngx-bootstrap/modal';
+
 import { OrganizationMacroprocess, OrganizationProcess } from '../../organization/organization';
+import { ProcessLookupModalComponent } from '../process-lookup-modal/process-lookup-modal.component';
 
 @Component({
   selector: 'app-macroprocess-item',
@@ -7,13 +10,14 @@ import { OrganizationMacroprocess, OrganizationProcess } from '../../organizatio
   styleUrls: ['./macroprocess-item.component.scss']
 })
 export class MacroprocessItemComponent implements OnInit {
+
   @Input() macroprocess: OrganizationMacroprocess;
   @Output() delete = new EventEmitter();
   
   expanded: boolean;
   processes: OrganizationProcess[];
 
-  constructor() { }
+  constructor(private modalService: BsModalService) { }
 
   ngOnInit() {
   }
@@ -32,7 +36,18 @@ export class MacroprocessItemComponent implements OnInit {
   }
 
   addProcess() {
-    // open modal
+    // Open modal
+    let modalRef = this.modalService.show(ProcessLookupModalComponent, {
+      class: 'modal-md',
+      initialState: {
+        macroprocess: this.macroprocess
+      }
+    });
+
+    // Act on confirmation
+    modalRef.content.confirmed.subscribe(process => {
+      modalRef.hide();
+    });
   }
 
   removeProcess() {
