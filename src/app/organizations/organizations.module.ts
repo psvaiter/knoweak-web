@@ -12,6 +12,7 @@ import { DepartmentsLookupModalComponent } from './organization-structure/depart
 import { MacroprocessesLookupModalComponent } from './organization-structure/macroprocesses-lookup-modal/macroprocesses-lookup-modal.component';
 import { DepartmentListComponent } from './organization-structure/department-list/department-list.component';
 import { MacroprocessListComponent } from './organization-structure/macroprocess-list/macroprocess-list.component';
+import { MacroprocessItemComponent } from './organization-structure/macroprocess-item/macroprocess-item.component';
 
 @NgModule({
     declarations: [
@@ -25,6 +26,7 @@ import { MacroprocessListComponent } from './organization-structure/macroprocess
         MacroprocessesLookupModalComponent,
         DepartmentListComponent,
         MacroprocessListComponent,
+        MacroprocessItemComponent,
     ],
     entryComponents: [
         DepartmentsLookupModalComponent,

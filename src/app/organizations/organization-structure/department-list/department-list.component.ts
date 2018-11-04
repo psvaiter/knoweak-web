@@ -15,6 +15,7 @@ export class DepartmentListComponent implements OnInit {
   
   @Input() organizationId: number;
   departments: OrganizationDepartment[];
+  macroprocesses: OrganizationMacroprocess[];
 
   constructor(
     private crudService: CrudService,
@@ -89,7 +90,7 @@ export class DepartmentListComponent implements OnInit {
     if (!department.expanded) {
       return;
     }
-    //this.getDepartmentMacroprocesses(department);
+    this.getDepartmentMacroprocesses(department);
   }
 
   private addDepartment(selectedDepartmentId): Promise<void> {
@@ -140,10 +141,9 @@ export class DepartmentListComponent implements OnInit {
 
     this.crudService.getPage(url, 1, 100).subscribe(
       response => {
-        let macroprocesses = response['data'].filter(item => item.department.id == department.id);
-        let selectedDepartment = this.departments.find(dept => dept.id == department.id);
-        console.log(selectedDepartment);
-        selectedDepartment.macroprocesses = macroprocesses.map(item => {
+        let data = response['data'].filter(item => item.department.id == department.id);
+        
+        this.macroprocesses = data.map(item => {
           let macroprocess: OrganizationMacroprocess;
           macroprocess = item.macroprocess;
           macroprocess.instanceId = item.instanceId;
@@ -154,5 +154,13 @@ export class DepartmentListComponent implements OnInit {
         console.error(err);
       }
     );
+  }
+
+  removeMacroprocess(macroprocess) {
+    console.log("Removing...", macroprocess);
+
+    // TODO: Replace the simulation below by actual delete
+    let indexToRemove = this.macroprocesses.findIndex(item => item.instanceId == macroprocess.instanceId);
+    this.macroprocesses.splice(indexToRemove, 1);
   }
 }
