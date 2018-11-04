@@ -6,6 +6,7 @@ import { EditOrganizationComponent } from './organization/edit-organization/edit
 import { AnalysisComponent } from '../components/analysis/analysis.component';
 import { EditAnalysisComponent } from '../components/analysis/edit-analysis/edit-analysis.component';
 import { OrganizationStructureComponent } from './organization-structure/organization-structure.component';
+import { CatalogProcessService } from '../services/catalog-process.service';
 
 const routes: Routes = [
     { path: '', component: OrganizationComponent },
@@ -18,5 +19,8 @@ const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
+  providers: [
+    CatalogProcessService
+  ]
 })
 export class OrganizationsRoutingModule { }

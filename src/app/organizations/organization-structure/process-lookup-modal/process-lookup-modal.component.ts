@@ -1,5 +1,5 @@
 import { Component, OnInit, EventEmitter } from '@angular/core';
-import { OrganizationProcess } from '../../organization/organization';
+import { CatalogProcessService } from '../../../services/catalog-process.service';
 
 @Component({
   selector: 'app-process-lookup-modal',
@@ -8,11 +8,11 @@ import { OrganizationProcess } from '../../organization/organization';
 })
 export class ProcessLookupModalComponent implements OnInit {
 
-  processes: OrganizationProcess[];
-  selectedProcess: OrganizationProcess;
-  confirmed = new EventEmitter<OrganizationProcess>();
+  processes: any[];
+  selectedProcess: any;
+  confirmed = new EventEmitter();
 
-  constructor() { }
+  constructor(private catalogProcessService: CatalogProcessService) { }
 
   ngOnInit() {
     this.loadProcesses();
@@ -23,6 +23,12 @@ export class ProcessLookupModalComponent implements OnInit {
   }
 
   private loadProcesses() {
-    this.processes = []
+    this.catalogProcessService.list(1, 100).subscribe(
+      response => {
+        this.processes = response['data'];
+        this.processes.sort((a, b) => (a.name < b.name) ? -1 : 1);
+      }
+    );
   }
+  
 }
