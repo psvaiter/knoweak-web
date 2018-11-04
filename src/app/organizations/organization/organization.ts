@@ -22,8 +22,8 @@ export class OrganizationMacroprocess {
     id: number;
     name: string;
     processes: OrganizationProcess[] = [];
-    
-    expanded: boolean = false;
+    department: OrganizationDepartment;
+
     selectedProcessId: number;
     selectedProcessRelevanceId: number;
 }

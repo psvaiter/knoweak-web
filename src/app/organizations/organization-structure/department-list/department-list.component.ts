@@ -147,6 +147,7 @@ export class DepartmentListComponent implements OnInit {
           let macroprocess: OrganizationMacroprocess;
           macroprocess = item.macroprocess;
           macroprocess.instanceId = item.instanceId;
+          macroprocess.department = department;
           return macroprocess;
         });
       },
@@ -156,8 +157,11 @@ export class DepartmentListComponent implements OnInit {
     );
   }
 
-  removeMacroprocess(macroprocess) {
+  removeMacroprocess(macroprocess: OrganizationMacroprocess) {
     console.log("Removing...", macroprocess);
+    if (!confirm(`Deseja remover o macroprocesso "${macroprocess.name}" do departamento "${macroprocess.department.name}"?`)) {
+      return;
+    }
 
     // TODO: Replace the simulation below by actual delete
     let indexToRemove = this.macroprocesses.findIndex(item => item.instanceId == macroprocess.instanceId);

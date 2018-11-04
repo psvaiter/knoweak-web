@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
+import { OrganizationMacroprocess, OrganizationProcess } from '../../organization/organization';
 
 @Component({
   selector: 'app-macroprocess-item',
@@ -6,11 +7,11 @@ import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
   styleUrls: ['./macroprocess-item.component.scss']
 })
 export class MacroprocessItemComponent implements OnInit {
-  @Input() macroprocess;
+  @Input() macroprocess: OrganizationMacroprocess;
   @Output() delete = new EventEmitter();
   
   expanded: boolean;
-  processes;
+  processes: OrganizationProcess[];
 
   constructor() { }
 
@@ -18,10 +19,6 @@ export class MacroprocessItemComponent implements OnInit {
   }
 
   deleteMacroprocess() {
-    if (!confirm(`Deseja remover o macroprocesso "${this.macroprocess.name}" do departamento "x"?`)) {
-      return;
-    }
-
     // Emit event asking for parent component to remove
     this.delete.emit(this.macroprocess);
   }
