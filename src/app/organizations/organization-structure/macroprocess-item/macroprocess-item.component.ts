@@ -3,6 +3,7 @@ import { BsModalService } from 'ngx-bootstrap/modal';
 
 import { OrganizationMacroprocess, OrganizationProcess } from '../../organization/organization';
 import { ProcessLookupModalComponent } from '../process-lookup-modal/process-lookup-modal.component';
+import { OrganizationProcessService } from '../../../services/organization-process.service';
 
 @Component({
   selector: 'app-macroprocess-item',
@@ -13,13 +14,20 @@ export class MacroprocessItemComponent implements OnInit {
 
   @Input() macroprocess: OrganizationMacroprocess;
   @Output() delete = new EventEmitter();
-  
+
   expanded: boolean;
   processes: OrganizationProcess[];
+  organizationId: number;
 
-  constructor(private modalService: BsModalService) { }
+  constructor(
+    private modalService: BsModalService,
+    private organizationProcessService: OrganizationProcessService
+  ) {
+
+  }
 
   ngOnInit() {
+    this.organizationId = this.macroprocess.organizationId;
   }
 
   deleteMacroprocess() {
@@ -46,15 +54,24 @@ export class MacroprocessItemComponent implements OnInit {
 
     // Act on confirmation
     modalRef.content.confirmed.subscribe(process => {
+      console.log(process);
       modalRef.hide();
     });
   }
 
   removeProcess() {
-    // react to child event
+    this.organizationProcessService.remove(this.organizationId, this.macroprocess.instanceId).subscribe(
+      response => {
+        this.listProcesses();
+      }
+    );
   }
 
   private listProcesses() {
-    // get from API and store
+    this.organizationProcessService.list(this.organizationId, 1).subscribe(
+      response => {
+        this.processes = response['data'].filter(item => item.macroprocessInstanceId == this.macroprocess.instanceId);
+        this.processes.sort((a, b) => (a.name < b.name) ? -1 : 1);
+      });
   }
 }
