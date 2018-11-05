@@ -1,0 +1,27 @@
+<div class="d-flex justify-content-between align-items-center">
+  <i class="fa pointer" (click)="toggleMacroprocesses()" [ngClass]="{
+    'fa-plus-square-o': !expanded,
+    'fa-minus-square-o': expanded
+  }"></i>
+
+  <span class="badge badge-default mx-2">Dept</span>
+  <label class="mb-0">{{department.name}}</label>
+
+  <button class="btn btn-outline-danger btn-sm ml-auto" title="Excluir" (click)="deleteDepartment()">
+    <fa name="trash"></fa>
+  </button>
+  <button class="btn btn-primary btn-sm ml-1" title="Adicionar macroprocesso..." (click)="addMacroprocess()">
+    <fa name="plus"></fa>
+  </button>
+
+</div>
+
+<div *ngIf="expanded">
+  <ul class="list-group" *ngIf="macroprocesses?.length > 0; else emptyList">
+    <li class="list-group-item" *ngFor="let macroprocess of macroprocesses">
+
+      <app-macroprocess-item [macroprocess]="macroprocess" (delete)="removeMacroprocess($event)"></app-macroprocess-item>
+
+    </li>
+  </ul>
+</div>
