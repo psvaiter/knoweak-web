@@ -4,7 +4,7 @@ import { BsModalService } from 'ngx-bootstrap/modal';
 import { OrganizationDepartment, OrganizationMacroprocess } from '../../organization/organization';
 import { CrudService } from '../../../shared/crud/crud.service';
 import { DepartmentsLookupModalComponent } from '../departments-lookup-modal/departments-lookup-modal.component';
-import { MacroprocessesLookupModalComponent } from '../macroprocesses-lookup-modal/macroprocesses-lookup-modal.component';
+import { MacroprocessLookupModalComponent } from '../macroprocess-lookup-modal/macroprocess-lookup-modal.component';
 
 @Component({
   selector: 'app-department-list',
@@ -31,7 +31,10 @@ export class DepartmentListComponent implements OnInit {
 
     this.crudService.getPage(url, 1, 100).subscribe(
       response => {
-        this.departments = response['data'].map(item => item.department);
+        this.departments = response['data'].map(item => {
+          item.department.organizationId = this.organizationId;
+          return item.department;
+        });
       },
       err => {
         console.error(err);
@@ -70,7 +73,7 @@ export class DepartmentListComponent implements OnInit {
   }
 
   openAddMacroprocess(department: OrganizationDepartment): void {
-    let modalRef = this.modalService.show(MacroprocessesLookupModalComponent, {
+    let modalRef = this.modalService.show(MacroprocessLookupModalComponent, {
       class: 'modal-md',
       initialState: {
         department
@@ -148,6 +151,7 @@ export class DepartmentListComponent implements OnInit {
           macroprocess = item.macroprocess;
           macroprocess.instanceId = item.instanceId;
           macroprocess.department = department;
+          macroprocess.organizationId = this.organizationId;
           return macroprocess;
         });
       },

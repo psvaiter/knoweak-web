@@ -9,11 +9,14 @@ import { AnalysisDetailComponent } from '../components/analysis/analysis-detail/
 import { EditAnalysisComponent } from '../components/analysis/edit-analysis/edit-analysis.component';
 import { SharedModule } from '../shared/shared.module';
 import { DepartmentsLookupModalComponent } from './organization-structure/departments-lookup-modal/departments-lookup-modal.component';
-import { MacroprocessesLookupModalComponent } from './organization-structure/macroprocesses-lookup-modal/macroprocesses-lookup-modal.component';
+import { MacroprocessLookupModalComponent } from './organization-structure/macroprocess-lookup-modal/macroprocess-lookup-modal.component';
 import { DepartmentListComponent } from './organization-structure/department-list/department-list.component';
 import { MacroprocessListComponent } from './organization-structure/macroprocess-list/macroprocess-list.component';
 import { MacroprocessItemComponent } from './organization-structure/macroprocess-item/macroprocess-item.component';
 import { ProcessLookupModalComponent } from './organization-structure/process-lookup-modal/process-lookup-modal.component';
+import { OrganizationProcessService } from '../services/organization-process.service';
+import { DepartmentItemComponent } from './organization-structure/department-item/department-item.component';
+import { OrganizationMacroprocessService } from '../services/organization-macroprocess.service';
 
 @NgModule({
     declarations: [
@@ -24,15 +27,16 @@ import { ProcessLookupModalComponent } from './organization-structure/process-lo
         AnalysisDetailComponent,
         EditAnalysisComponent,
         DepartmentsLookupModalComponent,
-        MacroprocessesLookupModalComponent,
+        MacroprocessLookupModalComponent,
         DepartmentListComponent,
         MacroprocessListComponent,
         MacroprocessItemComponent,
         ProcessLookupModalComponent,
+        DepartmentItemComponent,
     ],
     entryComponents: [
         DepartmentsLookupModalComponent,
-        MacroprocessesLookupModalComponent,
+        MacroprocessLookupModalComponent,
         ProcessLookupModalComponent
     ],
     imports: [
@@ -40,6 +44,9 @@ import { ProcessLookupModalComponent } from './organization-structure/process-lo
         SharedModule
     ],
     exports: [],
-    providers: [],
+    providers: [
+        OrganizationMacroprocessService,
+        OrganizationProcessService
+    ],
 })
 export class OrganizationsModule { }

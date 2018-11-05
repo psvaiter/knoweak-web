@@ -1,33 +1,15 @@
 <div class="text-right mb-2">
   <button class="btn btn-primary btn-sm mr-2" (click)="openAddDepartment()">
-    <fa name="plus"></fa> Novo Departamento
+    <fa name="plus"></fa> Adicionar departamento
   </button>
 </div>
-  
+
 <div class="my-structured-list">
   <ul class="list-group" *ngIf="departments?.length > 0">
-    <li class="list-group-item" *ngFor="let department of departments" [ngClass]="{'expanded': department.expanded}">
-      <div class="d-flex justify-content-between align-items-center">
-        <i class="fa pointer" (click)="toggleDepartmentMacroprocesses(department)" [ngClass]="{
-          'fa-plus-square-o': !department.expanded,
-          'fa-minus-square-o': department.expanded
-        }"></i>
+    <li class="list-group-item" *ngFor="let department of departments" [ngClass]="{'expanded': expanded}">
+      
+      <app-department-item [department]="department"></app-department-item>
 
-        <label class="mb-0">{{department.name}}</label>
-        <span class="badge badge-default ml-2" [class.badge-outlined]="department.expanded">Departamento</span>
-
-        <button class="btn btn-outline-danger btn-sm ml-auto" (click)="deleteDepartment(department)" title="Excluir"><fa name="trash"></fa></button>
-        <button class="btn btn-primary btn-sm ml-1" title="Adicionar macroprocesso..." (click)="openAddMacroprocess(department)"><fa name="plus"></fa></button>
-      </div>
-
-      <div *ngIf="department.expanded;">
-        <ul class="list-group" *ngIf="macroprocesses?.length > 0; else emptyList">
-          <li class="list-group-item" *ngFor="let macroprocess of macroprocesses">
-            <app-macroprocess-item [macroprocess]="macroprocess" (delete)="removeMacroprocess($event)"></app-macroprocess-item>
-          </li>
-        </ul>
-        <!-- <app-macroprocess-list [organizationId]="organizationId" [department]="department"></app-macroprocess-list> -->
-      </div>
     </li>
   </ul>
 </div>
