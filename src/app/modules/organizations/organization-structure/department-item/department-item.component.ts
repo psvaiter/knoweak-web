@@ -16,8 +16,8 @@ export class DepartmentItemComponent implements OnInit {
   @Output() delete: EventEmitter<OrganizationDepartment> = new EventEmitter();
 
   expanded: boolean = false;
-  macroprocesses: OrganizationMacroprocess[];
   organizationId: number;
+  macroprocesses: OrganizationMacroprocess[];
 
   constructor(
     private modalService: BsModalService,
@@ -39,10 +39,12 @@ export class DepartmentItemComponent implements OnInit {
   }
 
   deleteDepartment() {
+    // Emit event asking for parent component to remove
     this.delete.emit(this.department);
   }
 
   addMacroprocess() {
+    // Open modal
     let modalRef = this.modalService.show(MacroprocessLookupModalComponent, {
       class: "modal-md",
       initialState: {
@@ -50,39 +52,62 @@ export class DepartmentItemComponent implements OnInit {
       }
     });
 
+    // Act on confirmation
     modalRef.content.confirmed.subscribe(macroprocess => {
-      console.log(macroprocess);
-      
-      let request = {
-        departmentId: this.department.id,
-        macroprocessId: macroprocess.id
-      };
-      this.organizationMacroprocessService.add(this.organizationId, request).subscribe(
-        success => {
-          console.log(success);
-          this.listDepartmentMacroprocesses();
-        },
-        err => {
-          console.log(err);
-        }
-      );
-
+      this.requestAddMacroprocess(macroprocess);
       modalRef.hide();
     });
   }
 
-  removeMacroprocess() {
-    
+  removeMacroprocess(macroprocess: OrganizationMacroprocess) {
+    if (!confirm(`Deseja remover o macroprocesso "${macroprocess.name}" do departamento "${this.department.name}"?`)) {
+      return;
+    }
+
+    this.organizationMacroprocessService.remove(this.organizationId, macroprocess.instanceId).subscribe(
+      response => {
+        this.listDepartmentMacroprocesses();
+      },
+      error => {
+        console.log(error);
+      }
+    );
   }
 
   private listDepartmentMacroprocesses() {
     this.organizationMacroprocessService.list(this.organizationId, 1).subscribe(
       response => {
-        this.macroprocesses = response['data'].filter(item => item.department.id == this.department.id);
+        this.macroprocesses = response['data']
+          .filter(item => item.department.id == this.department.id)
+          .map(item => {
+            let macroprocess = new OrganizationMacroprocess();
+            
+            macroprocess.instanceId = item.instanceId;
+            macroprocess.id = item.macroprocess.id;
+            macroprocess.name = item.macroprocess.name;
+
+            macroprocess.department = this.department
+            macroprocess.organizationId = this.organizationId;
+
+            return macroprocess;
+          });
+
         this.macroprocesses.sort((a, b) => (a.name < b.name) ? -1 : 1);
-        console.log(this.macroprocesses);
       }
     );
+  }
+
+  private requestAddMacroprocess(macroprocess: any) {
+    let request = {
+      departmentId: this.department.id,
+      macroprocessId: macroprocess.id
+    };
+    this.organizationMacroprocessService.add(this.organizationId, request).subscribe(success => {
+      console.log(success);
+      this.listDepartmentMacroprocesses();
+    }, err => {
+      console.log(err);
+    });
   }
 
 }
