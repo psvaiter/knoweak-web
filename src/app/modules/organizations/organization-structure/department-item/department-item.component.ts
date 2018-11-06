@@ -1,5 +1,4 @@
-import { Component, OnInit, Input, Output } from '@angular/core';
-import { EventEmitter } from 'events';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { BsModalService } from 'ngx-bootstrap/modal';
 
 import { OrganizationDepartment, OrganizationMacroprocess } from '../../organization/organization';
@@ -14,7 +13,7 @@ import { MacroprocessLookupModalComponent } from '../macroprocess-lookup-modal/m
 export class DepartmentItemComponent implements OnInit {
 
   @Input() department: OrganizationDepartment;
-  @Output() delete = new EventEmitter();
+  @Output() delete: EventEmitter<OrganizationDepartment> = new EventEmitter();
 
   expanded: boolean = false;
   macroprocesses: OrganizationMacroprocess[];
@@ -37,6 +36,10 @@ export class DepartmentItemComponent implements OnInit {
       return;
     }
     this.listDepartmentMacroprocesses();
+  }
+
+  deleteDepartment() {
+    this.delete.emit(this.department);
   }
 
   addMacroprocess() {

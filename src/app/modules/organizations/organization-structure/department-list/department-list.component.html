@@ -8,7 +8,7 @@
   <ul class="list-group" *ngIf="departments?.length > 0">
     <li class="list-group-item" *ngFor="let department of departments" [ngClass]="{'expanded': expanded}">
       
-      <app-department-item [department]="department"></app-department-item>
+      <app-department-item [department]="department" (delete)="removeDepartment($event)"></app-department-item>
 
     </li>
   </ul>

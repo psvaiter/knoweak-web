@@ -1,15 +1,17 @@
 <div class="d-flex justify-content-between align-items-center">
+  
   <i class="fa pointer" (click)="toggleMacroprocesses()" [ngClass]="{
     'fa-plus-square-o': !expanded,
     'fa-minus-square-o': expanded
   }"></i>
-
   <span class="badge badge-default mx-2">Dept</span>
   <label class="mb-0">{{department.name}}</label>
 
+  <!-- Remove macroprocess -->
   <button class="btn btn-outline-danger btn-sm ml-auto" title="Excluir" (click)="deleteDepartment()">
     <fa name="trash"></fa>
   </button>
+  <!-- Add macroprocess to department -->
   <button class="btn btn-primary btn-sm ml-1" title="Adicionar macroprocesso..." (click)="addMacroprocess()">
     <fa name="plus"></fa>
   </button>
@@ -24,4 +26,11 @@
 
     </li>
   </ul>
+
+  <ng-template #emptyList>
+    <div class="mx-5 my-2">
+      Não existem macroprocessos neste departamento.
+    </div>
+  </ng-template>
+
 </div>

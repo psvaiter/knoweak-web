@@ -1,8 +1,19 @@
 <div class="d-flex justify-content-between align-items-center">
-  <fa name="plus-square-o" class="pointer" (click)="toggleProcesses()"></fa>
+  
+  <i class="fa pointer" (click)="toggleProcesses()" [ngClass]="{
+    'fa-plus-square-o': !expanded,
+    'fa-minus-square-o': expanded
+  }"></i>
   <span class="badge badge-default ml-2">M.Proc</span>
   <label class="mb-0">{{macroprocess.name}}</label>
 
-  <button class="btn btn-outline-danger btn-sm ml-auto" title="Excluir" (click)="deleteMacroprocess()"><fa name="trash"></fa></button>
-  <button class="btn btn-primary btn-sm ml-1" title="Adicionar processo..." (click)="addProcess()"><fa name="plus"></fa></button>
+  <!-- Remove macroprocess -->
+  <button class="btn btn-outline-danger btn-sm ml-auto" title="Excluir" (click)="deleteMacroprocess()">
+    <fa name="trash"></fa>
+  </button>
+  <!-- Add process to macroprocess -->
+  <button class="btn btn-primary btn-sm ml-1" title="Adicionar processo..." (click)="addProcess()">
+    <fa name="plus"></fa>
+  </button>
+
 </div>

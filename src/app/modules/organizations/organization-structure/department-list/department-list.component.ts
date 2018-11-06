@@ -46,7 +46,7 @@ export class DepartmentListComponent implements OnInit {
     );
   }
 
-  deleteDepartment(department: OrganizationDepartment) {
+  removeDepartment(department: OrganizationDepartment) {
     if (!confirm(`Deseja remover o departamento "${department.name}" da organização?`)) {
       return;
     }
