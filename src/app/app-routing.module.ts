@@ -11,8 +11,8 @@ const appRoutes: Routes = [
     { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
     { path: 'auth-callback', component: CallbackComponent },
     { path: 'dashboard', component: DashboardComponent },
-    { path: 'catalog', loadChildren: 'app/catalog/catalog.module#CatalogModule' },
-    { path: 'organizations', loadChildren: 'app/organizations/organizations.module#OrganizationsModule', canActivate: [] },
+    { path: 'catalog', loadChildren: 'app/modules/catalog/catalog.module#CatalogModule' },
+    { path: 'organizations', loadChildren: 'app/modules/organizations/organizations.module#OrganizationsModule', canActivate: [] },
     { path: 'users', component: UserComponent },
     { path: 'users/:id/edit', component: EditUserComponent },
     { path: '**', component: PageNotFoundComponent }

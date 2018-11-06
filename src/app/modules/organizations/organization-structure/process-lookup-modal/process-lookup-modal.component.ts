@@ -1,5 +1,5 @@
 import { Component, OnInit, EventEmitter } from '@angular/core';
-import { CatalogProcessService } from '../../../services/api/catalog/process/catalog-process.service';
+import { CatalogProcessService } from '../../../../services/api/catalog/process/catalog-process.service';
 
 @Component({
   selector: 'app-process-lookup-modal',

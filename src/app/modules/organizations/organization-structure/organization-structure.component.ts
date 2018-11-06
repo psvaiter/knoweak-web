@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { BsModalService } from 'ngx-bootstrap/modal';
 
 import { Organization, OrganizationDepartment, OrganizationMacroprocess, OrganizationProcess, RatingLevel, OrganizationItService, OrganizationItAsset } from '../organization/organization';
-import { CrudService } from '../../shared/components/crud/crud.service';
+import { CrudService } from '../../../shared/components/crud/crud.service';
 
 @Component({
   selector: 'app-organization-structure',

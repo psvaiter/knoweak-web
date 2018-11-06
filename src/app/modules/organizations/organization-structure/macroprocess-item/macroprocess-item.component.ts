@@ -3,7 +3,7 @@ import { BsModalService } from 'ngx-bootstrap/modal';
 
 import { OrganizationMacroprocess, OrganizationProcess } from '../../organization/organization';
 import { ProcessLookupModalComponent } from '../process-lookup-modal/process-lookup-modal.component';
-import { OrganizationProcessService } from '../../../services/api/organization/organization-process.service';
+import { OrganizationProcessService } from '../../../../services/api/organization/organization-process.service';
 
 @Component({
   selector: 'app-macroprocess-item',

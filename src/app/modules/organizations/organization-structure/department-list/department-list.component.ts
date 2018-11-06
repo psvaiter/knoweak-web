@@ -4,8 +4,8 @@ import { BsModalService } from 'ngx-bootstrap/modal';
 import { OrganizationDepartment, OrganizationMacroprocess } from '../../organization/organization';
 import { DepartmentsLookupModalComponent } from '../departments-lookup-modal/departments-lookup-modal.component';
 import { MacroprocessLookupModalComponent } from '../macroprocess-lookup-modal/macroprocess-lookup-modal.component';
-import { CrudService } from '../../../shared/components/crud/crud.service';
-import { CatalogDepartmentService } from '../../../services/api/catalog/department/catalog-department.service';
+import { CrudService } from '../../../../shared/components/crud/crud.service';
+import { CatalogDepartmentService } from '../../../../services/api/catalog/department/catalog-department.service';
 
 @Component({
   selector: 'app-department-list',

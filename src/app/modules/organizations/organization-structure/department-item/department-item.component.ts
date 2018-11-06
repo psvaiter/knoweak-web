@@ -3,7 +3,7 @@ import { EventEmitter } from 'events';
 import { BsModalService } from 'ngx-bootstrap/modal';
 
 import { OrganizationDepartment, OrganizationMacroprocess } from '../../organization/organization';
-import { OrganizationMacroprocessService } from '../../../services/api/organization/organization-macroprocess.service';
+import { OrganizationMacroprocessService } from '../../../../services/api/organization/organization-macroprocess.service';
 import { MacroprocessLookupModalComponent } from '../macroprocess-lookup-modal/macroprocess-lookup-modal.component';
 
 @Component({

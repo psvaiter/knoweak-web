@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { CrudService } from '../../shared/components/crud/crud.service';
-import { CrudComponent } from '../../shared/components/crud/crud.component';
+import { CrudService } from '../../../shared/components/crud/crud.service';
+import { CrudComponent } from '../../../shared/components/crud/crud.component';
 
 @Component({
   selector: 'app-security-threat',

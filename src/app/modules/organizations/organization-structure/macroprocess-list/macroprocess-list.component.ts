@@ -1,8 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { BsModalService } from 'ngx-bootstrap/modal';
 
 import { OrganizationMacroprocess, OrganizationDepartment } from '../../organization/organization';
-import { CrudService } from '../../../shared/components/crud/crud.service';
+import { CrudService } from '../../../../shared/components/crud/crud.service';
 
 @Component({
   selector: 'app-macroprocess-list',

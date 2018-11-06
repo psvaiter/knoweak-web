@@ -1,7 +1,7 @@
 import { NgModule } from "@angular/core";
 
 import { CatalogRoutingModule } from "./catalog-routing.module";
-import { SharedModule } from "../shared/shared.module";
+import { SharedModule } from "../../shared/shared.module";
 import { DepartmentComponent } from "./department/department.component";
 import { EditDepartmentComponent } from "./department/edit-department/edit-department.component";
 import { MacroprocessComponent } from "./macroprocess/macroprocess.component";

@@ -1,6 +1,6 @@
 import { Component, OnInit, EventEmitter } from '@angular/core';
 import { OrganizationDepartment } from '../../organization/organization';
-import { CrudService } from '../../../shared/components/crud/crud.service';
+import { CrudService } from '../../../../shared/components/crud/crud.service';
 
 @Component({
   selector: 'app-macroprocess-lookup-modal',
