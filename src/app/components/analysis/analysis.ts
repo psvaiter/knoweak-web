@@ -4,10 +4,10 @@ export class Analysis {
     createdOn: Date;
     lastModifiedOn: Date;
     
-    details: AnalysisDeatil[] = [];
+    details: AnalysisDetail[] = [];
 }
 
-export class AnalysisDeatil {
+export class AnalysisDetail {
     id: number;
     departmentName: string;
     macroprocessName: string;

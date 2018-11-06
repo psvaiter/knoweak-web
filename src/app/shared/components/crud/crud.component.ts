@@ -59,7 +59,7 @@ export class CrudComponent<TEntity> {
 
   createRecord(newRecord: TEntity) {
     this.loading = true;
-    this._crudService.post(newRecord, this.url).subscribe(
+    this._crudService.post(this.url, newRecord).subscribe(
       data => {
         this.loading = false;
 

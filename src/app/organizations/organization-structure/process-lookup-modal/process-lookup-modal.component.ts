@@ -1,5 +1,5 @@
 import { Component, OnInit, EventEmitter } from '@angular/core';
-import { CatalogProcessService } from '../../../services/catalog-process.service';
+import { CatalogProcessService } from '../../../services/api/catalog/process/catalog-process.service';
 
 @Component({
   selector: 'app-process-lookup-modal',
@@ -23,7 +23,7 @@ export class ProcessLookupModalComponent implements OnInit {
   }
 
   private loadProcesses() {
-    this.catalogProcessService.list(1, 100).subscribe(
+    this.catalogProcessService.listProcesses(1, 100).subscribe(
       response => {
         this.processes = response['data'];
         this.processes.sort((a, b) => (a.name < b.name) ? -1 : 1);

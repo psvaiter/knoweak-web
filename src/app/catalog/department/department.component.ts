@@ -1,15 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 
-import { CrudComponent } from '../../shared/crud/crud.component';
-import { CrudService } from '../../shared/crud/crud.service';
 import { Department } from './department';
+import { CrudComponent } from '../../shared/components/crud/crud.component';
+import { CrudService } from '../../shared/components/crud/crud.service';
 
 @Component({
   selector: 'app-department',
   templateUrl: './department.component.html',
   styleUrls: ['./department.component.scss']
 })
-
 export class DepartmentComponent extends CrudComponent<Department> implements OnInit {
 
   url = CrudService.BaseUrl + '/departments';

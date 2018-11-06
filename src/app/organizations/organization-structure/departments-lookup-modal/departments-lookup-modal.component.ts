@@ -1,5 +1,5 @@
 import { Component, OnInit, EventEmitter } from '@angular/core';
-import { CrudService } from '../../../shared/crud/crud.service';
+import { CrudService } from '../../../shared/components/crud/crud.service';
 
 @Component({
   selector: 'app-departments-lookup-modal',

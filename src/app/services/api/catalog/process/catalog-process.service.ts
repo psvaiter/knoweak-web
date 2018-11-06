@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { CrudService } from '../shared/crud/crud.service';
+import { CrudService } from '../../../../shared/components/crud/crud.service';
+import { AddCatalogProcessRequest, PatchCatalogProcessRequest } from './catalog-process';
 
 @Injectable()
 export class CatalogProcessService {
@@ -12,9 +13,9 @@ export class CatalogProcessService {
 
   /**
    * Gets a single process by id from catalog.
-   * @param processId The id of process to retrieve.
+   * @param processId The id of the process to retrieve.
    */
-  getById(processId: number) {
+  getProcessById(processId: number) {
     return this.crudService.get(`${this.url}/${processId}`);
   }
 
@@ -23,23 +24,32 @@ export class CatalogProcessService {
    * @param page Number of the desired page.
    * @param recordsPerPage Number of records per page to return.
    */
-  list(page: number, recordsPerPage: number = 10) {
+  listProcesses(page: number, recordsPerPage: number = 10) {
     return this.crudService.getPage(this.url, page, recordsPerPage);
   }
 
   /**
    * Adds a process to catalog.
-   * @param data The process data to be added.
+   * @param data The process data.
    */
-  add(data) {
-    return this.crudService.post(data, this.url);
+  addProcess(data: AddCatalogProcessRequest) {
+    return this.crudService.post(this.url, data);
+  }
+
+  /**
+   * Updates process with informed data.
+   * @param data The data to patch.
+   */
+  patchProcess(data: PatchCatalogProcessRequest) {
+    return this.crudService.patch(this.url, data);
   }
 
   /**
    * Removes a process from catalog.
-   * @param processId The id of process to remove.
+   * @param processId The id of the process to remove.
    */
-  remove(processId: number) {
+  removeProcess(processId: number) {
     return this.crudService.delete(`${this.url}/${processId}`);
   }
+  
 }

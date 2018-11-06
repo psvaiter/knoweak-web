@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
-import { environment } from '../../../environments/environment';
+import { environment } from '../../../../environments/environment';
 
 @Injectable()
 export class CrudService {
@@ -22,12 +22,12 @@ export class CrudService {
     return this._http.get(url, { params });
   }
 
-  post(resource, url: string) {
-    return this._http.post(url, resource, this.httpOptions);
+  post(url: string, data: any) {
+    return this._http.post(url, data, this.httpOptions);
   }
 
-  patch(resource, url: string) {
-    return this._http.patch(url, resource, this.httpOptions);
+  patch(url: string, data: any) {
+    return this._http.patch(url, data, this.httpOptions);
   }
 
   delete(url: string) {

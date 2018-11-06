@@ -14,9 +14,10 @@ import { DepartmentListComponent } from './organization-structure/department-lis
 import { MacroprocessListComponent } from './organization-structure/macroprocess-list/macroprocess-list.component';
 import { MacroprocessItemComponent } from './organization-structure/macroprocess-item/macroprocess-item.component';
 import { ProcessLookupModalComponent } from './organization-structure/process-lookup-modal/process-lookup-modal.component';
-import { OrganizationProcessService } from '../services/organization-process.service';
+import { OrganizationProcessService } from '../services/api/organization/organization-process.service';
 import { DepartmentItemComponent } from './organization-structure/department-item/department-item.component';
-import { OrganizationMacroprocessService } from '../services/organization-macroprocess.service';
+import { OrganizationMacroprocessService } from '../services/api/organization/organization-macroprocess.service';
+import { CatalogDepartmentService } from '../services/api/catalog/department/catalog-department.service';
 
 @NgModule({
     declarations: [
@@ -45,6 +46,7 @@ import { OrganizationMacroprocessService } from '../services/organization-macrop
     ],
     exports: [],
     providers: [
+        CatalogDepartmentService,
         OrganizationMacroprocessService,
         OrganizationProcessService
     ],

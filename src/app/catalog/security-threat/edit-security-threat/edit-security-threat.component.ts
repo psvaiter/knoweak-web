@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
-
-import { CrudComponent } from '../../../shared/crud/crud.component';
-import { CrudService } from '../../../shared/crud/crud.service';
+import { CrudService } from '../../../shared/components/crud/crud.service';
+import { CrudComponent } from '../../../shared/components/crud/crud.component';
 
 @Component({
   selector: 'app-edit-security-threat',

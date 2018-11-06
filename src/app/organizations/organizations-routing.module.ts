@@ -6,7 +6,7 @@ import { EditOrganizationComponent } from './organization/edit-organization/edit
 import { AnalysisComponent } from '../components/analysis/analysis.component';
 import { EditAnalysisComponent } from '../components/analysis/edit-analysis/edit-analysis.component';
 import { OrganizationStructureComponent } from './organization-structure/organization-structure.component';
-import { CatalogProcessService } from '../services/catalog-process.service';
+import { CatalogProcessService } from '../services/api/catalog/process/catalog-process.service';
 
 const routes: Routes = [
     { path: '', component: OrganizationComponent },

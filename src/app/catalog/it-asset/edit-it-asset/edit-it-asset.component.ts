@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-
-import { CrudComponent } from '../../../shared/crud/crud.component';
-import { CrudService } from '../../../shared/crud/crud.service';
+import { CrudService } from '../../../shared/components/crud/crud.service';
+import { CrudComponent } from '../../../shared/components/crud/crud.component';
 
 @Component({
   selector: 'app-edit-it-asset',

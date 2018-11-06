@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-
-import { CrudComponent } from '../../shared/crud/crud.component';
-import { CrudService } from '../../shared/crud/crud.service';
+import { CrudComponent } from '../../shared/components/crud/crud.component';
+import { CrudService } from '../../shared/components/crud/crud.service';
 
 
 @Component({
@@ -9,7 +8,6 @@ import { CrudService } from '../../shared/crud/crud.service';
   templateUrl: './it-asset.component.html',
   styleUrls: ['./it-asset.component.scss']
 })
-
 export class ItAssetComponent extends CrudComponent<ItAsset> implements OnInit {
 
   url = CrudService.BaseUrl + '/itAssets';

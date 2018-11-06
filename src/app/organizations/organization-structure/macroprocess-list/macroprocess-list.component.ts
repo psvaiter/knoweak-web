@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { BsModalService } from 'ngx-bootstrap/modal';
 
 import { OrganizationMacroprocess, OrganizationDepartment } from '../../organization/organization';
-import { CrudService } from '../../../shared/crud/crud.service';
+import { CrudService } from '../../../shared/components/crud/crud.service';
 
 @Component({
   selector: 'app-macroprocess-list',
@@ -16,10 +16,7 @@ export class MacroprocessListComponent implements OnInit {
 
   macroprocesses: OrganizationMacroprocess[];
 
-  constructor(
-    private crudService: CrudService,
-    private modalService: BsModalService
-  ) { }
+  constructor(private crudService: CrudService) { }
 
   ngOnInit() {
     this.getDepartmentMacroprocesses();
@@ -48,10 +45,10 @@ export class MacroprocessListComponent implements OnInit {
     let url = `${CrudService.BaseUrl}/organizations/${this.organizationId}/macroprocesses`;
 
     this.crudService
-      .post({ 
+      .post(url, { 
         departmentId: department.id,
         macroprocessId: department.selectedMacroprocessId 
-      }, url)
+      })
       .subscribe(
         data => {
           department.selectedMacroprocessId = null; // remove selection
@@ -80,11 +77,4 @@ export class MacroprocessListComponent implements OnInit {
     );
   }
 
-  toggleMacroprocessProcesses(macroprocess: OrganizationMacroprocess) {
-    macroprocess.expanded = !macroprocess.expanded; 
-    if (!macroprocess.expanded) {
-      return;
-    }
-    //this.getMacroprocessProcesses(macroprocess);
-  }
 }

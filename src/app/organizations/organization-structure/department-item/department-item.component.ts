@@ -3,7 +3,7 @@ import { EventEmitter } from 'events';
 import { BsModalService } from 'ngx-bootstrap/modal';
 
 import { OrganizationDepartment, OrganizationMacroprocess } from '../../organization/organization';
-import { OrganizationMacroprocessService } from '../../../services/organization-macroprocess.service';
+import { OrganizationMacroprocessService } from '../../../services/api/organization/organization-macroprocess.service';
 import { MacroprocessLookupModalComponent } from '../macroprocess-lookup-modal/macroprocess-lookup-modal.component';
 
 @Component({
@@ -36,7 +36,7 @@ export class DepartmentItemComponent implements OnInit {
     if (!this.expanded) {
       return;
     }
-    this.listMacroprocesses();
+    this.listDepartmentMacroprocesses();
   }
 
   addMacroprocess() {
@@ -49,11 +49,30 @@ export class DepartmentItemComponent implements OnInit {
 
     modalRef.content.confirmed.subscribe(macroprocess => {
       console.log(macroprocess);
+      
+      let request = {
+        departmentId: this.department.id,
+        macroprocessId: macroprocess.id
+      };
+      this.organizationMacroprocessService.add(this.organizationId, request).subscribe(
+        success => {
+          console.log(success);
+          this.listDepartmentMacroprocesses();
+        },
+        err => {
+          console.log(err);
+        }
+      );
+
       modalRef.hide();
     });
   }
 
-  private listMacroprocesses() {
+  removeMacroprocess() {
+    
+  }
+
+  private listDepartmentMacroprocesses() {
     this.organizationMacroprocessService.list(this.organizationId, 1).subscribe(
       response => {
         this.macroprocesses = response['data'].filter(item => item.department.id == this.department.id);

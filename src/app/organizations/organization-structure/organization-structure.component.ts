@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { BsModalService } from 'ngx-bootstrap/modal';
 
 import { Organization, OrganizationDepartment, OrganizationMacroprocess, OrganizationProcess, RatingLevel, OrganizationItService, OrganizationItAsset } from '../organization/organization';
-import { CrudService } from '../../shared/crud/crud.service';
+import { CrudService } from '../../shared/components/crud/crud.service';
 
 @Component({
   selector: 'app-organization-structure',
@@ -78,11 +78,11 @@ export class OrganizationStructureComponent implements OnInit {
     let url = `${CrudService.BaseUrl}/organizations/${this.organization.id}/processes`;
 
     this._crudService
-      .post({ 
+      .post(url, {
         macroprocessInstanceId: macroprocess.instanceId,
         processId: macroprocess.selectedProcessId,
         relevanceLevelId: macroprocess.selectedProcessRelevanceId
-      }, url)
+      })
       .subscribe(
         data => {
           // remove selection
@@ -146,11 +146,11 @@ export class OrganizationStructureComponent implements OnInit {
     let url = `${CrudService.BaseUrl}/organizations/${this.organization.id}/itServices`;
 
     this._crudService
-      .post({ 
+      .post(url, {
         processInstanceId: process.instanceId,
         itServiceId: process.selectedItServiceId,
         relevanceLevelId: process.selectedItServiceRelevanceId
-      }, url)
+      })
       .subscribe(
         data => {
           // remove selection
@@ -226,7 +226,7 @@ export class OrganizationStructureComponent implements OnInit {
       };
 
       this._crudService
-        .post(requestAddOrganizationAsset, urlAddOrganizationAsset)
+        .post(urlAddOrganizationAsset, requestAddOrganizationAsset)
         .subscribe(
           data => {
             let requestAddServiceAsset = { 
@@ -235,7 +235,7 @@ export class OrganizationStructureComponent implements OnInit {
             };
       
             this._crudService
-              .post(requestAddServiceAsset, urlAddServiceAsset)
+              .post(urlAddServiceAsset, requestAddServiceAsset)
               .subscribe(
                 data => {
                   // remove selection
@@ -262,7 +262,7 @@ export class OrganizationStructureComponent implements OnInit {
       };
 
       this._crudService
-        .post(requestAddServiceAsset, urlAddServiceAsset)
+        .post(urlAddServiceAsset, requestAddServiceAsset)
         .subscribe(
           data => {
             // remove selection

@@ -6,9 +6,9 @@ import { AngularFontAwesomeModule } from "angular-font-awesome";
 import { NgSelectModule } from "@ng-select/ng-select";
 import { ModalModule } from 'ngx-bootstrap/modal';
 
-import { ErrorAlertComponent } from "./error-alert/error-alert.component";
-import { PaginationComponent } from "./pagination/pagination.component";
-import { ModalComponent } from './modal/modal.component';
+import { ErrorAlertComponent } from "./components/error-alert/error-alert.component";
+import { PaginationComponent } from "./components/pagination/pagination.component";
+import { ModalComponent } from "./components/modal/modal.component";
 
 @NgModule({
     declarations: [

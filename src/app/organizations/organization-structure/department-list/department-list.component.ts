@@ -2,9 +2,10 @@ import { Component, OnInit, Input } from '@angular/core';
 import { BsModalService } from 'ngx-bootstrap/modal';
 
 import { OrganizationDepartment, OrganizationMacroprocess } from '../../organization/organization';
-import { CrudService } from '../../../shared/crud/crud.service';
 import { DepartmentsLookupModalComponent } from '../departments-lookup-modal/departments-lookup-modal.component';
 import { MacroprocessLookupModalComponent } from '../macroprocess-lookup-modal/macroprocess-lookup-modal.component';
+import { CrudService } from '../../../shared/components/crud/crud.service';
+import { CatalogDepartmentService } from '../../../services/api/catalog/department/catalog-department.service';
 
 @Component({
   selector: 'app-department-list',
@@ -19,8 +20,11 @@ export class DepartmentListComponent implements OnInit {
 
   constructor(
     private crudService: CrudService,
-    private modalService: BsModalService
-  ) { }
+    private modalService: BsModalService,
+    private catalogDepartmentSerivec: CatalogDepartmentService
+  ) { 
+
+  }
 
   ngOnInit() {
     this.getOrganizationDepartments();
@@ -100,7 +104,7 @@ export class DepartmentListComponent implements OnInit {
     let promise = new Promise<void>((resolve, reject) => {
       let url = `${CrudService.BaseUrl}/organizations/${this.organizationId}/departments`;
 
-      this.crudService.post({ id: selectedDepartmentId }, url).subscribe(
+      this.crudService.post(url, { id: selectedDepartmentId }).subscribe(
         data => {
           this.getOrganizationDepartments();
           resolve();
@@ -120,10 +124,10 @@ export class DepartmentListComponent implements OnInit {
       let url = `${CrudService.BaseUrl}/organizations/${this.organizationId}/macroprocesses`;
 
       this.crudService
-        .post({ 
+        .post(url, { 
           departmentId: department.id,
           macroprocessId: department.selectedMacroprocessId 
-        }, url)
+        })
         .subscribe(
           data => {
             this.getDepartmentMacroprocesses(department);

@@ -2,16 +2,16 @@ import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 
-import { CrudComponent } from '../../../shared/crud/crud.component';
-import { CrudService } from '../../../shared/crud/crud.service';
-import { Analysis, AnalysisDeatil } from '../analysis';
+import { AnalysisDetail } from '../analysis';
+import { CrudComponent } from '../../../shared/components/crud/crud.component';
+import { CrudService } from '../../../shared/components/crud/crud.service';
 
 @Component({
   selector: 'app-analysis-detail',
   templateUrl: './analysis-detail.component.html',
   styleUrls: ['./analysis-detail.component.scss']
 })
-export class AnalysisDetailComponent extends CrudComponent<AnalysisDeatil> implements OnInit {
+export class AnalysisDetailComponent extends CrudComponent<AnalysisDetail> implements OnInit {
 
   analysisId: number;
   organizationId: number;
