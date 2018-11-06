@@ -92,7 +92,7 @@ export class CrudComponent<TEntity> {
     
     let patchRequestBody = this.buildPatchRequestBody();
 
-    this._crudService.patch(patchRequestBody, url).subscribe(
+    this._crudService.patch(url, patchRequestBody).subscribe(
       data => {
         this.loading = false;
         this.persistedRecord = data['data'];
@@ -135,7 +135,7 @@ export class CrudComponent<TEntity> {
           patchRequestBody[key] = null;
         }
         else {
-          patchRequestBody[key] = this.currentRecord[key];
+          patchRequestBody[key] = value;
         }
       }
     }
