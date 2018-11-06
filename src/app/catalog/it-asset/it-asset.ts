@@ -3,8 +3,8 @@ class ItAsset {
     name: string;
     description: string;
     categoryId: number;
-    createdOn: DateTimeFormat;
-    lastModifiedOn: DateTimeFormat;
+    createdOn: Date;
+    lastModifiedOn: Date;
 }
   
 class ItAssetCategory {

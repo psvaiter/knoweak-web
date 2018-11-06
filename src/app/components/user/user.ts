@@ -3,13 +3,13 @@ class User {
     fullName: string;
     email: string;
     password: string;
-    createdOn: DateTimeFormat;
-    lastModifiedOn: DateTimeFormat;
-    lastLoggedInOn: DateTimeFormat;
-    lastLoginAttemptedOn: DateTimeFormat;
+    createdOn: Date;
+    lastModifiedOn: Date;
+    lastLoggedInOn: Date;
+    lastLoginAttemptedOn: Date;
     failedLoginAttemptCount: number;
-    lockedOutOn: DateTimeFormat;
-    blockedOn: DateTimeFormat;
+    lockedOutOn: Date;
+    blockedOn: Date;
     roles: SystemRole[] = [];
 }
 

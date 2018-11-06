@@ -1,6 +1,6 @@
 class Process {
     id: number;
     name: string;
-    createdOn: DateTimeFormat;
-    lastModifiedOn: DateTimeFormat;
+    createdOn: Date;
+    lastModifiedOn: Date;
 }
