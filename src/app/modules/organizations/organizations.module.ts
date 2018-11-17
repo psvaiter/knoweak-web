@@ -8,7 +8,6 @@ import { OrganizationStructureComponent } from '../organizations/organization-st
 import { DepartmentsLookupModalComponent } from './organization-structure/departments-lookup-modal/departments-lookup-modal.component';
 import { MacroprocessLookupModalComponent } from './organization-structure/macroprocess-lookup-modal/macroprocess-lookup-modal.component';
 import { DepartmentListComponent } from './organization-structure/department-list/department-list.component';
-import { MacroprocessListComponent } from './organization-structure/macroprocess-list/macroprocess-list.component';
 import { MacroprocessItemComponent } from './organization-structure/macroprocess-item/macroprocess-item.component';
 import { ProcessLookupModalComponent } from './organization-structure/process-lookup-modal/process-lookup-modal.component';
 import { DepartmentItemComponent } from './organization-structure/department-item/department-item.component';
@@ -18,6 +17,7 @@ import { EditAnalysisComponent } from '../../components/analysis/edit-analysis/e
 import { CatalogDepartmentService } from '../../services/api/catalog/department/catalog-department.service';
 import { OrganizationMacroprocessService } from '../../services/api/organization/organization-macroprocess.service';
 import { OrganizationProcessService } from '../../services/api/organization/organization-process.service';
+import { CatalogMacroprocessService } from '../../services/api/catalog/macroprocess/catalog-macroprocess.service';
 
 @NgModule({
     declarations: [
@@ -30,7 +30,6 @@ import { OrganizationProcessService } from '../../services/api/organization/orga
         DepartmentsLookupModalComponent,
         MacroprocessLookupModalComponent,
         DepartmentListComponent,
-        MacroprocessListComponent,
         MacroprocessItemComponent,
         ProcessLookupModalComponent,
         DepartmentItemComponent,
@@ -47,6 +46,7 @@ import { OrganizationProcessService } from '../../services/api/organization/orga
     exports: [],
     providers: [
         CatalogDepartmentService,
+        CatalogMacroprocessService,
         OrganizationMacroprocessService,
         OrganizationProcessService
     ],
