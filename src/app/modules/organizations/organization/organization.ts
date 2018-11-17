@@ -14,8 +14,6 @@ export class OrganizationDepartment {
     macroprocesses: OrganizationMacroprocess[] = [];
 
     organizationId: number;
-    
-    expanded: boolean = false;
     selectedMacroprocessId: number;
 }
   
