@@ -20,7 +20,7 @@ export class OrganizationProcessService {
 
   add(organizationId: number, data) {
     let url = `${CrudService.BaseUrl}/organizations/${organizationId}/processes`;
-    return this.crudService.post(data, url);
+    return this.crudService.post(url, data);
   }
 
   remove(organizationId: number, instanceId: number) {

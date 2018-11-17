@@ -53,9 +53,12 @@ export class MacroprocessItemComponent implements OnInit {
     });
 
     // Act on confirmation
-    modalRef.content.confirmed.subscribe(process => {
-      console.log(process);
-      //this.requestAddProcess(process);
+    modalRef.content.confirmed.subscribe(eventData => {
+      let organizationProcess = new OrganizationProcess();
+      organizationProcess.id = eventData.processId;
+      organizationProcess.relevance = eventData.relevance;
+
+      this.requestAddProcess(organizationProcess);
       modalRef.hide();
     });
   }
