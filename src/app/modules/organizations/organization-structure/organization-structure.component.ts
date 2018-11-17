@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 
 import { BsModalService } from 'ngx-bootstrap/modal';
 
-import { Organization, OrganizationDepartment, OrganizationMacroprocess, OrganizationProcess, RatingLevel, OrganizationItService, OrganizationItAsset } from '../organization/organization';
+import { Organization, OrganizationMacroprocess, OrganizationProcess, RatingLevel, OrganizationItService, OrganizationItAsset } from '../organization/organization';
 import { CrudService } from '../../../shared/components/crud/crud.service';
 
 @Component({
@@ -113,14 +113,6 @@ export class OrganizationStructureComponent implements OnInit {
       }
     );
   }
-  
-  toggleProcessItServices(process: OrganizationProcess) {
-    process.expanded = !process.expanded; 
-    if (!process.expanded) {
-      return;
-    }
-    this.getProcessItServices(process);
-  }
 
   getProcessItServices(process) {
     let url = `${CrudService.BaseUrl}/organizations/${this.organization.id}/itServices`;
@@ -180,14 +172,6 @@ export class OrganizationStructureComponent implements OnInit {
         console.error(err);
       }
     );
-  }
-
-  toggleItServiceItAssets(itService: OrganizationItService) {
-    itService.expanded = !itService.expanded; 
-    if (!itService.expanded) {
-      return;
-    }
-    this.getItServiceItAssets(itService);
   }
 
   getItServiceItAssets(itService) {

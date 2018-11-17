@@ -40,7 +40,6 @@ export class OrganizationProcess {
     organizationId: number;
     macroprocess: OrganizationMacroprocess;
 
-    expanded: boolean = false;
     selectedItServiceId: number;
     selectedItServiceRelevanceId: number;
 }
@@ -52,7 +51,6 @@ export class OrganizationItService {
     itAssets: OrganizationItAsset[] = [];
     relevance: RatingLevel;
     
-    expanded: boolean = false;
     selectedItem: any;
     selectedExternalIdentifier: string;
     selectedItAssetRelevanceId: number;
