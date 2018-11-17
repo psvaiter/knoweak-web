@@ -18,7 +18,7 @@ export class OrganizationMacroprocessService {
 
   add(organizationId: number, data) {
     let url = `${CrudService.BaseUrl}/organizations/${organizationId}/macroprocesses`;
-    return this.crudService.post(data, url);
+    return this.crudService.post(url, data);
   }
 
   remove(organizationId: number, instanceId: number) {
