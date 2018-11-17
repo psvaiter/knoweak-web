@@ -9,7 +9,16 @@ import { CatalogProcessService } from '../../../../services/api/catalog/process/
 export class ProcessLookupModalComponent implements OnInit {
 
   processes: any[];
-  selectedProcess: any;
+  ratingLevels = [
+    {id: 1, name: "Muito baixa"},
+    {id: 2, name: "Baixa"},
+    {id: 3, name: "Média"},
+    {id: 4, name: "Alta"},
+    {id: 5, name: "Muito alta"}
+  ]
+
+  selectedProcessId: number;
+  selectedRelevanceId: number;
   confirmed = new EventEmitter();
 
   constructor(private catalogProcessService: CatalogProcessService) { }
@@ -19,7 +28,10 @@ export class ProcessLookupModalComponent implements OnInit {
   }
 
   confirm() {
-    this.confirmed.emit(this.selectedProcess);
+    this.confirmed.emit({
+      processId: this.selectedProcessId,
+      relevance: this.selectedRelevanceId
+    });
   }
 
   private loadProcesses() {

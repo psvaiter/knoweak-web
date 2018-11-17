@@ -55,6 +55,7 @@ export class MacroprocessItemComponent implements OnInit {
     // Act on confirmation
     modalRef.content.confirmed.subscribe(process => {
       console.log(process);
+      //this.requestAddProcess(process);
       modalRef.hide();
     });
   }

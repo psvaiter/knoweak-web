@@ -2,15 +2,31 @@
   <div class="body">
     <div class="ml-2 mb-2">Departamento: {{macroprocess.department.name}}</div>
     <div class="ml-2 mb-2">Macroprocesso: {{macroprocess.name}}</div>
-    <ng-select  
-      [items]="processes"
-      [searchable]="true"
-      bindLabel="name"
-      [(ngModel)]="selectedProcess"
-      placeholder="Selecione um processo...">
-    </ng-select>
+    
+    <div class="my-2">
+      <ng-select
+        [items]="processes"
+        [searchable]="true"
+        bindLabel="name"
+        bindValue="id"
+        [(ngModel)]="selectedProcessId"
+        placeholder="Selecione um processo...">
+      </ng-select>
+    </div>
+    
+    <div class="my-2">
+      <ng-select
+        [items]="ratingLevels"
+        [searchable]="true"
+        bindLabel="name"
+        bindValue="id"
+        [(ngModel)]="selectedRelevanceId"
+        placeholder="Selecione uma relevância...">
+      </ng-select>
+    </div>
+    
   </div>
   <div class="actions">
-    <button class="btn btn-outline-success" (click)="confirm()" [disabled]="!selectedProcess">Salvar</button>
+    <button class="btn btn-outline-success" (click)="confirm()" [disabled]="!selectedProcessId">Salvar</button>
   </div>
 </app-modal>

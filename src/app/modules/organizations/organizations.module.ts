@@ -15,9 +15,10 @@ import { AnalysisComponent } from '../../components/analysis/analysis.component'
 import { AnalysisDetailComponent } from '../../components/analysis/analysis-detail/analysis-detail.component';
 import { EditAnalysisComponent } from '../../components/analysis/edit-analysis/edit-analysis.component';
 import { CatalogDepartmentService } from '../../services/api/catalog/department/catalog-department.service';
+import { CatalogMacroprocessService } from '../../services/api/catalog/macroprocess/catalog-macroprocess.service';
+import { CatalogProcessService } from '../../services/api/catalog/process/catalog-process.service';
 import { OrganizationMacroprocessService } from '../../services/api/organization/organization-macroprocess.service';
 import { OrganizationProcessService } from '../../services/api/organization/organization-process.service';
-import { CatalogMacroprocessService } from '../../services/api/catalog/macroprocess/catalog-macroprocess.service';
 
 @NgModule({
     declarations: [
@@ -47,6 +48,7 @@ import { CatalogMacroprocessService } from '../../services/api/catalog/macroproc
     providers: [
         CatalogDepartmentService,
         CatalogMacroprocessService,
+        CatalogProcessService,
         OrganizationMacroprocessService,
         OrganizationProcessService
     ],
