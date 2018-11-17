@@ -31,7 +31,7 @@ export class MacroprocessItemComponent implements OnInit {
   }
 
   deleteMacroprocess() {
-    // Emit event asking for parent component to remove
+    // Emit event asking for parent component to remove from its register
     this.delete.emit(this.macroprocess);
   }
 

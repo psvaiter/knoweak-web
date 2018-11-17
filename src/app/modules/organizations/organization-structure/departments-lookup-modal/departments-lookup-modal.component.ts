@@ -19,7 +19,7 @@ export class DepartmentsLookupModalComponent implements OnInit {
     this.loadDepartments();
   }
 
-  Confirm(): void {
+  confirm(): void {
     this.confirmed.emit(this.selectedDepartmentId);
   }
 

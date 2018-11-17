@@ -39,7 +39,7 @@ export class DepartmentItemComponent implements OnInit {
   }
 
   deleteDepartment() {
-    // Emit event asking for parent component to remove
+    // Emit event asking for parent component to remove from its register
     this.delete.emit(this.department);
   }
 
@@ -53,8 +53,8 @@ export class DepartmentItemComponent implements OnInit {
     });
 
     // Act on confirmation
-    modalRef.content.confirmed.subscribe(macroprocess => {
-      this.requestAddMacroprocess(macroprocess);
+    modalRef.content.confirmed.subscribe(macroprocessId => {
+      this.requestAddMacroprocess(macroprocessId);
       modalRef.hide();
     });
   }
@@ -97,17 +97,18 @@ export class DepartmentItemComponent implements OnInit {
     );
   }
 
-  private requestAddMacroprocess(macroprocess: any) {
+  private requestAddMacroprocess(macroprocessId: number) {
     let request = {
       departmentId: this.department.id,
-      macroprocessId: macroprocess.id
+      macroprocessId: macroprocessId
     };
-    this.organizationMacroprocessService.add(this.organizationId, request).subscribe(success => {
-      console.log(success);
-      this.listDepartmentMacroprocesses();
-    }, err => {
-      console.log(err);
-    });
+    this.organizationMacroprocessService.add(this.organizationId, request).subscribe(
+      response => {
+        this.listDepartmentMacroprocesses();
+      },
+      err => {
+        console.error(err);
+      });
   }
 
 }
