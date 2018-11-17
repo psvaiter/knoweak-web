@@ -1,0 +1,36 @@
+<div class="d-flex justify-content-between align-items-center">
+  
+  <i class="fa pointer" (click)="toggleItServices()" [ngClass]="{
+    'fa-plus-square-o': !expanded,
+    'fa-minus-square-o': expanded
+  }"></i>
+  <span class="badge badge-default mx-2">Process</span>
+  <label class="mb-0">{{process.name}}</label>
+
+  <!-- Remove process -->
+  <button class="btn btn-outline-danger btn-sm ml-auto" title="Excluir" (click)="deleteProcess()">
+    <fa name="trash"></fa>
+  </button>
+  <!-- Add IT service to process -->
+  <button class="btn btn-primary btn-sm ml-1" title="Adicionar serviço de TI..." (click)="addItService()">
+    <fa name="plus"></fa>
+  </button>
+
+</div>
+
+<div *ngIf="expanded">
+  <ul class="list-group" *ngIf="itServices?.length > 0; else emptyList">
+    <li class="list-group-item" *ngFor="let itService of itServices">
+
+      <!-- <app-it-service-item [itService]="itService" (delete)="removeItService($event)"></app-it-service-item> -->
+
+    </li>
+  </ul>
+
+  <ng-template #emptyList>
+    <div class="mx-5 my-2">
+      Não existem serviços de TI neste processo.
+    </div>
+  </ng-template>
+
+</div>
