@@ -68,8 +68,8 @@ export class DepartmentItemComponent implements OnInit {
       response => {
         this.listDepartmentMacroprocesses();
       },
-      error => {
-        console.log(error);
+      err => {
+        console.error(err);
       }
     );
   }

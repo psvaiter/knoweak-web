@@ -37,6 +37,9 @@ export class OrganizationProcess {
     itServices: OrganizationItService[] = [];
     relevance: RatingLevel;
 
+    organizationId: number;
+    macroprocess: OrganizationMacroprocess;
+
     expanded: boolean = false;
     selectedItServiceId: number;
     selectedItServiceRelevanceId: number;

@@ -16,8 +16,8 @@ export class MacroprocessItemComponent implements OnInit {
   @Output() delete = new EventEmitter();
 
   expanded: boolean;
-  processes: OrganizationProcess[];
   organizationId: number;
+  processes: OrganizationProcess[];
 
   constructor(
     private modalService: BsModalService,
@@ -29,18 +29,18 @@ export class MacroprocessItemComponent implements OnInit {
   ngOnInit() {
     this.organizationId = this.macroprocess.organizationId;
   }
-
-  deleteMacroprocess() {
-    // Emit event asking for parent component to remove from its register
-    this.delete.emit(this.macroprocess);
-  }
-
+  
   toggleProcesses() {
     this.expanded = !this.expanded;
     if (!this.expanded) {
       return;
     }
-    this.listProcesses();
+    this.listMacroprocessProcesses();
+  }
+
+  deleteMacroprocess() {
+    // Emit event asking for parent component to remove from its register
+    this.delete.emit(this.macroprocess);
   }
 
   addProcess() {
@@ -59,19 +59,58 @@ export class MacroprocessItemComponent implements OnInit {
     });
   }
 
-  removeProcess() {
+  removeProcess(process: OrganizationProcess) {
+    if (!confirm(`Deseja remover o processo "${process.name}" do macroprocesso "${this.macroprocess.name}"?`)) {
+      return;
+    }
+
     this.organizationProcessService.remove(this.organizationId, this.macroprocess.instanceId).subscribe(
       response => {
-        this.listProcesses();
+        this.listMacroprocessProcesses();
+      },
+      err => {
+        console.error(err);
       }
     );
   }
 
-  private listProcesses() {
-    this.organizationProcessService.list(this.organizationId, 1).subscribe(
+  private listMacroprocessProcesses() {
+    this.organizationProcessService.list(this.organizationId, 1, 100).subscribe(
       response => {
-        this.processes = response['data'].filter(item => item.macroprocessInstanceId == this.macroprocess.instanceId);
+        this.processes = response['data']
+          .filter(item => item.macroprocessInstanceId == this.macroprocess.instanceId)
+          .map(item => {
+            let process = new OrganizationProcess();
+
+            process.instanceId = item.instanceId;
+            process.id = item.process.id;
+            process.name = item.process.name;
+            process.relevance = item.relevanceLevelId;
+
+            process.organizationId = this.organizationId;
+            process.macroprocess = this.macroprocess;
+
+            return process;
+          });
+
         this.processes.sort((a, b) => (a.name < b.name) ? -1 : 1);
       });
   }
+
+  private requestAddProcess(process: OrganizationProcess) {
+    let request = {
+      macroprocessInstanceId: this.macroprocess.instanceId,
+      processId: process.id,
+      relevanceLevelId: process.relevance
+    };
+    this.organizationProcessService.add(this.organizationId, request).subscribe(
+      response => {
+        this.listMacroprocessProcesses();
+      },
+      err => {
+        console.error(err);
+      }
+    );
+  }
+
 }

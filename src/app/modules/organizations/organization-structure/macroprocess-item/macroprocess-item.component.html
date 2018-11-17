@@ -17,3 +17,20 @@
   </button>
 
 </div>
+
+<div *ngIf="expanded">
+  <ul class="list-group" *ngIf="processes?.length > 0; else emptyList">
+    <li class="list-group-item" *ngFor="let process of processes">
+
+      <!-- <app-process-item [process]="process" (delete)="removeProcess($event)"></app-process-item> -->
+
+    </li>
+  </ul>
+
+  <ng-template #emptyList>
+    <div class="mx-5 my-2">
+      Não existem processos neste macroprocesso.
+    </div>
+  </ng-template>
+
+</div>
