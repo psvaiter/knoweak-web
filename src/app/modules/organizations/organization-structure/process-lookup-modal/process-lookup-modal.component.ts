@@ -30,7 +30,7 @@ export class ProcessLookupModalComponent implements OnInit {
   confirm() {
     this.confirmed.emit({
       processId: this.selectedProcessId,
-      relevance: this.selectedRelevanceId
+      relevance: this.ratingLevels.find(r => r.id == this.selectedRelevanceId)
     });
   }
 

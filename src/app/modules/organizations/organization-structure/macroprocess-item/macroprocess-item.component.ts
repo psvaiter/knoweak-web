@@ -1,9 +1,10 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { BsModalService } from 'ngx-bootstrap/modal';
 
-import { OrganizationMacroprocess, OrganizationProcess } from '../../organization/organization';
+import { OrganizationMacroprocess, OrganizationProcess, RatingLevel } from '../../organization/organization';
 import { ProcessLookupModalComponent } from '../process-lookup-modal/process-lookup-modal.component';
 import { OrganizationProcessService } from '../../../../services/api/organization/organization-process.service';
+import { Constants } from '../../../../shared/constants';
 
 @Component({
   selector: 'app-macroprocess-item',
@@ -21,7 +22,7 @@ export class MacroprocessItemComponent implements OnInit {
 
   constructor(
     private modalService: BsModalService,
-    private organizationProcessService: OrganizationProcessService
+    private organizationProcessService: OrganizationProcessService,
   ) {
 
   }
@@ -89,7 +90,12 @@ export class MacroprocessItemComponent implements OnInit {
             process.instanceId = item.instanceId;
             process.id = item.process.id;
             process.name = item.process.name;
-            process.relevance = item.relevanceLevelId;
+
+            if (item.relevanceLevelId) {
+              process.relevance = new RatingLevel();
+              process.relevance.id = item.relevanceLevelId;
+              process.relevance.name = Constants.RATING_LEVELS.find(level => level.id == item.relevanceLevelId).name;
+            }
 
             process.organizationId = this.organizationId;
             process.macroprocess = this.macroprocess;

@@ -5,6 +5,7 @@
     'fa-minus-square-o': expanded
   }"></i>
   <span class="badge badge-default badge-hierarchy mx-2">Process</span>
+  <span class="badge badge-primary mx-2" title="Relevância: {{process.relevance.name}}" *ngIf="process.relevance">Rp {{process.relevance.id}}</span>
   <label class="mb-0">{{process.name}}</label>
 
   <!-- Remove process -->
