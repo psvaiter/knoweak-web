@@ -12,7 +12,7 @@ export class MacroprocessLookupModalComponent implements OnInit {
   selectedMacroprocessId: number;
   department: OrganizationDepartment;
   macroprocesses = [];
-  confirmed = new EventEmitter();
+  confirmed = new EventEmitter<number>();
 
   constructor(private catalogMacroprocessService: CatalogMacroprocessService) { }
 

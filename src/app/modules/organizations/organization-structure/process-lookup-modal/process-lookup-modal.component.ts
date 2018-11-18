@@ -1,5 +1,6 @@
 import { Component, OnInit, EventEmitter } from '@angular/core';
 import { CatalogProcessService } from '../../../../services/api/catalog/process/catalog-process.service';
+import { Constants } from '../../../../shared/constants';
 
 @Component({
   selector: 'app-process-lookup-modal',
@@ -9,13 +10,7 @@ import { CatalogProcessService } from '../../../../services/api/catalog/process/
 export class ProcessLookupModalComponent implements OnInit {
 
   processes: any[];
-  ratingLevels = [
-    {id: 1, name: "Muito baixa"},
-    {id: 2, name: "Baixa"},
-    {id: 3, name: "Média"},
-    {id: 4, name: "Alta"},
-    {id: 5, name: "Muito alta"}
-  ]
+  ratingLevels = Constants.RATING_LEVELS;
 
   selectedProcessId: number;
   selectedRelevanceId: number;
@@ -30,7 +25,7 @@ export class ProcessLookupModalComponent implements OnInit {
   confirm() {
     this.confirmed.emit({
       processId: this.selectedProcessId,
-      relevance: this.ratingLevels.find(r => r.id == this.selectedRelevanceId)
+      relevance: Constants.RATING_LEVELS.find(level => level.id == this.selectedRelevanceId)
     });
   }
 

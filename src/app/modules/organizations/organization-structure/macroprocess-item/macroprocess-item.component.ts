@@ -111,7 +111,7 @@ export class MacroprocessItemComponent implements OnInit {
     let request = {
       macroprocessInstanceId: this.macroprocess.instanceId,
       processId: process.id,
-      relevanceLevelId: process.relevance
+      relevanceLevelId: (process.relevance) ? process.relevance.id : null
     };
     this.organizationProcessService.add(this.organizationId, request).subscribe(
       response => {
