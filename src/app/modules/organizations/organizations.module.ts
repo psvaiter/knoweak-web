@@ -22,6 +22,7 @@ import { EditAnalysisComponent } from '../../components/analysis/edit-analysis/e
 import { CatalogDepartmentService } from '../../services/api/catalog/department/catalog-department.service';
 import { CatalogMacroprocessService } from '../../services/api/catalog/macroprocess/catalog-macroprocess.service';
 import { CatalogProcessService } from '../../services/api/catalog/process/catalog-process.service';
+import { OrganizationDepartmentService } from '../../services/api/organization/organization-department.service';
 import { OrganizationMacroprocessService } from '../../services/api/organization/organization-macroprocess.service';
 import { OrganizationProcessService } from '../../services/api/organization/organization-process.service';
 
@@ -60,6 +61,7 @@ import { OrganizationProcessService } from '../../services/api/organization/orga
         CatalogDepartmentService,
         CatalogMacroprocessService,
         CatalogProcessService,
+        OrganizationDepartmentService,
         OrganizationMacroprocessService,
         OrganizationProcessService
     ],

@@ -3,7 +3,7 @@ import { BsModalService } from 'ngx-bootstrap/modal';
 
 import { OrganizationDepartment } from '../../organization/organization';
 import { DepartmentsLookupModalComponent } from '../departments-lookup-modal/departments-lookup-modal.component';
-import { CrudService } from '../../../../shared/components/crud/crud.service';
+import { OrganizationDepartmentService } from '../../../../services/api/organization/organization-department.service';
 
 @Component({
   selector: 'app-department-list',
@@ -17,8 +17,8 @@ export class DepartmentListComponent implements OnInit {
   departments: OrganizationDepartment[];
 
   constructor(
-    private crudService: CrudService,
     private modalService: BsModalService,
+    private organizationDepartmentService: OrganizationDepartmentService
   ) { 
 
   }
@@ -28,9 +28,7 @@ export class DepartmentListComponent implements OnInit {
   }
 
   getOrganizationDepartments() {
-    let url = `${CrudService.BaseUrl}/organizations/${this.organizationId}/departments`;
-
-    this.crudService.getPage(url, 1, 100).subscribe(
+    this.organizationDepartmentService.listDepartments(this.organizationId, 1, 100).subscribe(
       response => {
         this.departments = response['data'].map(item => {
           item.department.organizationId = this.organizationId;
@@ -48,9 +46,7 @@ export class DepartmentListComponent implements OnInit {
       return;
     }
 
-    let url = `${CrudService.BaseUrl}/organizations/${this.organizationId}/departments/${department.id}`;
-    
-    this.crudService.delete(url).subscribe(
+    this.organizationDepartmentService.removeDepartment(this.organizationId, department.id).subscribe(
       data => {
         this.getOrganizationDepartments();
       },
@@ -75,9 +71,7 @@ export class DepartmentListComponent implements OnInit {
 
   private addDepartment(selectedDepartmentId): Promise<void> {
     let promise = new Promise<void>((resolve, reject) => {
-      let url = `${CrudService.BaseUrl}/organizations/${this.organizationId}/departments`;
-
-      this.crudService.post(url, { id: selectedDepartmentId }).subscribe(
+      this.organizationDepartmentService.addDepartment(this.organizationId, { id: selectedDepartmentId }).subscribe(
         data => {
           this.getOrganizationDepartments();
           resolve();
