@@ -17,8 +17,15 @@ export class CrudService {
     return this._http.get(url);
   }
 
-  getPage(url: string, page: number, recordsPerPage: number) {
+  getPage(url: string, page: number, recordsPerPage: number, filters: object = null) {
     let params = this.getPageRequestParams(page, recordsPerPage);
+    
+    if (filters) {
+      for (let key in filters) {
+        params = params.append(key, filters[key]);
+      }
+    }
+    
     return this._http.get(url, { params });
   }
 

@@ -75,7 +75,7 @@ export class DepartmentItemComponent implements OnInit {
   }
 
   private listDepartmentMacroprocesses() {
-    this.organizationMacroprocessService.list(this.organizationId, 1).subscribe(
+    this.organizationMacroprocessService.list(this.organizationId, 1, 100, this.department.id).subscribe(
       response => {
         this.macroprocesses = response['data']
           .filter(item => item.department.id == this.department.id)
