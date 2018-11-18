@@ -68,7 +68,7 @@ export class MacroprocessItemComponent implements OnInit {
       return;
     }
 
-    this.organizationProcessService.remove(this.organizationId, this.macroprocess.instanceId).subscribe(
+    this.organizationProcessService.remove(this.organizationId, process.instanceId).subscribe(
       response => {
         this.listMacroprocessProcesses();
       },
