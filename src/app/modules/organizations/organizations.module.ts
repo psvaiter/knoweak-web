@@ -9,10 +9,13 @@ import { DepartmentsLookupModalComponent } from './organization-structure/depart
 import { MacroprocessLookupModalComponent } from './organization-structure/macroprocess-lookup-modal/macroprocess-lookup-modal.component';
 import { ProcessLookupModalComponent } from './organization-structure/process-lookup-modal/process-lookup-modal.component';
 import { ItServiceLookupModalComponent } from './organization-structure/it-service-lookup-modal/it-service-lookup-modal.component';
+import { ItAssetLookupModalComponent } from './organization-structure/it-asset-lookup-modal/it-asset-lookup-modal.component';
 import { DepartmentListComponent } from './organization-structure/department-list/department-list.component';
 import { DepartmentItemComponent } from './organization-structure/department-item/department-item.component';
 import { MacroprocessItemComponent } from './organization-structure/macroprocess-item/macroprocess-item.component';
 import { ProcessItemComponent } from './organization-structure/process-item/process-item.component';
+import { ItServiceItemComponent } from './organization-structure/it-service-item/it-service-item.component';
+import { ItAssetItemComponent } from './organization-structure/it-asset-item/it-asset-item.component';
 import { AnalysisComponent } from '../../components/analysis/analysis.component';
 import { AnalysisDetailComponent } from '../../components/analysis/analysis-detail/analysis-detail.component';
 import { EditAnalysisComponent } from '../../components/analysis/edit-analysis/edit-analysis.component';
@@ -34,10 +37,13 @@ import { OrganizationProcessService } from '../../services/api/organization/orga
         MacroprocessLookupModalComponent,
         ProcessLookupModalComponent,
         ItServiceLookupModalComponent,
+        ItAssetLookupModalComponent,
         DepartmentListComponent,
         DepartmentItemComponent,
         MacroprocessItemComponent,
         ProcessItemComponent,
+        ItServiceItemComponent,
+        ItAssetItemComponent,
     ],
     entryComponents: [
         DepartmentsLookupModalComponent,
