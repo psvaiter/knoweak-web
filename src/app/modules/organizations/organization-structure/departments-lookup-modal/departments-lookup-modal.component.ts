@@ -1,5 +1,5 @@
 import { Component, OnInit, EventEmitter } from '@angular/core';
-import { CrudService } from '../../../../shared/components/crud/crud.service';
+import { CatalogDepartmentService } from '../../../../services/api/catalog/department/catalog-department.service';
 
 @Component({
   selector: 'app-departments-lookup-modal',
@@ -7,13 +7,16 @@ import { CrudService } from '../../../../shared/components/crud/crud.service';
   styleUrls: ['./departments-lookup-modal.component.scss']
 })
 export class DepartmentsLookupModalComponent implements OnInit {
+  
   selectedDepartmentId: number;
   departments = [];
   confirmed = new EventEmitter<number>();
 
   constructor(
-    private _crudService: CrudService,
-  ) { }
+    private catalogDepartmentService: CatalogDepartmentService
+  ) { 
+    
+  }
 
   ngOnInit() {
     this.loadDepartments();
@@ -24,9 +27,7 @@ export class DepartmentsLookupModalComponent implements OnInit {
   }
 
   private loadDepartments(): void {
-    let url = `${CrudService.BaseUrl}/departments`;
-
-    this._crudService.get(url).subscribe(
+    this.catalogDepartmentService.listDepartments(1, 100).subscribe(
       response => {
         this.departments = response['data'];
       },
@@ -35,4 +36,5 @@ export class DepartmentsLookupModalComponent implements OnInit {
       }
     );
   }
+
 }
