@@ -8,22 +8,23 @@ export class OrganizationProcessService {
 
   }
 
-  getById(organizationId: number, instanceId: number) {
+  getProcessById(organizationId: number, instanceId: number) {
     let url = `${CrudService.BaseUrl}/organizations/${organizationId}/processes/${instanceId}`;
     return this.crudService.get(url);
   }
 
-  list(organizationId: number, page: number, recordsPerPage: number = 10) {
+  listProcesses(organizationId: number, page: number, recordsPerPage: number = 10, macroprocessInstanceId?: number) {
     let url = `${CrudService.BaseUrl}/organizations/${organizationId}/processes`;
-    return this.crudService.getPage(url, page, recordsPerPage);
+    let filter = (macroprocessInstanceId) ? { macroprocessInstanceId } : null;
+    return this.crudService.getPage(url, page, recordsPerPage, filter);
   }
 
-  add(organizationId: number, data) {
+  addProcess(organizationId: number, data) {
     let url = `${CrudService.BaseUrl}/organizations/${organizationId}/processes`;
     return this.crudService.post(url, data);
   }
 
-  remove(organizationId: number, instanceId: number) {
+  removeProcess(organizationId: number, instanceId: number) {
     let url = `${CrudService.BaseUrl}/organizations/${organizationId}/processes/${instanceId}`;
     return this.crudService.delete(url);
   }

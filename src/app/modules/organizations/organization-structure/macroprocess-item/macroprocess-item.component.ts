@@ -69,7 +69,7 @@ export class MacroprocessItemComponent implements OnInit {
       return;
     }
 
-    this.organizationProcessService.remove(this.organizationId, process.instanceId).subscribe(
+    this.organizationProcessService.removeProcess(this.organizationId, process.instanceId).subscribe(
       response => {
         this.listMacroprocessProcesses();
       },
@@ -80,7 +80,7 @@ export class MacroprocessItemComponent implements OnInit {
   }
 
   private listMacroprocessProcesses() {
-    this.organizationProcessService.list(this.organizationId, 1, 100).subscribe(
+    this.organizationProcessService.listProcesses(this.organizationId, 1, 100, this.macroprocess.instanceId).subscribe(
       response => {
         this.processes = response['data']
           .filter(item => item.macroprocessInstanceId == this.macroprocess.instanceId)
@@ -113,7 +113,7 @@ export class MacroprocessItemComponent implements OnInit {
       processId: process.id,
       relevanceLevelId: (process.relevance) ? process.relevance.id : null
     };
-    this.organizationProcessService.add(this.organizationId, request).subscribe(
+    this.organizationProcessService.addProcess(this.organizationId, request).subscribe(
       response => {
         this.listMacroprocessProcesses();
       },
