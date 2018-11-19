@@ -112,7 +112,7 @@ export class ProcessItemComponent implements OnInit {
     let request = {
       processInstanceId: this.process.instanceId,
       itServiceId: itService.id,
-      relevanceLevelId: itService.relevance
+      relevanceLevelId: (itService.relevance) ? itService.relevance.id : null
     };
     this.organizationItServiceService.addItService(this.organizationId, request).subscribe(
       response => {
