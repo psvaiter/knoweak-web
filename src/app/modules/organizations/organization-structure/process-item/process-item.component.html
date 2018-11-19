@@ -23,7 +23,7 @@
   <ul class="list-group" *ngIf="itServices?.length > 0; else emptyList">
     <li class="list-group-item" *ngFor="let itService of itServices">
 
-      <!-- <app-it-service-item [itService]="itService" (delete)="removeItService($event)"></app-it-service-item> -->
+      <app-it-service-item [itService]="itService" (delete)="removeItService($event)"></app-it-service-item>
 
     </li>
   </ul>
