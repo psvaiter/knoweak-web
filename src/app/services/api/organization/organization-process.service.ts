@@ -8,7 +8,7 @@ export class OrganizationProcessService {
 
   }
 
-  getProcessById(organizationId: number, instanceId: number) {
+  getProcessByInstanceId(organizationId: number, instanceId: number) {
     let url = `${CrudService.BaseUrl}/organizations/${organizationId}/processes/${instanceId}`;
     return this.crudService.get(url);
   }
@@ -28,4 +28,5 @@ export class OrganizationProcessService {
     let url = `${CrudService.BaseUrl}/organizations/${organizationId}/processes/${instanceId}`;
     return this.crudService.delete(url);
   }
+  
 }
