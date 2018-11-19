@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter } from '@angular/core';
+import { Constants } from '../../../../shared/constants';
+import { CatalogItServiceService } from '../../../../services/api/catalog/it-service/catalog-it-service.service';
 
 @Component({
   selector: 'app-it-service-lookup-modal',
@@ -7,9 +9,35 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ItServiceLookupModalComponent implements OnInit {
 
-  constructor() { }
+  itServices: any[];
+  ratingLevels = Constants.RATING_LEVELS;
 
-  ngOnInit() {
+  selectedItServiceId: number;
+  selectedRelevanceId: number;
+  confirmed = new EventEmitter();
+
+  constructor(private catalogItServiceService: CatalogItServiceService) { 
+
   }
 
+  ngOnInit() {
+    this.loadItServices();
+  }
+
+  confirm() {
+    this.confirmed.emit({
+      itServiceId: this.selectedItServiceId,
+      relevance: Constants.RATING_LEVELS.find(level => level.id == this.selectedRelevanceId)
+    });
+  }
+
+  private loadItServices() {
+    this.catalogItServiceService.listItServices(1, 100).subscribe(
+      response => {
+        this.itServices = response['data'];
+        this.itServices.sort((a, b) => (a.name < b.name) ? -1 : 1);
+      }
+    );
+  }
+  
 }

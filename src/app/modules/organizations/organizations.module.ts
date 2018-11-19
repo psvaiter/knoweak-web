@@ -22,9 +22,13 @@ import { EditAnalysisComponent } from '../../components/analysis/edit-analysis/e
 import { CatalogDepartmentService } from '../../services/api/catalog/department/catalog-department.service';
 import { CatalogMacroprocessService } from '../../services/api/catalog/macroprocess/catalog-macroprocess.service';
 import { CatalogProcessService } from '../../services/api/catalog/process/catalog-process.service';
+import { CatalogItServiceService } from '../../services/api/catalog/it-service/catalog-it-service.service';
+import { CatalogItAssetService } from '../../services/api/catalog/it-asset/catalog-it-asset.service';
 import { OrganizationDepartmentService } from '../../services/api/organization/organization-department.service';
 import { OrganizationMacroprocessService } from '../../services/api/organization/organization-macroprocess.service';
 import { OrganizationProcessService } from '../../services/api/organization/organization-process.service';
+import { OrganizationItServiceService } from '../../services/api/organization/organization-it-service.service';
+import { OrganizationItAssetService } from '../../services/api/organization/organization-it-asset.service';
 
 @NgModule({
     declarations: [
@@ -50,7 +54,8 @@ import { OrganizationProcessService } from '../../services/api/organization/orga
         DepartmentsLookupModalComponent,
         MacroprocessLookupModalComponent,
         ProcessLookupModalComponent,
-        ItServiceLookupModalComponent
+        ItServiceLookupModalComponent,
+        ItAssetLookupModalComponent
     ],
     imports: [
         OrganizationsRoutingModule,
@@ -61,9 +66,13 @@ import { OrganizationProcessService } from '../../services/api/organization/orga
         CatalogDepartmentService,
         CatalogMacroprocessService,
         CatalogProcessService,
+        CatalogItServiceService,
+        CatalogItAssetService,
         OrganizationDepartmentService,
         OrganizationMacroprocessService,
-        OrganizationProcessService
+        OrganizationProcessService,
+        OrganizationItServiceService,
+        OrganizationItAssetService
     ],
 })
 export class OrganizationsModule { }

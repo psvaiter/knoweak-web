@@ -1,8 +1,10 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { BsModalService } from 'ngx-bootstrap/modal';
 
-import { OrganizationProcess, OrganizationItService } from '../../organization/organization';
+import { OrganizationProcess, OrganizationItService, RatingLevel } from '../../organization/organization';
 import { ItServiceLookupModalComponent } from '../it-service-lookup-modal/it-service-lookup-modal.component';
+import { OrganizationItServiceService } from '../../../../services/api/organization/organization-it-service.service';
+import { Constants } from '../../../../shared/constants';
 
 @Component({
   selector: 'app-process-item',
@@ -19,7 +21,8 @@ export class ProcessItemComponent implements OnInit {
   itServices: OrganizationItService[];
 
   constructor(
-    private modalService: BsModalService
+    private modalService: BsModalService,
+    private organizationItServiceService: OrganizationItServiceService
   ) { 
 
   }
@@ -41,7 +44,7 @@ export class ProcessItemComponent implements OnInit {
     this.delete.emit(this.process);
   }
 
-  addProcess() {
+  addItService() {
     // Open modal
     let modalRef = this.modalService.show(ItServiceLookupModalComponent, {
       class: 'modal-md',
@@ -52,8 +55,11 @@ export class ProcessItemComponent implements OnInit {
 
     // Act on confirmation
     modalRef.content.confirmed.subscribe(eventData => {
-      console.log(eventData);
-      //this.requestAddItService(itService);
+      let organizationItService = new OrganizationItService();
+      organizationItService.id = eventData.itServiceId;
+      organizationItService.relevance = eventData.relevance;
+
+      this.requestAddItService(organizationItService);
       modalRef.hide();
     });
   }
@@ -63,54 +69,59 @@ export class ProcessItemComponent implements OnInit {
       return;
     }
 
-    // this.organizationItServiceService.remove(this.organizationId, this.process.instanceId).subscribe(
-    //   response => {
-    //     this.listMacroprocessProcesses();
-    //   },
-    //   err => {
-    //     console.error(err);
-    //   }
-    // );
+    this.organizationItServiceService.removeItService(this.organizationId, itService.instanceId).subscribe(
+      response => {
+        this.listProcessItServices();
+      },
+      err => {
+        console.error(err);
+      }
+    );
   }
 
   private listProcessItServices() {
-    // this.organizationProcessService.list(this.organizationId, 1, 100).subscribe(
-    //   response => {
-    //     this.processes = response['data']
-    //       .filter(item => item.macroprocessInstanceId == this.macroprocess.instanceId)
-    //       .map(item => {
-    //         let process = new OrganizationProcess();
+    this.organizationItServiceService.listItServices(this.organizationId, 1, 100, this.process.instanceId).subscribe(
+      response => {
+        this.itServices = response['data']
+          .filter(item => item.processInstanceId == this.process.instanceId)
+          .map(item => {
+            let itService = new OrganizationItService();
 
-    //         process.instanceId = item.instanceId;
-    //         process.id = item.process.id;
-    //         process.name = item.process.name;
-    //         process.relevance = item.relevanceLevelId;
+            itService.instanceId = item.instanceId;
+            itService.id = item.itService.id;
+            itService.name = item.itService.name;
 
-    //         process.organizationId = this.organizationId;
-    //         process.macroprocess = this.macroprocess;
+            if (item.relevanceLevelId) {
+              itService.relevance = new RatingLevel();
+              itService.relevance.id = item.relevanceLevelId;
+              itService.relevance.name = Constants.RATING_LEVELS.find(level => level.id == item.relevanceLevelId).name;
+            }
 
-    //         return process;
-    //       });
+            itService.organizationId = this.organizationId;
+            itService.process = this.process;
 
-    //     this.processes.sort((a, b) => (a.name < b.name) ? -1 : 1);
-    //   }
-    // );
+            return itService;
+          });
+
+        this.itServices.sort((a, b) => (a.name < b.name) ? -1 : 1);
+      }
+    );
   }
 
   private requestAddItService(itService: OrganizationItService) {
     let request = {
-      macroprocessInstanceId: this.process.instanceId,
-      processId: itService.id,
+      processInstanceId: this.process.instanceId,
+      itServiceId: itService.id,
       relevanceLevelId: itService.relevance
     };
-    // this.organizationProcessService.add(this.organizationId, request).subscribe(
-    //   response => {
-    //     this.listProcessItServices();
-    //   },
-    //   err => {
-    //     console.error(err);
-    //   }
-    // );
+    this.organizationItServiceService.addItService(this.organizationId, request).subscribe(
+      response => {
+        this.listProcessItServices();
+      },
+      err => {
+        console.error(err);
+      }
+    );
   }
 
 }

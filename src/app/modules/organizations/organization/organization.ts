@@ -51,6 +51,9 @@ export class OrganizationItService {
     itAssets: OrganizationItAsset[] = [];
     relevance: RatingLevel;
     
+    organizationId: number;
+    process: OrganizationProcess;
+    
     selectedItem: any;
     selectedExternalIdentifier: string;
     selectedItAssetRelevanceId: number;

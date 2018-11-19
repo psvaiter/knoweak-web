@@ -1,3 +1,33 @@
-<p>
-  it-service-lookup-modal works!
-</p>
+<app-modal modalTitle="Adicionar serviço de TI">
+  <div class="body">
+    <div class="ml-2 mb-2"><b>Departamento:</b> {{process.macroprocess.department.name}}</div>
+    <div class="ml-2 mb-2"><b>Macroprocesso:</b> {{process.macroprocess.name}}</div>
+    <div class="ml-2 mb-2"><b>Processo:</b> {{process.name}}</div>
+    
+    <div class="my-2">
+      <ng-select
+        [items]="itServices"
+        [searchable]="true"
+        bindLabel="name"
+        bindValue="id"
+        [(ngModel)]="selectedItServiceId"
+        placeholder="Selecione um serviço de TI...">
+      </ng-select>
+    </div>
+    
+    <div class="my-2">
+      <ng-select
+        [items]="ratingLevels"
+        [searchable]="true"
+        bindLabel="name"
+        bindValue="id"
+        [(ngModel)]="selectedRelevanceId"
+        placeholder="Selecione uma relevância...">
+      </ng-select>
+    </div>
+    
+  </div>
+  <div class="actions">
+    <button class="btn btn-outline-success" (click)="confirm()" [disabled]="!selectedItServiceId">Salvar</button>
+  </div>
+</app-modal>
