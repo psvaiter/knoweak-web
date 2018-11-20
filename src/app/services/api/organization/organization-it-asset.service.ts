@@ -14,8 +14,8 @@ export class OrganizationItAssetService {
   }
 
   listItAssets(organizationId: number, itServiceInstanceId: number, page: number, recordsPerPage: number = 10) {
-    let url = `${CrudService.BaseUrl}/organizations/${organizationId}/itServices/${itServiceInstanceId}`;
-    return this.crudService.getPage(url, page, recordsPerPage, { itServiceInstanceId });
+    let url = `${CrudService.BaseUrl}/organizations/${organizationId}/itServices/${itServiceInstanceId}/itAssets`;
+    return this.crudService.getPage(url, page, recordsPerPage);
   }
 
   addItAsset(organizationId: number, itServiceInstanceId: number, data) {

@@ -65,6 +65,9 @@ export class OrganizationItAsset {
     name: string;
     externalIdentifier: string;
     relevance: RatingLevel;
+    
+    organizationId: number;
+    itService: OrganizationItService;
 }
 
 export class RatingLevel {

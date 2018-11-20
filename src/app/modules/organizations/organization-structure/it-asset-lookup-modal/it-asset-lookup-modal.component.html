@@ -1,3 +1,34 @@
-<p>
-  it-asset-lookup-modal works!
-</p>
+<app-modal modalTitle="Adicionar ativo de TI">
+  <div class="body">
+    <div class="ml-2 mb-2"><b>Departamento:</b> {{itService.process.macroprocess.department.name}}</div>
+    <div class="ml-2 mb-2"><b>Macroprocesso:</b> {{itService.process.macroprocess.name}}</div>
+    <div class="ml-2 mb-2"><b>Processo:</b> {{itService.process.name}}</div>
+    <div class="ml-2 mb-2"><b>Serviço de TI:</b> {{itService.name}}</div>
+    
+    <div class="my-2">
+      <ng-select
+        [items]="itAssets"
+        [searchable]="true"
+        bindLabel="name"
+        bindValue="id"
+        [(ngModel)]="selectedItAssetId"
+        placeholder="Selecione um ativo de TI...">
+      </ng-select>
+    </div>
+    
+    <div class="my-2">
+      <ng-select
+        [items]="ratingLevels"
+        [searchable]="true"
+        bindLabel="name"
+        bindValue="id"
+        [(ngModel)]="selectedRelevanceId"
+        placeholder="Selecione uma relevância...">
+      </ng-select>
+    </div>
+    
+  </div>
+  <div class="actions">
+    <button class="btn btn-outline-success" (click)="confirm()" [disabled]="!selectedItAssetId">Salvar</button>
+  </div>
+</app-modal>
