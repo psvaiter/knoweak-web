@@ -73,7 +73,11 @@ export class ItServiceItemComponent implements OnInit {
   }
 
   removeItAsset(itAsset: OrganizationItAsset) {
-    if (!confirm(`Deseja remover o ativo de TI "${itAsset.name}" do serviço de TI "${this.itService.name}"?`)) {
+    let itAssetDisplayName = (itAsset.externalIdentifier)
+      ? `${itAsset.name} - ${itAsset.externalIdentifier}`
+      : `${itAsset.name} (instância ${itAsset.instanceId})`;
+
+    if (!confirm(`Deseja remover o ativo de TI "${itAssetDisplayName}" do serviço de TI "${this.itService.name}"?`)) {
       return;
     }
 
