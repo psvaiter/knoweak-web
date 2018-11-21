@@ -157,7 +157,16 @@ export class ItServiceItemComponent implements OnInit {
         );
       }
       else {
+        let request = {
+          itServiceInstanceId: this.itService.instanceId,
+          itAssetInstanceId: itAsset.instanceId,
+          relevanceLevelId: (itAsset.relevance) ? itAsset.relevance.id : null
+        };
 
+        this.organizationItAssetService.addItAsset(this.organizationId, this.itService.instanceId, request).subscribe(
+          response => resolve(),
+          err => reject(err)
+        );
       }
 
     });
