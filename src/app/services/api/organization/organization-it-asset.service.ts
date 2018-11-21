@@ -13,6 +13,11 @@ export class OrganizationItAssetService {
     return this.crudService.get(url);
   }
 
+  listItAssetsFromOrganization(organizationId: number, page: number, recordsPerPage: number = 10) {
+    let url = `${CrudService.BaseUrl}/organizations/${organizationId}/itAssets`;
+    return this.crudService.getPage(url, page, recordsPerPage);
+  }
+
   listItAssets(organizationId: number, itServiceInstanceId: number, page: number, recordsPerPage: number = 10) {
     let url = `${CrudService.BaseUrl}/organizations/${organizationId}/itServices/${itServiceInstanceId}/itAssets`;
     return this.crudService.getPage(url, page, recordsPerPage);
