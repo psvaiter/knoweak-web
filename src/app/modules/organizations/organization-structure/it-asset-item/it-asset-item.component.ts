@@ -10,10 +10,18 @@ export class ItAssetItemComponent implements OnInit {
 
   @Input() itAsset: OrganizationItAsset;
   @Output() delete = new EventEmitter();
+  
+  organizationId: number;
 
   constructor() { }
 
   ngOnInit() {
+    this.organizationId = this.itAsset.organizationId;
+  }
+
+  deleteItAsset() {
+    // Emit event asking for parent component to remove from its register
+    this.delete.emit(this.itAsset);
   }
 
 }
