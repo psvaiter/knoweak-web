@@ -23,6 +23,11 @@ export class OrganizationItAssetService {
     return this.crudService.getPage(url, page, recordsPerPage);
   }
 
+  addItAssetToOrganization(organizationId: number, data) {
+    let url = `${CrudService.BaseUrl}/organizations/${organizationId}/itAssets`;
+    return this.crudService.post(url, data);
+  }
+
   addItAsset(organizationId: number, itServiceInstanceId: number, data) {
     let url = `${CrudService.BaseUrl}/organizations/${organizationId}/itServices/${itServiceInstanceId}/itAssets`;
     return this.crudService.post(url, data);

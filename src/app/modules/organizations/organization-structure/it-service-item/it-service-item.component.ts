@@ -56,11 +56,19 @@ export class ItServiceItemComponent implements OnInit {
     // Act on confirmation
     modalRef.content.confirmed.subscribe(eventData => {
       let organizationItAsset = new OrganizationItAsset();
+      organizationItAsset.instanceId = eventData.instanceId;
       organizationItAsset.id = eventData.itAssetId;
       organizationItAsset.relevance = eventData.relevance;
+      organizationItAsset.externalIdentifier = eventData.externalIdentifier;
 
-      this.requestAddItAsset(organizationItAsset);
-      modalRef.hide();
+      this.requestAddItAsset(organizationItAsset)
+        .then(() => {
+          this.listItServiceItAssets();
+          modalRef.hide();
+        })
+        .catch(err => {
+          console.error(err);
+        });
     });
   }
 
@@ -87,9 +95,10 @@ export class ItServiceItemComponent implements OnInit {
           .map(item => {
             let itAsset = new OrganizationItAsset();
 
-            itAsset.instanceId = item.instanceId;
-            itAsset.id = item.itAsset.id;
-            itAsset.name = item.itAsset.name;
+            itAsset.instanceId = item.itAssetInstanceId;
+            itAsset.externalIdentifier = item.itAssetInstance.externalIdentifier;
+            itAsset.id = item.itAssetInstance.itAsset.id;
+            itAsset.name = item.itAssetInstance.itAsset.name;
 
             if (item.relevanceLevelId) {
               itAsset.relevance = new RatingLevel();
@@ -103,25 +112,51 @@ export class ItServiceItemComponent implements OnInit {
             return itAsset;
           });
 
-        this.itAssets.sort((a, b) => (a.name < b.name) ? -1 : 1);
+        this.itAssets.sort((a, b) => {
+          if (a.name < b.name) return -1;
+          if (a.name > b.name) return 1;
+          if (a.externalIdentifier < b.externalIdentifier) return -1;
+          return 1;
+        });
       }
     );
   }
 
-  private requestAddItAsset(itAsset: OrganizationItAsset) {
-    let request = {
-      itServiceInstanceId: this.itService.instanceId,
-      itAssetId: itAsset.id,
-      relevanceLevelId: (itAsset.relevance) ? itAsset.relevance.id : null
-    };
-    this.organizationItAssetService.addItAsset(this.organizationId, this.itService.instanceId, request).subscribe(
-      response => {
-        this.listItServiceItAssets();
-      },
-      err => {
-        console.error(err);
+  private requestAddItAsset(itAsset: OrganizationItAsset): Promise<void> {
+    return new Promise((resolve, reject) => {
+  
+      if (!itAsset.instanceId) {
+        
+        let request = {
+          itAssetId: itAsset.id,
+          externalIdentifier: itAsset.externalIdentifier
+        };
+
+        this.organizationItAssetService.addItAssetToOrganization(this.organizationId, request).subscribe(
+          response => {
+            
+            let request = {
+              itServiceInstanceId: this.itService.instanceId,
+              itAssetInstanceId: response['data'].instanceId,
+              relevanceLevelId: (itAsset.relevance) ? itAsset.relevance.id : null
+            };
+    
+            this.organizationItAssetService.addItAsset(this.organizationId, this.itService.instanceId, request).subscribe(
+              response => resolve(),
+              err => reject(err)
+            );
+
+          },
+          err => {
+            reject(err);
+          }
+        );
       }
-    );
+      else {
+
+      }
+
+    });
   }
 
 }
