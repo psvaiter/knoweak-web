@@ -4,7 +4,7 @@
     'fa-plus-square-o': !expanded,
     'fa-minus-square-o': expanded
   }"></i>
-  <span class="badge badge-default badge-hierarchy mx-2">Service</span>
+  <span class="badge badge-default badge-hierarchy mx-2">Serviço TI</span>
   <span class="badge badge-primary mx-2" title="Relevância: {{itService.relevance.name}}" *ngIf="itService.relevance">Rs {{itService.relevance.id}}</span>
   <label class="mb-0">{{itService.name}}</label>
 
@@ -23,7 +23,7 @@
   <ul class="list-group" *ngIf="itAssets?.length > 0; else emptyList">
     <li class="list-group-item" *ngFor="let itAsset of itAssets">
 
-      <!-- <app-it-asset-item [itAsset]="itAsset" (delete)="removeItAsset($event)"></app-it-asset-item> -->
+      <app-it-asset-item [itAsset]="itAsset" (delete)="removeItAsset($event)"></app-it-asset-item>
 
     </li>
   </ul>

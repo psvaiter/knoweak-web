@@ -1,3 +1,12 @@
-<p>
-  it-asset-item works!
-</p>
+<div class="d-flex justify-content-between align-items-center pl-4">
+  
+  <span class="badge badge-default badge-hierarchy mx-2">Ativo TI</span>
+  <span class="badge badge-primary mx-2" title="Relevância: {{itAsset.relevance.name}}" *ngIf="itAsset.relevance">Rs {{itAsset.relevance.id}}</span>
+  <label class="mb-0">{{itAsset.name}} <span *ngIf="itAsset.externalIdentifier">({{itAsset.externalIdentifier}})</span></label>
+
+  <!-- Remove IT asset -->
+  <button class="btn btn-outline-danger btn-sm ml-auto" title="Excluir" (click)="deleteItService()">
+    <fa name="trash"></fa>
+  </button>
+
+</div>

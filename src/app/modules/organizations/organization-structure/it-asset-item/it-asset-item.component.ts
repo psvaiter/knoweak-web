@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { OrganizationItAsset } from '../../organization/organization';
 
 @Component({
   selector: 'app-it-asset-item',
@@ -6,6 +7,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./it-asset-item.component.scss']
 })
 export class ItAssetItemComponent implements OnInit {
+
+  @Input() itAsset: OrganizationItAsset;
+  @Output() delete = new EventEmitter();
 
   constructor() { }
 
