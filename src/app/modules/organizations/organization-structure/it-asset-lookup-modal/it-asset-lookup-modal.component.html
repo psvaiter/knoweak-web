@@ -16,9 +16,8 @@
         <ng-select
           [items]="itAssets"
           [searchable]="true"
-          bindLabel="name"
-          bindValue="id"
-          [(ngModel)]="selectedItAssetId"
+          bindLabel="displayName"
+          [(ngModel)]="selectedItAsset"
           placeholder="Selecione um ativo de TI"
           (change)="onItAssetChange($event)">
         </ng-select>
@@ -40,6 +39,6 @@
     
   </div>
   <div class="actions">
-    <button class="btn btn-outline-success" (click)="confirm()" [disabled]="!selectedItAssetId">Salvar</button>
+    <button class="btn btn-outline-success" (click)="confirm()" [disabled]="!selectedItAsset">Salvar</button>
   </div>
 </app-modal>

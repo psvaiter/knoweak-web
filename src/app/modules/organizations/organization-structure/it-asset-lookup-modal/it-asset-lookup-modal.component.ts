@@ -17,7 +17,7 @@ export class ItAssetLookupModalComponent implements OnInit {
   ratingLevels = Constants.RATING_LEVELS;
 
   selectedItAssetSource: string;
-  selectedItAssetId: number;
+  selectedItAsset: any;
   selectedRelevanceId: number;
   externalIdentifier: string;
   confirmed = new EventEmitter();
@@ -40,8 +40,8 @@ export class ItAssetLookupModalComponent implements OnInit {
 
   confirm() {
     this.confirmed.emit({
-      isNew: (this.selectedItAssetSource !== "organization"),
-      itAssetId: this.selectedItAssetId,
+      itAssetInstanceId: this.selectedItAsset.instanceId,
+      itAssetId: this.selectedItAsset.id,
       externalIdentifier: this.externalIdentifier,
       relevance: Constants.RATING_LEVELS.find(level => level.id == this.selectedRelevanceId)
     });
@@ -49,38 +49,46 @@ export class ItAssetLookupModalComponent implements OnInit {
 
   selectCatalogSource() {
     if (this.itAssets != this.catalogItAssets) {
-      this.selectedItAssetId = null;
-      this.externalIdentifier = null;
+      this.cleanup();
       this.itAssets = this.catalogItAssets;
     }
   }
 
   selectOrganizationSource() {
     if (this.itAssets != this.organizationItAssets) {
-      this.selectedItAssetId = null;
-      this.externalIdentifier = null;
+      this.cleanup();
       this.itAssets = this.organizationItAssets;
     }
   }
 
-  onItAssetChange(event) {
-    if (this.selectedItAssetSource === "organization") {
-      if (event) {
-        this.externalIdentifier = event.externalIdentifier || "(Sem identificação)";
-      }
-      else {
-        this.externalIdentifier = null;
-      }
+  onItAssetChange(eventData) {
+    // Set appropriate external identifier if IT asset is in organization
+    if (eventData && eventData.instanceId) {
+      this.externalIdentifier = eventData.externalIdentifier || "(Sem identificação)";
+      return;
     }
-    else {
-      this.externalIdentifier = null;
-    }
+
+    // Erase external identifier if IT asset is from catalog or if field is empty
+    this.externalIdentifier = null;
+  }
+
+  private cleanup() {
+    this.selectedItAsset = null;
+    this.externalIdentifier = null;
   }
 
   private loadCatalogItAssets() {
     this.catalogItAssetService.listItAssets(1, 100).subscribe(
       response => {
-        this.catalogItAssets = response['data'];
+        this.catalogItAssets = response['data'].map(item => {
+          return {
+            instanceId: null,
+            id: item.id,
+            name: item.name,
+            displayName: item.name,
+            externalIdentifier: null
+          };
+        });
         this.catalogItAssets.sort((a, b) => (a.name < b.name) ? -1 : 1);
       }
     );
@@ -90,13 +98,13 @@ export class ItAssetLookupModalComponent implements OnInit {
     this.organizationItAssetService.listItAssetsFromOrganization(this.itService.organizationId, 1, 100).subscribe(
       response => {
         this.organizationItAssets = response['data'].map(item => {
-          let displayName = (item.externalIdentifier)
-            ? `${item.itAsset.name} (${item.externalIdentifier})`
-            : `${item.itAsset.name} (instância ${item.instanceId})`;
-
           return {
+            instanceId: item.instanceId,
             id: item.itAsset.id,
-            name: displayName,
+            name: item.itAsset.name,
+            displayName: (item.externalIdentifier)
+              ? `${item.itAsset.name} (${item.externalIdentifier})`
+              : `${item.itAsset.name} (instância ${item.instanceId})`,
             externalIdentifier: item.externalIdentifier
           };
         });
