@@ -22,9 +22,13 @@
           (change)="onItAssetChange($event)">
         </ng-select>
   
-        <input type="text" class="my-2 form-control form-control-sm" [disabled]="selectedItAssetSource == 'organization'"
-          placeholder="Identificação do ativo"
-          id="externalIdentifier" name="externalIdentifier" [(ngModel)]="externalIdentifier" />
+        <input *ngIf="selectedItAssetSource == 'catalog'" [(ngModel)]="externalIdentifier"
+          type="text" class="mt-2 mb-4 form-control form-control-sm"
+          placeholder="Preencha uma identificação para o ativo" />
+
+        <div *ngIf="selectedItAssetSource == 'organization'" class="mx-2 mt-2 mb-4" style="color: #aaa">
+          Identificação: {{externalIdentifier || "(Selecione um ativo)"}}
+        </div>
 
         <ng-select
           [items]="ratingLevels"

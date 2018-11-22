@@ -64,7 +64,7 @@ export class ItAssetLookupModalComponent implements OnInit {
   onItAssetChange(eventData) {
     // Set appropriate external identifier if IT asset is in organization
     if (eventData && eventData.instanceId) {
-      this.externalIdentifier = eventData.externalIdentifier || "(Sem identificação)";
+      this.externalIdentifier = eventData.externalIdentifier || "(Nenhuma)";
       return;
     }
 
