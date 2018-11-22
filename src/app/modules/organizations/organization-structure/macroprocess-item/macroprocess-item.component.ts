@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
+import { finalize } from 'rxjs/operators';
 import { BsModalService } from 'ngx-bootstrap/modal';
 
 import { OrganizationMacroprocess, OrganizationProcess, RatingLevel } from '../../organization/organization';
@@ -17,6 +18,7 @@ export class MacroprocessItemComponent implements OnInit {
   @Output() delete = new EventEmitter();
 
   expanded: boolean;
+  loading: boolean;
   organizationId: number;
   processes: OrganizationProcess[];
 
@@ -80,31 +82,35 @@ export class MacroprocessItemComponent implements OnInit {
   }
 
   private listMacroprocessProcesses() {
-    this.organizationProcessService.listProcesses(this.organizationId, 1, 100, this.macroprocess.instanceId).subscribe(
-      response => {
-        this.processes = response['data']
-          .filter(item => item.macroprocessInstanceId == this.macroprocess.instanceId)
-          .map(item => {
-            let process = new OrganizationProcess();
+    this.loading = true;
+    this.organizationProcessService.listProcesses(this.organizationId, 1, 100, this.macroprocess.instanceId)
+      .pipe(finalize(() => this.loading= false))
+      .subscribe(
+        response => {
+          this.processes = response['data']
+            .filter(item => item.macroprocessInstanceId == this.macroprocess.instanceId)
+            .map(item => {
+              let process = new OrganizationProcess();
 
-            process.instanceId = item.instanceId;
-            process.id = item.process.id;
-            process.name = item.process.name;
+              process.instanceId = item.instanceId;
+              process.id = item.process.id;
+              process.name = item.process.name;
 
-            if (item.relevanceLevelId) {
-              process.relevance = new RatingLevel();
-              process.relevance.id = item.relevanceLevelId;
-              process.relevance.name = Constants.RATING_LEVELS.find(level => level.id == item.relevanceLevelId).name;
-            }
+              if (item.relevanceLevelId) {
+                process.relevance = new RatingLevel();
+                process.relevance.id = item.relevanceLevelId;
+                process.relevance.name = Constants.RATING_LEVELS.find(level => level.id == item.relevanceLevelId).name;
+              }
 
-            process.organizationId = this.organizationId;
-            process.macroprocess = this.macroprocess;
+              process.organizationId = this.organizationId;
+              process.macroprocess = this.macroprocess;
 
-            return process;
-          });
+              return process;
+            });
 
-        this.processes.sort((a, b) => (a.name < b.name) ? -1 : 1);
-      });
+          this.processes.sort((a, b) => (a.name < b.name) ? -1 : 1);
+        }
+      );
   }
 
   private requestAddProcess(process: OrganizationProcess) {

@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { finalize } from 'rxjs/operators';
 import { BsModalService } from 'ngx-bootstrap/modal';
 
 import { OrganizationProcess, OrganizationItService, RatingLevel } from '../../organization/organization';
@@ -17,6 +18,7 @@ export class ProcessItemComponent implements OnInit {
   @Output() delete = new EventEmitter();
   
   expanded: boolean;
+  loading: boolean;
   organizationId: number;
   itServices: OrganizationItService[];
 
@@ -80,32 +82,35 @@ export class ProcessItemComponent implements OnInit {
   }
 
   private listProcessItServices() {
-    this.organizationItServiceService.listItServices(this.organizationId, 1, 100, this.process.instanceId).subscribe(
-      response => {
-        this.itServices = response['data']
-          .filter(item => item.processInstanceId == this.process.instanceId)
-          .map(item => {
-            let itService = new OrganizationItService();
+    this.loading = true;
+    this.organizationItServiceService.listItServices(this.organizationId, 1, 100, this.process.instanceId)
+      .pipe(finalize(() => this.loading = false))
+      .subscribe(
+        response => {
+          this.itServices = response['data']
+            .filter(item => item.processInstanceId == this.process.instanceId)
+            .map(item => {
+              let itService = new OrganizationItService();
 
-            itService.instanceId = item.instanceId;
-            itService.id = item.itService.id;
-            itService.name = item.itService.name;
+              itService.instanceId = item.instanceId;
+              itService.id = item.itService.id;
+              itService.name = item.itService.name;
 
-            if (item.relevanceLevelId) {
-              itService.relevance = new RatingLevel();
-              itService.relevance.id = item.relevanceLevelId;
-              itService.relevance.name = Constants.RATING_LEVELS.find(level => level.id == item.relevanceLevelId).name;
-            }
+              if (item.relevanceLevelId) {
+                itService.relevance = new RatingLevel();
+                itService.relevance.id = item.relevanceLevelId;
+                itService.relevance.name = Constants.RATING_LEVELS.find(level => level.id == item.relevanceLevelId).name;
+              }
 
-            itService.organizationId = this.organizationId;
-            itService.process = this.process;
+              itService.organizationId = this.organizationId;
+              itService.process = this.process;
 
-            return itService;
-          });
+              return itService;
+            });
 
-        this.itServices.sort((a, b) => (a.name < b.name) ? -1 : 1);
-      }
-    );
+          this.itServices.sort((a, b) => (a.name < b.name) ? -1 : 1);
+        }
+      );
   }
 
   private requestAddItService(itService: OrganizationItService) {

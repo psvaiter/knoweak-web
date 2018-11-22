@@ -4,6 +4,7 @@ import { BsModalService } from 'ngx-bootstrap/modal';
 import { OrganizationDepartment, OrganizationMacroprocess } from '../../organization/organization';
 import { OrganizationMacroprocessService } from '../../../../services/api/organization/organization-macroprocess.service';
 import { MacroprocessLookupModalComponent } from '../macroprocess-lookup-modal/macroprocess-lookup-modal.component';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-department-item',
@@ -15,7 +16,8 @@ export class DepartmentItemComponent implements OnInit {
   @Input() department: OrganizationDepartment;
   @Output() delete: EventEmitter<OrganizationDepartment> = new EventEmitter();
 
-  expanded: boolean = false;
+  expanded: boolean;
+  loading: boolean;
   organizationId: number;
   macroprocesses: OrganizationMacroprocess[];
 
@@ -75,26 +77,29 @@ export class DepartmentItemComponent implements OnInit {
   }
 
   private listDepartmentMacroprocesses() {
-    this.organizationMacroprocessService.list(this.organizationId, 1, 100, this.department.id).subscribe(
-      response => {
-        this.macroprocesses = response['data']
-          .filter(item => item.department.id == this.department.id)
-          .map(item => {
-            let macroprocess = new OrganizationMacroprocess();
-            
-            macroprocess.instanceId = item.instanceId;
-            macroprocess.id = item.macroprocess.id;
-            macroprocess.name = item.macroprocess.name;
+    this.loading = true;
+    this.organizationMacroprocessService.list(this.organizationId, 1, 100, this.department.id)
+      .pipe(finalize(() => this.loading = false))
+      .subscribe(
+        response => {
+          this.macroprocesses = response['data']
+            .filter(item => item.department.id == this.department.id)
+            .map(item => {
+              let macroprocess = new OrganizationMacroprocess();
 
-            macroprocess.department = this.department
-            macroprocess.organizationId = this.organizationId;
+              macroprocess.instanceId = item.instanceId;
+              macroprocess.id = item.macroprocess.id;
+              macroprocess.name = item.macroprocess.name;
 
-            return macroprocess;
-          });
+              macroprocess.department = this.department
+              macroprocess.organizationId = this.organizationId;
 
-        this.macroprocesses.sort((a, b) => (a.name < b.name) ? -1 : 1);
-      }
-    );
+              return macroprocess;
+            });
+
+          this.macroprocesses.sort((a, b) => (a.name < b.name) ? -1 : 1);
+        }
+      );
   }
 
   private requestAddMacroprocess(macroprocessId: number) {

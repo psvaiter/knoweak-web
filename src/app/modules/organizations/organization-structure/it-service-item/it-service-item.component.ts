@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { finalize } from 'rxjs/operators';
 import { BsModalService } from 'ngx-bootstrap/modal';
 
 import { Constants } from '../../../../shared/constants';
@@ -17,6 +18,7 @@ export class ItServiceItemComponent implements OnInit {
   @Output() delete = new EventEmitter();
 
   expanded: boolean;
+  loading: boolean;
   organizationId: number;
   itAssets: OrganizationItAsset[];
 
@@ -92,38 +94,41 @@ export class ItServiceItemComponent implements OnInit {
   }
   
   private listItServiceItAssets() {
-    this.organizationItAssetService.listItAssets(this.organizationId, this.itService.instanceId, 1, 100).subscribe(
-      response => {
-        this.itAssets = response['data']
-          .filter(item => item.itServiceInstanceId == this.itService.instanceId)
-          .map(item => {
-            let itAsset = new OrganizationItAsset();
+    this.loading = true;
+    this.organizationItAssetService.listItAssets(this.organizationId, this.itService.instanceId, 1, 100)
+      .pipe(finalize(() => this.loading = false))
+      .subscribe(
+        response => {
+          this.itAssets = response['data']
+            .filter(item => item.itServiceInstanceId == this.itService.instanceId)
+            .map(item => {
+              let itAsset = new OrganizationItAsset();
 
-            itAsset.instanceId = item.itAssetInstanceId;
-            itAsset.externalIdentifier = item.itAssetInstance.externalIdentifier;
-            itAsset.id = item.itAssetInstance.itAsset.id;
-            itAsset.name = item.itAssetInstance.itAsset.name;
+              itAsset.instanceId = item.itAssetInstanceId;
+              itAsset.externalIdentifier = item.itAssetInstance.externalIdentifier;
+              itAsset.id = item.itAssetInstance.itAsset.id;
+              itAsset.name = item.itAssetInstance.itAsset.name;
 
-            if (item.relevanceLevelId) {
-              itAsset.relevance = new RatingLevel();
-              itAsset.relevance.id = item.relevanceLevelId;
-              itAsset.relevance.name = Constants.RATING_LEVELS.find(level => level.id == item.relevanceLevelId).name;
-            }
+              if (item.relevanceLevelId) {
+                itAsset.relevance = new RatingLevel();
+                itAsset.relevance.id = item.relevanceLevelId;
+                itAsset.relevance.name = Constants.RATING_LEVELS.find(level => level.id == item.relevanceLevelId).name;
+              }
 
-            itAsset.organizationId = this.organizationId;
-            itAsset.itService = this.itService;
+              itAsset.organizationId = this.organizationId;
+              itAsset.itService = this.itService;
 
-            return itAsset;
+              return itAsset;
+            });
+
+          this.itAssets.sort((a, b) => {
+            if (a.name < b.name) return -1;
+            if (a.name > b.name) return 1;
+            if (a.externalIdentifier < b.externalIdentifier) return -1;
+            return 1;
           });
-
-        this.itAssets.sort((a, b) => {
-          if (a.name < b.name) return -1;
-          if (a.name > b.name) return 1;
-          if (a.externalIdentifier < b.externalIdentifier) return -1;
-          return 1;
-        });
-      }
-    );
+        }
+      );
   }
 
   private requestAddItAsset(itAsset: OrganizationItAsset): Promise<void> {

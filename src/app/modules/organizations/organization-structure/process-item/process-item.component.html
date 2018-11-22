@@ -29,9 +29,11 @@
   </ul>
 
   <ng-template #emptyList>
-    <div class="mx-5 my-2">
+    <div class="mx-5 my-2" *ngIf="loading">
+      Carregando...
+    </div>
+    <div class="mx-5 my-2" *ngIf="!loading">
       Não existem serviços de TI neste processo.
     </div>
   </ng-template>
-
 </div>
