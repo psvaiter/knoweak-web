@@ -6,11 +6,13 @@ import { EditOrganizationComponent } from './organization/edit-organization/edit
 import { OrganizationStructureComponent } from './organization-structure/organization-structure.component';
 import { AnalysisComponent } from '../../components/analysis/analysis.component';
 import { EditAnalysisComponent } from '../../components/analysis/edit-analysis/edit-analysis.component';
+import { SecurityThreatsComponent } from './security-threats/security-threats.component';
 
 const routes: Routes = [
     { path: '', component: OrganizationComponent },
     { path: ':id/edit', component: EditOrganizationComponent },
     { path: ':id/structure', component: OrganizationStructureComponent },
+    { path: ':id/threats', component: SecurityThreatsComponent },
     { path: ':id/analyses', component: AnalysisComponent },
     { path: ':id/analyses/:analysisId/details', component: EditAnalysisComponent },
 ];

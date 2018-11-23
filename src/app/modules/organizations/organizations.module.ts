@@ -29,6 +29,7 @@ import { OrganizationMacroprocessService } from '../../services/api/organization
 import { OrganizationProcessService } from '../../services/api/organization/organization-process.service';
 import { OrganizationItServiceService } from '../../services/api/organization/organization-it-service.service';
 import { OrganizationItAssetService } from '../../services/api/organization/organization-it-asset.service';
+import { SecurityThreatsComponent } from './security-threats/security-threats.component';
 
 @NgModule({
     declarations: [
@@ -49,6 +50,7 @@ import { OrganizationItAssetService } from '../../services/api/organization/orga
         ProcessItemComponent,
         ItServiceItemComponent,
         ItAssetItemComponent,
+        SecurityThreatsComponent,
     ],
     entryComponents: [
         DepartmentsLookupModalComponent,
