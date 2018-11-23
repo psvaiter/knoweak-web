@@ -1,3 +1,45 @@
-<p>
-  security-threats works!
-</p>
+<div>
+  <div>
+    <small style="text-transform: uppercase">Organização {{ organizationLegalName }}</small>
+    <h5>Ameaças</h5>
+  </div>
+  <div class="d-flex">
+    <!-- Add new security threat to organization -->
+    <input type="button" class="btn btn-sm btn-primary ml-auto" value="Adicionar ameaça" (click)="addItem()" />
+  </div>
+
+  <!-- List of organization security threats -->
+  <div class="table-container">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>Ameaça</th>
+          <th>Grau</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngIf="loading">
+          <td colspan="3">Carregando...</td>
+        </tr>
+        <tr *ngIf="!securityThreats && !loading">
+          <td colspan="3">Nenhuma ameaça cadastrada</td>
+        </tr>
+        <tr *ngFor="let securityThreat of securityThreats">
+          <td>{{ securityThreat.name }}</td>
+          <td>{{ securityThreat.threatLevel.id }} - {{ securityThreat.threatLevel.name }}</td>
+          <td>
+            <a title="Alterar grau" [routerLink]="" (click)="editItem(securityThreat)"><fa name="edit"></fa></a>
+            <a title="Remover" [routerLink]="" (click)="removeItem(securityThreat)"><fa name="trash"></fa></a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <app-pagination 
+      [paging]="paging"
+      (goPrevPage)="getPrevPage()"
+      (goNextPage)="getNextPage()">
+    </app-pagination>
+
+  </div>
+</div>
