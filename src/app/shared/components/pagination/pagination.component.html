@@ -1,5 +1,5 @@
 <div class="pagination-container">
-  <nav aria-label="Page navigation" *ngIf="paging.totalRecords > 0">
+  <nav aria-label="Page navigation" *ngIf="paging && paging.totalRecords > 0">
     <span>Exibindo {{ getCurrentStart() }} a {{ getCurrentEnd() }} de {{ paging.totalRecords }}</span>
     <ul class="pagination">
       <li class="page-item" *ngIf="paging.currentPage > 1">
