@@ -16,7 +16,7 @@ export class ModalComponent implements OnInit {
   ngOnInit() {
   }
 
-  Close(): void {
+  close(): void {
     this.modalRef.hide();
   }
 
