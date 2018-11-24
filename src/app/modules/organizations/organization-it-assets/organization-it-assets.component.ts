@@ -58,7 +58,7 @@ export class OrganizationItAssetsComponent implements OnInit {
       class: 'modal-md',
       initialState: {
         organization: this.organization,
-        securityThreat: itAsset
+        itAsset: itAsset
       }
     });
 
@@ -121,6 +121,7 @@ export class OrganizationItAssetsComponent implements OnInit {
           this.itAssets = response['data'].map(item => {
             return {
               instanceId: item.instanceId,
+              id: item.itAsset.id,
               name: item.itAsset.name,
               externalIdentifier: item.externalIdentifier
             };

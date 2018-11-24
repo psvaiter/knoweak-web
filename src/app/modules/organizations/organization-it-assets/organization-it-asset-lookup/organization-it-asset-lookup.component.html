@@ -1,3 +1,28 @@
-<p>
-  organization-it-asset-lookup works!
-</p>
+<app-modal modalTitle="Adicionar ativo de TI">
+  <div class="body">
+
+    <div class="ml-2 mb-4"><b>Organização:</b> {{ organization.legalName }}</div>
+    
+    <div class="my-2">
+      <ng-select
+        [disabled]="editMode"
+        [items]="itAssets"
+        [searchable]="true"
+        bindLabel="name"
+        bindValue="id"
+        [(ngModel)]="selectedItAssetId"
+        placeholder="Selecione um ativo de TI"
+        [loading]="loadingItAssets"
+        loadingText="Carregando...">
+      </ng-select>
+    </div>
+    
+    <input [(ngModel)]="externalIdentifier"
+      type="text" class="mt-2 mb-4 form-control form-control-sm"
+      placeholder="Preencha uma identificação para o ativo" />
+    
+  </div>
+  <div class="actions">
+    <button type="submit" class="btn btn-outline-success" (click)="confirm()" [disabled]="!selectedItAssetId">Salvar</button>
+  </div>
+</app-modal>

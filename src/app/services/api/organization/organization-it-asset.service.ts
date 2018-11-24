@@ -3,7 +3,7 @@ import { CrudService } from '../../../shared/components/crud/crud.service';
 
 @Injectable()
 export class OrganizationItAssetService {
-
+  
   constructor(private crudService: CrudService) {
 
   }
@@ -26,6 +26,11 @@ export class OrganizationItAssetService {
   addItAssetToOrganization(organizationId: number, data) {
     let url = `${CrudService.BaseUrl}/organizations/${organizationId}/itAssets`;
     return this.crudService.post(url, data);
+  }
+
+  patchItAsset(organizationId: number, itAssetInstanceId: number, data: { externalIdentifier: string; }) {
+    let url = `${CrudService.BaseUrl}/organizations/${organizationId}/itAssets/${itAssetInstanceId}`;
+    return this.crudService.patch(url, data);
   }
 
   addItAsset(organizationId: number, itServiceInstanceId: number, data) {
