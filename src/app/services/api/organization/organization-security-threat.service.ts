@@ -18,4 +18,9 @@ export class OrganizationSecurityThreatService {
     return this.crudService.getPage(url, page, recordsPerPage);
   }
 
+  patchSecurityThreat(organizationId: number, securityThreatId: number, data: { threatLevelId: number }) {
+    let url = `${CrudService.BaseUrl}/organizations/${organizationId}/securityThreats/${securityThreatId}`;
+    return this.crudService.patch(url, data);
+  }
+
 }

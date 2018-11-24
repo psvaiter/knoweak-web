@@ -95,6 +95,7 @@ export class SecurityThreatsComponent implements OnInit {
         response => {
           this.securityThreats = response['data'].map(item => {
             return {
+              id: item.securityThreat.id,
               name: item.securityThreat.name,
               threatLevel: Constants.RATING_LEVELS.find(level => level.id == item.threatLevelId)
             };

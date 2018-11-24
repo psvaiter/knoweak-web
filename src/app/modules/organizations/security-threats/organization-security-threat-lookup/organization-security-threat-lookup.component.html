@@ -10,7 +10,9 @@
         bindLabel="name"
         bindValue="id"
         [(ngModel)]="selectedSecurityThreatId"
-        placeholder="Selecione uma ameaça">
+        placeholder="Selecione uma ameaça"
+        [loading]="loadingSecurityThreats"
+        loadingText="Carregando...">
       </ng-select>
     </div>
     
@@ -20,7 +22,7 @@
         [searchable]="true"
         bindLabel="name"
         bindValue="id"
-        [(ngModel)]="selectedRelevanceId"
+        [(ngModel)]="selectedThreatLevelId"
         placeholder="Selecione o grau da ameaça para a organização">
       </ng-select>
     </div>
