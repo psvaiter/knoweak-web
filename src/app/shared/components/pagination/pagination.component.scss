@@ -3,7 +3,8 @@
     overflow: hidden;
     margin: 0;
     padding: 0.3rem 0;
-    background-color: #dee2e6;
+    background-color: #e9ecef;
+    border-top: 2px solid #dee2e6;
     //sborder-radius: 6px;
     // box-shadow: 0 0 10px 2px #c2c2c2;
 }
@@ -23,10 +24,11 @@
     background-color: inherit;
     //text-decoration: underline;
     border: none;
+    border-radius: unset;
 }
 
 .page-item a.page-link:hover {
-    background-color: white;
+    background-color: #dee2e6;
 }
 
 ul.pagination {

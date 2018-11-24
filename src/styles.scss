@@ -132,31 +132,23 @@ h5, .h5 {
  * Table
  */
 
-.table-container {
+div.table-container {
   // overflow: hidden;
-  margin: 20px 0px 0px 0px;
+  margin: 20px 0px;
   padding: 0;
-  border-radius: 0.2rem;
-  //border: 1px solid #c2c2c2;
+  border: 1px solid #343a40;
   box-shadow: 0 0 5px 0px #c2c2c2;
 }
 
-.table-container table {
+div.table-container table {
   margin: 0;
+  padding: 0;
 }
 
-.table-container table thead {
-  background-color: #dee2e6;
-}
-
-.table-container table tr:hover {
-  background-color: #dee2e6;  
-}
-
-.table-container table th, 
-.table-container table td {
+div.table-container table th, 
+div.table-container table td {
   font-size: 0.8rem;
-  padding: 0.3rem 0.6rem;
+  padding: 0.35rem 0.6rem;
   white-space: nowrap;
 }
 
