@@ -2,11 +2,9 @@
     font-size: 0.8rem;
     overflow: hidden;
     margin: 0;
-    padding: 0.3rem 0;
+    padding: 0.25rem 0;
     background-color: #e9ecef;
     border-top: 2px solid #dee2e6;
-    //sborder-radius: 6px;
-    // box-shadow: 0 0 10px 2px #c2c2c2;
 }
 
 .pagination-container nav {
@@ -16,6 +14,10 @@
     padding: 0 0.6rem;
 }
 
+.page-item {
+    width: 4rem; // buttons with same width
+}
+
 .page-item a.page-link {
     padding: 0.2rem 0.6rem;
     font-size: 0.8rem;
@@ -23,12 +25,13 @@
     color: black;
     background-color: inherit;
     //text-decoration: underline;
-    border: none;
+    border: 1px solid transparent;
     border-radius: unset;
 }
 
 .page-item a.page-link:hover {
     background-color: #dee2e6;
+    border: 1px solid #007bff;
 }
 
 ul.pagination {
