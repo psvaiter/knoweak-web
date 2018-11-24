@@ -28,6 +28,7 @@ import { CatalogMacroprocessService } from '../../services/api/catalog/macroproc
 import { CatalogProcessService } from '../../services/api/catalog/process/catalog-process.service';
 import { CatalogItServiceService } from '../../services/api/catalog/it-service/catalog-it-service.service';
 import { CatalogItAssetService } from '../../services/api/catalog/it-asset/catalog-it-asset.service';
+import { CatalogSecurityThreatService } from '../../services/api/catalog/security-threat/catalog-security-threat.service';
 import { OrganizationService } from '../../services/api/organization/organization.service';
 import { OrganizationDepartmentService } from '../../services/api/organization/organization-department.service';
 import { OrganizationMacroprocessService } from '../../services/api/organization/organization-macroprocess.service';
@@ -77,6 +78,7 @@ import { OrganizationSecurityThreatService } from '../../services/api/organizati
         CatalogProcessService,
         CatalogItServiceService,
         CatalogItAssetService,
+        CatalogSecurityThreatService,
         OrganizationService,
         OrganizationDepartmentService,
         OrganizationMacroprocessService,

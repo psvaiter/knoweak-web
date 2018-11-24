@@ -1,3 +1,32 @@
-<p>
-  organization-security-threat-lookup works!
-</p>
+<app-modal modalTitle="Adicionar ameaça">
+  <div class="body">
+
+    <div class="ml-2 mb-4"><b>Organização:</b> {{ organization.legalName }}</div>
+    
+    <div class="my-2">
+      <ng-select
+        [items]="securityThreats"
+        [searchable]="true"
+        bindLabel="name"
+        bindValue="id"
+        [(ngModel)]="selectedSecurityThreatId"
+        placeholder="Selecione uma ameaça">
+      </ng-select>
+    </div>
+    
+    <div class="my-2">
+      <ng-select
+        [items]="ratingLevels"
+        [searchable]="true"
+        bindLabel="name"
+        bindValue="id"
+        [(ngModel)]="selectedRelevanceId"
+        placeholder="Selecione o grau da ameaça para a organização">
+      </ng-select>
+    </div>
+    
+  </div>
+  <div class="actions">
+    <button type="submit" class="btn btn-outline-success" (click)="confirm()" [disabled]="!selectedSecurityThreatId">Salvar</button>
+  </div>
+</app-modal>

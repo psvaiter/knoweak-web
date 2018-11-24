@@ -8,6 +8,11 @@ export class OrganizationSecurityThreatService {
 
   }
 
+  addSecurityThreat(organizationId: number, data: { securityThreatId: number, threatLevelId: number }) {
+    let url = `${CrudService.BaseUrl}/organizations/${organizationId}/securityThreats`;
+    return this.crudService.post(url, data);
+  }
+
   listSecurityThreats(organizationId: number, page: number, recordsPerPage: number = 10) {
     let url = `${CrudService.BaseUrl}/organizations/${organizationId}/securityThreats`;
     return this.crudService.getPage(url, page, recordsPerPage);

@@ -1,6 +1,6 @@
 <div>
   <div>
-    <small style="text-transform: uppercase">Organização {{ organizationLegalName }}</small>
+    <small style="text-transform: uppercase">Organização {{ organization.legalName }}</small>
     <h5>Ameaças</h5>
   </div>
   <div class="d-flex">
@@ -27,7 +27,10 @@
         </tr>
         <tr *ngFor="let securityThreat of securityThreats">
           <td>{{ securityThreat.name }}</td>
-          <td>{{ securityThreat.threatLevel.id }} - {{ securityThreat.threatLevel.name }}</td>
+          <td>
+            <span *ngIf="securityThreat.threatLevel">{{ securityThreat.threatLevel.id }} - {{ securityThreat.threatLevel.name }}</span>
+            <span *ngIf="!securityThreat.threatLevel">Não cadastrado</span>
+          </td>
           <td>
             <a title="Alterar grau" [routerLink]="" (click)="editItem(securityThreat)"><fa name="edit"></fa></a>
             <a title="Remover" [routerLink]="" (click)="removeItem(securityThreat)"><fa name="trash"></fa></a>

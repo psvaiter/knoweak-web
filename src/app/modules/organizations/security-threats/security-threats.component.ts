@@ -3,10 +3,11 @@ import { ActivatedRoute } from '@angular/router';
 import { finalize } from 'rxjs/operators';
 import { BsModalService } from 'ngx-bootstrap/modal';
 
+import { Constants } from '../../../shared/constants';
 import { OrganizationSecurityThreatLookupComponent } from './organization-security-threat-lookup/organization-security-threat-lookup.component';
 import { OrganizationService } from '../../../services/api/organization/organization.service';
 import { OrganizationSecurityThreatService } from '../../../services/api/organization/organization-security-threat.service';
-import { Constants } from '../../../shared/constants';
+import { Organization } from '../organization/organization';
 
 @Component({
   selector: 'app-security-threats',
@@ -16,53 +17,23 @@ import { Constants } from '../../../shared/constants';
 export class SecurityThreatsComponent implements OnInit {
 
   loading: boolean;
-  organizationLegalName: string;
-  securityThreats: [];
-
-  private organizationId: number;
+  organization: Organization = new Organization();
+  securityThreats: any[];
 
   constructor(
     private route: ActivatedRoute,
     private modalService: BsModalService,
     private organizationService: OrganizationService,
     private organizationSecurityThreatService: OrganizationSecurityThreatService
-  ) { 
+  ) {
     route.paramMap.subscribe(params => {
-      this.organizationId = +params.get('id');
+      this.organization.id = +params.get('id');
     });
   }
 
   ngOnInit() {
-    // Get organization name to show
-    this.organizationLegalName = "Carregando...";
-    this.organizationService.getById(this.organizationId)
-      .subscribe(
-        response => {
-          this.organizationLegalName = response['data'].legalName;
-        },
-        err => {
-          this.organizationLegalName = "--- Falha ao carregar nome da organização ---"
-        }
-      );
-      
-    // Load security threats of organization
-    this.loading = true;
-    this.organizationSecurityThreatService.listSecurityThreats(this.organizationId, 1)
-      .pipe(finalize(() => this.loading = false))
-      .subscribe(
-        response => {
-          console.log(response);
-          this.securityThreats = response['data'].map(item => {
-            return {
-              name: item.securityThreat.name,
-              threatLevel: Constants.RATING_LEVELS.find(level => level.id == item.threatLevelId)
-            };
-          });
-        },
-        err => {
-          console.error(err);
-        }
-      );
+    this.loadOrganizationData();
+    this.loadSecurityThreats();
   }
 
   addItem() {
@@ -70,13 +41,13 @@ export class SecurityThreatsComponent implements OnInit {
     let modalRef = this.modalService.show(OrganizationSecurityThreatLookupComponent, {
       class: 'modal-md',
       initialState: {
-        
+        organization: this.organization
       }
     });
 
-    // Act on confirmation
-    modalRef.content.confirmed.subscribe(eventData => {
-      //modalRef.hide();
+    modalRef.content.added.subscribe(eventData => {
+      this.loadSecurityThreats();
+      modalRef.hide();
     });
   }
 
@@ -85,13 +56,14 @@ export class SecurityThreatsComponent implements OnInit {
     let modalRef = this.modalService.show(OrganizationSecurityThreatLookupComponent, {
       class: 'modal-md',
       initialState: {
+        organization: this.organization,
         securityThreat: securityThreat
       }
     });
 
     // Act on confirmation
-    modalRef.content.confirmed.subscribe(eventData => {
-      //modalRef.hide();
+    modalRef.content.added.subscribe(eventData => {
+      modalRef.hide();
     });
   }
 
@@ -100,6 +72,38 @@ export class SecurityThreatsComponent implements OnInit {
       return;
     }
     // TODO: remove
+  }
+
+  private loadOrganizationData() {
+    this.organization.legalName = "Carregando...";
+    this.organizationService.getById(this.organization.id)
+      .subscribe(
+        response => {
+          this.organization.legalName = response['data'].legalName;
+        }, 
+        err => {
+          this.organization.legalName = "--- Falha ao carregar nome da organização ---";
+        }
+      );
+  }
+
+  private loadSecurityThreats() {
+    this.loading = true;
+    this.organizationSecurityThreatService.listSecurityThreats(this.organization.id, 1)
+      .pipe(finalize(() => this.loading = false))
+      .subscribe(
+        response => {
+          this.securityThreats = response['data'].map(item => {
+            return {
+              name: item.securityThreat.name,
+              threatLevel: Constants.RATING_LEVELS.find(level => level.id == item.threatLevelId)
+            };
+          });
+        }, 
+        err => {
+          console.error(err);
+        }
+      );
   }
 
 }
