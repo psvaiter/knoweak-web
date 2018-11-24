@@ -7,12 +7,14 @@ import { OrganizationStructureComponent } from './organization-structure/organiz
 import { AnalysisComponent } from '../../components/analysis/analysis.component';
 import { EditAnalysisComponent } from '../../components/analysis/edit-analysis/edit-analysis.component';
 import { SecurityThreatsComponent } from './security-threats/security-threats.component';
+import { OrganizationItAssetsComponent } from './organization-it-assets/organization-it-assets.component';
 
 const routes: Routes = [
     { path: '', component: OrganizationComponent },
     { path: ':id/edit', component: EditOrganizationComponent },
     { path: ':id/structure', component: OrganizationStructureComponent },
-    { path: ':id/threats', component: SecurityThreatsComponent },
+    { path: ':id/securityThreats', component: SecurityThreatsComponent },
+    { path: ':id/itAssets', component: OrganizationItAssetsComponent },
     { path: ':id/analyses', component: AnalysisComponent },
     { path: ':id/analyses/:analysisId/details', component: EditAnalysisComponent },
 ];

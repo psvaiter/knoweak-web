@@ -19,6 +19,7 @@ import { ProcessItemComponent } from './organization-structure/process-item/proc
 import { ItServiceItemComponent } from './organization-structure/it-service-item/it-service-item.component';
 import { ItAssetItemComponent } from './organization-structure/it-asset-item/it-asset-item.component';
 import { SecurityThreatsComponent } from './security-threats/security-threats.component';
+import { OrganizationItAssetsComponent } from './organization-it-assets/organization-it-assets.component';
 import { AnalysisComponent } from '../../components/analysis/analysis.component';
 import { AnalysisDetailComponent } from '../../components/analysis/analysis-detail/analysis-detail.component';
 import { EditAnalysisComponent } from '../../components/analysis/edit-analysis/edit-analysis.component';
@@ -57,7 +58,8 @@ import { OrganizationSecurityThreatService } from '../../services/api/organizati
         ProcessItemComponent,
         ItServiceItemComponent,
         ItAssetItemComponent,
-        SecurityThreatsComponent
+        SecurityThreatsComponent,
+        OrganizationItAssetsComponent
     ],
     entryComponents: [
         DepartmentsLookupModalComponent,
