@@ -8,6 +8,7 @@ import { OrganizationSecurityThreatLookupComponent } from './organization-securi
 import { OrganizationService } from '../../../services/api/organization/organization.service';
 import { OrganizationSecurityThreatService } from '../../../services/api/organization/organization-security-threat.service';
 import { Organization } from '../organization/organization';
+import { Paging } from '../../../shared/components/pagination/pagination.component';
 
 @Component({
   selector: 'app-security-threats',
@@ -19,6 +20,7 @@ export class SecurityThreatsComponent implements OnInit {
   loading: boolean;
   organization: Organization = new Organization();
   securityThreats: any[];
+  paging: Paging = new Paging();
 
   constructor(
     private route: ActivatedRoute,
@@ -84,6 +86,14 @@ export class SecurityThreatsComponent implements OnInit {
       );
   }
 
+  getPrevPage() {
+    this.loadSecurityThreats(this.paging.currentPage - 1);
+  }
+
+  getNextPage() {
+    this.loadSecurityThreats(this.paging.currentPage + 1);
+  }
+
   private loadOrganizationData() {
     this.organization.legalName = "Carregando...";
     this.organizationService.getById(this.organization.id)
@@ -97,11 +107,11 @@ export class SecurityThreatsComponent implements OnInit {
       );
   }
 
-  private loadSecurityThreats() {
+  private loadSecurityThreats(page: number = 1) {
     this.securityThreats = null;
     this.loading = true;
 
-    this.organizationSecurityThreatService.listSecurityThreats(this.organization.id, 1)
+    this.organizationSecurityThreatService.listSecurityThreats(this.organization.id, page)
       .pipe(finalize(() => this.loading = false))
       .subscribe(
         response => {
@@ -112,6 +122,7 @@ export class SecurityThreatsComponent implements OnInit {
               threatLevel: Constants.RATING_LEVELS.find(level => level.id == item.threatLevelId)
             };
           });
+          this.paging = Object.assign(this.paging, response['paging']);
         }, 
         err => {
           console.error(err);

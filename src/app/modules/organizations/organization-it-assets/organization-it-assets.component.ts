@@ -89,6 +89,14 @@ export class OrganizationItAssetsComponent implements OnInit {
       );
   }
 
+  getPrevPage() {
+    this.loadItAssets(this.paging.currentPage - 1);
+  }
+
+  getNextPage() {
+    this.loadItAssets(this.paging.currentPage + 1);
+  }
+
   private loadOrganizationData() {
     this.organization.legalName = "Carregando...";
     this.organizationService.getById(this.organization.id)
@@ -125,12 +133,4 @@ export class OrganizationItAssetsComponent implements OnInit {
       );
   }
   
-  getPrevPage() {
-    this.loadItAssets(this.paging.currentPage - 1);
-  }
-
-  getNextPage() {
-    this.loadItAssets(this.paging.currentPage + 1);
-  }
-
 }
