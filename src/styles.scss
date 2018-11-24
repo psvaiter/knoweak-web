@@ -15,12 +15,6 @@ h5, .h5 {
   margin-bottom: 1.25rem;
 }
 
-.fa {
-  width: 22px;
-  text-align: center;
-  // margin-right: 0.5rem;
-}
-
 /*
  * Adjusts ng-select to match sizing small of inputs
  */
@@ -156,10 +150,11 @@ div.table-container table td {
   text-decoration: none;
 }
 
-.table .actions .fa {
+.table .fa {
   width: 22px;
   text-align: center;
   margin-right: 0;
+  font-size: 0.95rem;
 }
 
 .fa-no-margin .fa {

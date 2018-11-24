@@ -61,7 +61,7 @@
             <td>{{ record.taxId }}</td>
             <td>{{ record.legalName }}</td>
             <td>{{ record.createdOn | date : "dd/MM/yyyy HH:mm" }}</td>
-            <td class="actions">
+            <td>
               <a title="Editar" [routerLink]="['/organizations', record.id, 'edit']" class="icon-link"><fa name="edit"></fa></a>
               <a title="Gerenciar estrutura" [routerLink]="['/organizations', record.id, 'structure']" class="icon-link"><fa name="sitemap"></fa></a>
               <a title="Gerenciar ameaças" [routerLink]="['/organizations', record.id, 'threats']" class="icon-link"><fa name="exclamation-triangle"></fa></a>
