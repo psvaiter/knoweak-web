@@ -12,6 +12,7 @@ import { ProcessLookupModalComponent } from './organization-structure/process-lo
 import { ItServiceLookupModalComponent } from './organization-structure/it-service-lookup-modal/it-service-lookup-modal.component';
 import { ItAssetLookupModalComponent } from './organization-structure/it-asset-lookup-modal/it-asset-lookup-modal.component';
 import { OrganizationSecurityThreatLookupComponent } from './security-threats/organization-security-threat-lookup/organization-security-threat-lookup.component';
+import { OrganizationItAssetLookupComponent } from './organization-it-assets/organization-it-asset-lookup/organization-it-asset-lookup.component';
 import { DepartmentListComponent } from './organization-structure/department-list/department-list.component';
 import { DepartmentItemComponent } from './organization-structure/department-item/department-item.component';
 import { MacroprocessItemComponent } from './organization-structure/macroprocess-item/macroprocess-item.component';
@@ -59,7 +60,8 @@ import { OrganizationSecurityThreatService } from '../../services/api/organizati
         ItServiceItemComponent,
         ItAssetItemComponent,
         SecurityThreatsComponent,
-        OrganizationItAssetsComponent
+        OrganizationItAssetsComponent,
+        OrganizationItAssetLookupComponent
     ],
     entryComponents: [
         DepartmentsLookupModalComponent,
@@ -67,7 +69,8 @@ import { OrganizationSecurityThreatService } from '../../services/api/organizati
         ProcessLookupModalComponent,
         ItServiceLookupModalComponent,
         ItAssetLookupModalComponent,
-        OrganizationSecurityThreatLookupComponent
+        OrganizationSecurityThreatLookupComponent,
+        OrganizationItAssetLookupComponent
     ],
     imports: [
         OrganizationsRoutingModule,

@@ -38,4 +38,9 @@ export class OrganizationItAssetService {
     return this.crudService.delete(url);
   }
 
+  removeItAssetFromOrganization(organizationId: number, itAssetInstanceId: number) {
+    let url = `${CrudService.BaseUrl}/organizations/${organizationId}/itAssets/${itAssetInstanceId}`;
+    return this.crudService.delete(url);
+  }
+
 }
