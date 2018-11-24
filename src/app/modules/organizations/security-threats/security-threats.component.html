@@ -26,8 +26,8 @@
           <td colspan="3">Nenhuma ameaça cadastrada</td>
         </tr>
         <tr *ngFor="let securityThreat of securityThreats">
-          <td>{{ securityThreat.name }}</td>
-          <td>
+          <td class="w-100">{{ securityThreat.name }}</td>
+          <td class="text-nowrap">
             <span *ngIf="securityThreat.threatLevel">{{ securityThreat.threatLevel.id }} - {{ securityThreat.threatLevel.name }}</span>
             <span *ngIf="!securityThreat.threatLevel">Não cadastrado</span>
           </td>

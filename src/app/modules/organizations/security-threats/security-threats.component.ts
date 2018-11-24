@@ -63,6 +63,7 @@ export class SecurityThreatsComponent implements OnInit {
 
     // Act on confirmation
     modalRef.content.added.subscribe(eventData => {
+      this.loadSecurityThreats();
       modalRef.hide();
     });
   }
@@ -71,7 +72,16 @@ export class SecurityThreatsComponent implements OnInit {
     if (!confirm(`Deseja remover a ameaça "${securityThreat.name}" da organização?`)) {
       return;
     }
-    // TODO: remove
+    
+    this.organizationSecurityThreatService.removeSecurityThreat(this.organization.id, securityThreat.id)
+      .subscribe(
+        response => {
+          this.loadSecurityThreats();
+        },
+        err => {
+          console.error(err);
+        }
+      );
   }
 
   private loadOrganizationData() {
@@ -88,7 +98,9 @@ export class SecurityThreatsComponent implements OnInit {
   }
 
   private loadSecurityThreats() {
+    this.securityThreats = null;
     this.loading = true;
+
     this.organizationSecurityThreatService.listSecurityThreats(this.organization.id, 1)
       .pipe(finalize(() => this.loading = false))
       .subscribe(

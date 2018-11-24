@@ -23,4 +23,9 @@ export class OrganizationSecurityThreatService {
     return this.crudService.patch(url, data);
   }
 
+  removeSecurityThreat(organizationId: number, securityThreatId: number) {
+    let url = `${CrudService.BaseUrl}/organizations/${organizationId}/securityThreats/${securityThreatId}`;
+    return this.crudService.delete(url);
+  }
+
 }
