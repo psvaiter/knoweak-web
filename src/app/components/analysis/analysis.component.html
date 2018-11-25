@@ -36,7 +36,7 @@
   </div>
   <div class="table-container">
     <table class="table table-hover">
-      <thead>
+      <thead class="thead-light">
         <tr>
           <th>ID</th>
           <th>Descrição</th>
@@ -47,7 +47,7 @@
       <tbody>
         <tr *ngFor="let record of records">
           <td>{{ record.id }}</td>
-          <td>{{ record.description }}</td>
+          <td style="width: 99%">{{ record.description }}</td>
           <td>{{ record.createdOn | date : "dd/MM/yyyy HH:mm" }}</td>
           <td>
             <a title="Visualizar detalhes" [routerLink]="['/organizations', organizationId, 'analyses', record.id, 'details']" class="icon-link"><fa name="search-plus"></fa></a>
