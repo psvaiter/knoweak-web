@@ -8,6 +8,11 @@ export class OrganizationItAssetService {
 
   }
 
+  getItAssetByInstanceIdFromOrganization(organizationId: number, itAssetInstanceId: number) {
+    let url = `${CrudService.BaseUrl}/organizations/${organizationId}/itAssets/${itAssetInstanceId}`;
+    return this.crudService.get(url);
+  }
+
   getItAssetByInstanceId(organizationId: number, itServiceInstanceId: number, itAssetInstanceId: number) {
     let url = `${CrudService.BaseUrl}/organizations/${organizationId}/itServices/${itServiceInstanceId}/itAssets/${itAssetInstanceId}`;
     return this.crudService.get(url);
