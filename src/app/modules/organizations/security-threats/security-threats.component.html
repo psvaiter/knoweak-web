@@ -22,7 +22,7 @@
         <tr *ngIf="loading">
           <td colspan="3">Carregando...</td>
         </tr>
-        <tr *ngIf="!securityThreats && !loading">
+        <tr *ngIf="!loading && (!securityThreats || !securityThreats.length)">
           <td colspan="3">Nenhuma ameaça cadastrada</td>
         </tr>
         <tr *ngFor="let securityThreat of securityThreats">

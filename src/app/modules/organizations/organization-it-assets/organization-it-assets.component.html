@@ -22,7 +22,7 @@
         <tr *ngIf="loading">
           <td colspan="3">Carregando...</td>
         </tr>
-        <tr *ngIf="!itAssets && !loading">
+        <tr *ngIf="!loading && (!itAssets || !itAssets.length)">
           <td colspan="3">Nenhum ativo de TI cadastrado</td>
         </tr>
         <tr *ngFor="let itAsset of itAssets">
