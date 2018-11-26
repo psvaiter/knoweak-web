@@ -9,6 +9,7 @@ import { CatalogItServiceService } from '../../../../services/api/catalog/it-ser
 })
 export class ItServiceLookupModalComponent implements OnInit {
 
+  process: any;
   itServices: any[];
   ratingLevels = Constants.RATING_LEVELS;
 

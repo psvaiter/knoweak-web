@@ -9,6 +9,7 @@ import { Constants } from '../../../../shared/constants';
 })
 export class ProcessLookupModalComponent implements OnInit {
 
+  macroprocess: any;
   processes: any[];
   ratingLevels = Constants.RATING_LEVELS;
 
