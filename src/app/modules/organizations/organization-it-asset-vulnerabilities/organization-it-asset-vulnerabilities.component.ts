@@ -48,7 +48,8 @@ export class OrganizationItAssetVulnerabilitiesComponent implements OnInit {
     let modalRef = this.modalService.show(OrganizationItAssetVulnerabilityLookupComponent, {
       class: 'modal-md',
       initialState: {
-        organization: this.organization
+        organization: this.organization,
+        itAsset: this.itAsset
       }
     });
 
@@ -65,6 +66,7 @@ export class OrganizationItAssetVulnerabilitiesComponent implements OnInit {
       class: 'modal-md',
       initialState: {
         organization: this.organization,
+        itAsset: this.itAsset,
         vulnerability: vulnerability
       }
     });
