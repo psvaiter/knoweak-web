@@ -3,7 +3,9 @@ import { finalize } from 'rxjs/operators';
 import { BsModalService } from 'ngx-bootstrap/modal';
 
 import { OrganizationProcess, OrganizationItService, RatingLevel } from '../../organization/organization';
+import { ProcessLookupModalComponent } from '../process-lookup-modal/process-lookup-modal.component';
 import { ItServiceLookupModalComponent } from '../it-service-lookup-modal/it-service-lookup-modal.component';
+import { OrganizationProcessService } from '../../../../services/api/organization/organization-process.service';
 import { OrganizationItServiceService } from '../../../../services/api/organization/organization-it-service.service';
 import { Constants } from '../../../../shared/constants';
 
@@ -15,6 +17,7 @@ import { Constants } from '../../../../shared/constants';
 export class ProcessItemComponent implements OnInit {
 
   @Input() process: OrganizationProcess;
+  @Output() edited = new EventEmitter();
   @Output() delete = new EventEmitter();
   
   expanded: boolean;
@@ -24,6 +27,7 @@ export class ProcessItemComponent implements OnInit {
 
   constructor(
     private modalService: BsModalService,
+    private organizationProcessService: OrganizationProcessService,
     private organizationItServiceService: OrganizationItServiceService
   ) { 
 
@@ -44,6 +48,32 @@ export class ProcessItemComponent implements OnInit {
   deleteProcess() {
     // Emit event asking for parent component to remove from its register
     this.delete.emit(this.process);
+  }
+
+  editProcess() {
+    // Open modal
+    let modalRef = this.modalService.show(ProcessLookupModalComponent, {
+      class: 'modal-md',
+      initialState: {
+        macroprocess: this.process.macroprocess,
+        selectedProcessId: this.process.id,
+        selectedRelevanceId: (this.process.relevance) ? this.process.relevance.id : null
+      }
+    });
+
+    // Act on confirmation
+    modalRef.content.confirmed.subscribe(eventData => {
+      // Patch process
+      this.organizationProcessService
+        .patchProcess(this.organizationId, this.process.instanceId, { relevanceLevelId: eventData.relevance.id })
+        .subscribe(
+          response => {
+            this.process.relevance = Constants.RATING_LEVELS.find(level => level.id == response['data'].relevanceLevelId)
+            this.edited.emit(this.process);
+            modalRef.hide();
+          }
+      );
+    });
   }
 
   addItService() {

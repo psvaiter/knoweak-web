@@ -81,6 +81,10 @@ export class MacroprocessItemComponent implements OnInit {
     );
   }
 
+  onProcessEdited() {
+    this.listMacroprocessProcesses();
+  }
+
   private listMacroprocessProcesses() {
     this.loading = true;
     this.organizationProcessService.listProcesses(this.organizationId, 1, 100, this.macroprocess.instanceId)

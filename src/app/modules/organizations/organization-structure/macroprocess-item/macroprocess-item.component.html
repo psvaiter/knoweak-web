@@ -22,7 +22,7 @@
   <ul class="list-group" *ngIf="processes?.length > 0; else emptyList">
     <li class="list-group-item" *ngFor="let process of processes">
 
-      <app-process-item [process]="process" (delete)="removeProcess($event)"></app-process-item>
+      <app-process-item [process]="process" (delete)="removeProcess($event)" (edited)="onProcessEdited()"></app-process-item>
 
     </li>
   </ul>

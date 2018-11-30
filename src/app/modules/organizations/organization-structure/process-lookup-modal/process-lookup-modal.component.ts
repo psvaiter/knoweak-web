@@ -10,16 +10,20 @@ import { Constants } from '../../../../shared/constants';
 export class ProcessLookupModalComponent implements OnInit {
 
   macroprocess: any;
-  processes: any[];
-  ratingLevels = Constants.RATING_LEVELS;
-
   selectedProcessId: number;
   selectedRelevanceId: number;
   confirmed = new EventEmitter();
+  
+  private processes: any[];
+  private ratingLevels = Constants.RATING_LEVELS;
+  private editMode: boolean;
 
   constructor(private catalogProcessService: CatalogProcessService) { }
 
   ngOnInit() {
+    if (this.selectedProcessId) {
+      this.editMode = true;
+    }
     this.loadProcesses();
   }
 

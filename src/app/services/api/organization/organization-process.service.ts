@@ -24,9 +24,14 @@ export class OrganizationProcessService {
     return this.crudService.post(url, data);
   }
 
+  patchProcess(organizationId: number, instanceId: number, data: { relevanceLevelId: number }) {
+    let url = `${CrudService.BaseUrl}/organizations/${organizationId}/processes/${instanceId}`;
+    return this.crudService.patch(url, data);
+  }
+
   removeProcess(organizationId: number, instanceId: number) {
     let url = `${CrudService.BaseUrl}/organizations/${organizationId}/processes/${instanceId}`;
     return this.crudService.delete(url);
   }
-  
+
 }
