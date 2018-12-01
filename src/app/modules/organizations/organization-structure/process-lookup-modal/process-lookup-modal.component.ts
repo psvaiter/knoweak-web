@@ -1,4 +1,5 @@
 import { Component, OnInit, EventEmitter } from '@angular/core';
+import _ = require('lodash');
 import { CatalogProcessService } from '../../../../services/api/catalog/process/catalog-process.service';
 import { Constants } from '../../../../shared/constants';
 
@@ -37,8 +38,8 @@ export class ProcessLookupModalComponent implements OnInit {
   private loadProcesses() {
     this.catalogProcessService.listProcesses(1, 100).subscribe(
       response => {
-        this.processes = response['data'];
-        this.processes.sort((a, b) => (a.name < b.name) ? -1 : 1);
+        let processes = response['data'];
+        this.processes = _.orderBy(processes, ['name']);
       }
     );
   }

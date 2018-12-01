@@ -1,5 +1,7 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { finalize } from 'rxjs/operators';
+
+import * as _ from 'lodash';
 import { BsModalService } from 'ngx-bootstrap/modal';
 
 import { OrganizationMacroprocess, OrganizationProcess, RatingLevel } from '../../organization/organization';
@@ -61,8 +63,8 @@ export class MacroprocessItemComponent implements OnInit {
       organizationProcess.id = eventData.processId;
       organizationProcess.relevance = eventData.relevance;
 
-      this.requestAddProcess(organizationProcess);
-      modalRef.hide();
+      this.requestAddProcess(organizationProcess)
+        .then(() => modalRef.hide());
     });
   }
 
@@ -91,7 +93,7 @@ export class MacroprocessItemComponent implements OnInit {
       .pipe(finalize(() => this.loading= false))
       .subscribe(
         response => {
-          this.processes = response['data']
+          let processes = response['data']
             .filter(item => item.macroprocessInstanceId == this.macroprocess.instanceId)
             .map(item => {
               let process = new OrganizationProcess();
@@ -112,25 +114,32 @@ export class MacroprocessItemComponent implements OnInit {
               return process;
             });
 
-          this.processes.sort((a, b) => (a.name < b.name) ? -1 : 1);
+          this.processes = _.orderBy(processes, ['name']);
         }
       );
   }
 
-  private requestAddProcess(process: OrganizationProcess) {
-    let request = {
-      macroprocessInstanceId: this.macroprocess.instanceId,
-      processId: process.id,
-      relevanceLevelId: (process.relevance) ? process.relevance.id : null
-    };
-    this.organizationProcessService.addProcess(this.organizationId, request).subscribe(
-      response => {
-        this.listMacroprocessProcesses();
-      },
-      err => {
-        console.error(err);
-      }
-    );
+  private requestAddProcess(process: OrganizationProcess): Promise<void> {
+    let promise = new Promise<void>((resolve, reject) => {
+      let request = {
+        macroprocessInstanceId: this.macroprocess.instanceId,
+        processId: process.id,
+        relevanceLevelId: (process.relevance) ? process.relevance.id : null
+      };
+
+      this.organizationProcessService.addProcess(this.organizationId, request).subscribe(
+        response => {
+          this.listMacroprocessProcesses();
+          resolve();
+        },
+        err => {
+          console.error(err);
+          reject();
+        }
+      );
+    });
+
+    return promise;
   }
 
 }

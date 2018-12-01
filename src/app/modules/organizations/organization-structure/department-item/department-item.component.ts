@@ -1,10 +1,12 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { finalize } from 'rxjs/operators';
+
+import _ = require('lodash');
 import { BsModalService } from 'ngx-bootstrap/modal';
 
 import { OrganizationDepartment, OrganizationMacroprocess } from '../../organization/organization';
 import { OrganizationMacroprocessService } from '../../../../services/api/organization/organization-macroprocess.service';
 import { MacroprocessLookupModalComponent } from '../macroprocess-lookup-modal/macroprocess-lookup-modal.component';
-import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-department-item',
@@ -82,7 +84,7 @@ export class DepartmentItemComponent implements OnInit {
       .pipe(finalize(() => this.loading = false))
       .subscribe(
         response => {
-          this.macroprocesses = response['data']
+          let macroprocesses = response['data']
             .filter(item => item.department.id == this.department.id)
             .map(item => {
               let macroprocess = new OrganizationMacroprocess();
@@ -97,7 +99,7 @@ export class DepartmentItemComponent implements OnInit {
               return macroprocess;
             });
 
-          this.macroprocesses.sort((a, b) => (a.name < b.name) ? -1 : 1);
+          this.macroprocesses = _.orderBy(macroprocesses, ['name']);
         }
       );
   }

@@ -1,5 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { finalize } from 'rxjs/operators';
+
+import _ = require('lodash');
 import { BsModalService } from 'ngx-bootstrap/modal';
 
 import { OrganizationProcess, OrganizationItService, RatingLevel } from '../../organization/organization';
@@ -117,7 +119,7 @@ export class ProcessItemComponent implements OnInit {
       .pipe(finalize(() => this.loading = false))
       .subscribe(
         response => {
-          this.itServices = response['data']
+          let itServices = response['data']
             .filter(item => item.processInstanceId == this.process.instanceId)
             .map(item => {
               let itService = new OrganizationItService();
@@ -138,7 +140,7 @@ export class ProcessItemComponent implements OnInit {
               return itService;
             });
 
-          this.itServices.sort((a, b) => (a.name < b.name) ? -1 : 1);
+          this.itServices = _.orderBy(itServices, ['name']);
         }
       );
   }

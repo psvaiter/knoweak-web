@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
+import _ = require('lodash');
 import { BsModalService } from 'ngx-bootstrap/modal';
 
 import { Organization, OrganizationMacroprocess, OrganizationProcess, RatingLevel, OrganizationItService, OrganizationItAsset } from '../organization/organization';
@@ -337,7 +338,7 @@ export class OrganizationStructureComponent implements OnInit {
 
     this._crudService.get(url).subscribe(
       data => {
-        this.itAssets = data['data'];
+        let itAssets = data['data'];
         
         // Union with organization it assets
         this._crudService.get(`${CrudService.BaseUrl}/organizations/${this.organization.id}/itAssets`).subscribe(
@@ -355,9 +356,10 @@ export class OrganizationStructureComponent implements OnInit {
             });
 
             // Concatenate and sort (those with external identifiers to avoid duplicate)
-            this.itAssets = this.itAssets
+            this.itAssets = _(itAssets)
               .concat(organizationItAssets.filter(asset => asset && asset.externalIdentifier))
-              .sort((a, b) => (a.name < b.name) ? -1 : 1);
+              .orderBy(['name'])
+              .value();
           },
           err => {
             console.error(err);

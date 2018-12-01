@@ -1,5 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { finalize } from 'rxjs/operators';
+
+import _ = require('lodash');
 import { BsModalService } from 'ngx-bootstrap/modal';
 
 import { Constants } from '../../../../shared/constants';
@@ -99,7 +101,7 @@ export class ItServiceItemComponent implements OnInit {
       .pipe(finalize(() => this.loading = false))
       .subscribe(
         response => {
-          this.itAssets = response['data']
+          let itAssets = response['data']
             .filter(item => item.itServiceInstanceId == this.itService.instanceId)
             .map(item => {
               let itAsset = new OrganizationItAsset();
@@ -121,12 +123,7 @@ export class ItServiceItemComponent implements OnInit {
               return itAsset;
             });
 
-          this.itAssets.sort((a, b) => {
-            if (a.name < b.name) return -1;
-            if (a.name > b.name) return 1;
-            if (a.externalIdentifier < b.externalIdentifier) return -1;
-            return 1;
-          });
+          this.itAssets = _.orderBy(itAssets, ['name', 'externalIdentifier']);
         }
       );
   }

@@ -1,7 +1,9 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { finalize } from 'rxjs/operators';
+import * as _ from 'lodash';
+
 import { OrganizationItAssetService } from '../../../../services/api/organization/organization-it-asset.service';
 import { CatalogItAssetService } from '../../../../services/api/catalog/it-asset/catalog-it-asset.service';
-import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-organization-it-asset-lookup',
@@ -53,8 +55,8 @@ export class OrganizationItAssetLookupComponent implements OnInit {
       .pipe(finalize(() => this.loadingItAssets = false))
       .subscribe(
         response => {
-          this.itAssets = response['data'];
-          this.itAssets.sort((a, b) => (a.name < b.name) ? -1 : 1);
+          let itAssets = response['data'];
+          this.itAssets = _.orderBy(itAssets, ['name']);
         }
       );
   }

@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { finalize } from 'rxjs/operators';
+import _ = require('lodash');
 
 import { Constants } from '../../../../shared/constants';
 import { CatalogSecurityThreatService } from '../../../../services/api/catalog/security-threat/catalog-security-threat.service';
@@ -59,8 +60,8 @@ export class OrganizationSecurityThreatLookupComponent implements OnInit {
       .pipe(finalize(() => this.loadingSecurityThreats = false))
       .subscribe(
         response => {
-          this.securityThreats = response['data'];
-          this.securityThreats.sort((a, b) => (a.name < b.name) ? -1 : 1);
+          let securityThreats = response['data'];
+          this.securityThreats = _.orderBy(securityThreats, ['name']);
         }
       );
   }

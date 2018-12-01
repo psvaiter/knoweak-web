@@ -1,4 +1,5 @@
 import { Component, OnInit, EventEmitter } from '@angular/core';
+import _ = require('lodash');
 import { Constants } from '../../../../shared/constants';
 import { CatalogItServiceService } from '../../../../services/api/catalog/it-service/catalog-it-service.service';
 
@@ -35,8 +36,8 @@ export class ItServiceLookupModalComponent implements OnInit {
   private loadItServices() {
     this.catalogItServiceService.listItServices(1, 100).subscribe(
       response => {
-        this.itServices = response['data'];
-        this.itServices.sort((a, b) => (a.name < b.name) ? -1 : 1);
+        let itServices = response['data'];
+        this.itServices = _.orderBy(itServices, ['name']);
       }
     );
   }

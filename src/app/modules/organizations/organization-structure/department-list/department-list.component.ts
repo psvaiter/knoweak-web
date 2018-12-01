@@ -71,16 +71,17 @@ export class DepartmentListComponent implements OnInit {
 
   private addDepartment(selectedDepartmentId): Promise<void> {
     let promise = new Promise<void>((resolve, reject) => {
-      this.organizationDepartmentService.addDepartment(this.organizationId, { id: selectedDepartmentId }).subscribe(
-        data => {
-          this.getOrganizationDepartments();
-          resolve();
-        },
-        err => {
-          console.error(err);
-          reject(err);
-        }
-      );
+      this.organizationDepartmentService.addDepartment(this.organizationId, { id: selectedDepartmentId })
+        .subscribe(
+          data => {
+            this.getOrganizationDepartments();
+            resolve();
+          },
+          err => {
+            console.error(err);
+            reject(err);
+          }
+        );
     });
 
     return promise;

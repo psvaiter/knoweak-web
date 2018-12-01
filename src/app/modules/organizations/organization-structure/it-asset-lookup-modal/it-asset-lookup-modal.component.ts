@@ -1,4 +1,6 @@
 import { Component, OnInit, EventEmitter, Input } from '@angular/core';
+import _ = require('lodash');
+
 import { Constants } from '../../../../shared/constants';
 import { CatalogItAssetService } from '../../../../services/api/catalog/it-asset/catalog-it-asset.service';
 import { OrganizationItAssetService } from '../../../../services/api/organization/organization-it-asset.service';
@@ -80,7 +82,7 @@ export class ItAssetLookupModalComponent implements OnInit {
   private loadCatalogItAssets() {
     this.catalogItAssetService.listItAssets(1, 100).subscribe(
       response => {
-        this.catalogItAssets = response['data'].map(item => {
+        let catalogItAssets = response['data'].map(item => {
           return {
             instanceId: null,
             id: item.id,
@@ -89,7 +91,7 @@ export class ItAssetLookupModalComponent implements OnInit {
             externalIdentifier: null
           };
         });
-        this.catalogItAssets.sort((a, b) => (a.name < b.name) ? -1 : 1);
+        this.catalogItAssets = _.orderBy(catalogItAssets, ['name']);
       }
     );
   }
@@ -97,7 +99,7 @@ export class ItAssetLookupModalComponent implements OnInit {
   private loadOrganizationItAssets() {
     this.organizationItAssetService.listItAssetsFromOrganization(this.itService.organizationId, 1, 100).subscribe(
       response => {
-        this.organizationItAssets = response['data'].map(item => {
+        let organizationItAssets = response['data'].map(item => {
           return {
             instanceId: item.instanceId,
             id: item.itAsset.id,
@@ -109,7 +111,7 @@ export class ItAssetLookupModalComponent implements OnInit {
           };
         });
 
-        this.organizationItAssets.sort((a, b) => (a.name < b.name) ? -1 : 1);
+        this.organizationItAssets = _.orderBy(organizationItAssets, ['name']);
       },
       err => {
         console.error(err);
