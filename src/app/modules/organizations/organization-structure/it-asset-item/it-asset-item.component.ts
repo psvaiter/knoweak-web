@@ -3,7 +3,7 @@ import { BsModalService } from 'ngx-bootstrap/modal';
 
 import { Constants } from '../../../../shared/constants';
 import { OrganizationItAsset } from '../../organization/organization';
-import { OrganizationItAssetService } from '../../../../services/api/organization/organization-it-asset.service';
+import { OrganizationItServiceItAssetService } from '../../../../services/api/organization/organization-it-service-it-asset.service';
 import { ItAssetLookupModalComponent } from '../it-asset-lookup-modal/it-asset-lookup-modal.component';
 
 @Component({
@@ -21,7 +21,7 @@ export class ItAssetItemComponent implements OnInit {
 
   constructor(
     private modalService: BsModalService,
-    private organizationItAssetService: OrganizationItAssetService
+    private organizationItServiceItAssetService: OrganizationItServiceItAssetService
   ) {
 
   }
@@ -47,8 +47,8 @@ export class ItAssetItemComponent implements OnInit {
       let request = {
         relevanceLevelId: (eventData.relevance) ? eventData.relevance.id : null
       };
-      this.organizationItAssetService
-        .patchItAssetFromItService(this.organizationId, this.itAsset.itService.instanceId, this.itAsset.instanceId, request)
+      this.organizationItServiceItAssetService
+        .patchItAsset(this.organizationId, this.itAsset.itService.instanceId, this.itAsset.instanceId, request)
         .subscribe(
           response => {
             this.itAsset.relevance = Constants.RATING_LEVELS.find(level => level.id == response['data'].relevanceLevelId)

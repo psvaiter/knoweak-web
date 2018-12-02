@@ -118,7 +118,7 @@ export class OrganizationItAssetVulnerabilitiesComponent implements OnInit {
 
   private loadItAssetData(): any {
     this.itAsset.name = "Carregando...";
-    this.organizationItAssetService.getItAssetByInstanceIdFromOrganization(this.organization.id, this.itAsset.instanceId)
+    this.organizationItAssetService.getItAssetByInstanceId(this.organization.id, this.itAsset.instanceId)
       .subscribe(
         response => {
           this.itAsset.name = response['data'].itAsset.name;

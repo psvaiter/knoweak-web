@@ -41,6 +41,7 @@ import { OrganizationItServiceService } from '../../services/api/organization/or
 import { OrganizationItAssetService } from '../../services/api/organization/organization-it-asset.service';
 import { OrganizationSecurityThreatService } from '../../services/api/organization/organization-security-threat.service';
 import { OrganizationItAssetVulnerabilityService } from '../../services/api/organization/organization-it-asset-vulnerability.service';
+import { OrganizationItServiceItAssetService } from '../../services/api/organization/organization-it-service-it-asset.service';
 
 @NgModule({
     declarations: [
@@ -95,6 +96,7 @@ import { OrganizationItAssetVulnerabilityService } from '../../services/api/orga
         OrganizationMacroprocessService,
         OrganizationProcessService,
         OrganizationItServiceService,
+        OrganizationItServiceItAssetService,
         OrganizationItAssetService,
         OrganizationSecurityThreatService,
         OrganizationItAssetVulnerabilityService

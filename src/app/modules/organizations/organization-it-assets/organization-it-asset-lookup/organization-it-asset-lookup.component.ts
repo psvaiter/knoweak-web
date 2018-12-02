@@ -66,7 +66,7 @@ export class OrganizationItAssetLookupComponent implements OnInit {
       itAssetId: this.selectedItAssetId,
       externalIdentifier: this.externalIdentifier
     };
-    this.organizationItAssetService.addItAssetToOrganization(this.organization.id, request)
+    this.organizationItAssetService.addItAsset(this.organization.id, request)
       .subscribe(
         response => {
           this.added.emit(request);

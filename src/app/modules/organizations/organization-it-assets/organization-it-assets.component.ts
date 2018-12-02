@@ -78,7 +78,7 @@ export class OrganizationItAssetsComponent implements OnInit {
       return;
     }
     
-    this.organizationItAssetService.removeItAssetFromOrganization(this.organization.id, itAsset.instanceId)
+    this.organizationItAssetService.removeItAsset(this.organization.id, itAsset.instanceId)
       .subscribe(
         response => {
           this.loadItAssets();
@@ -114,7 +114,7 @@ export class OrganizationItAssetsComponent implements OnInit {
     this.itAssets = null;
     this.loading = true;
 
-    this.organizationItAssetService.listItAssetsFromOrganization(this.organization.id, page)
+    this.organizationItAssetService.listItAssets(this.organization.id, page)
       .pipe(finalize(() => this.loading = false))
       .subscribe(
         response => {

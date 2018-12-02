@@ -7,6 +7,7 @@ import { BsModalService } from 'ngx-bootstrap/modal';
 import { Constants } from '../../../../shared/constants';
 import { OrganizationItService, OrganizationItAsset, RatingLevel } from '../../organization/organization';
 import { OrganizationItServiceService } from '../../../../services/api/organization/organization-it-service.service';
+import { OrganizationItServiceItAssetService } from '../../../../services/api/organization/organization-it-service-it-asset.service';
 import { OrganizationItAssetService } from '../../../../services/api/organization/organization-it-asset.service';
 import { ItAssetLookupModalComponent } from '../it-asset-lookup-modal/it-asset-lookup-modal.component';
 import { ItServiceLookupModalComponent } from '../it-service-lookup-modal/it-service-lookup-modal.component';
@@ -30,6 +31,7 @@ export class ItServiceItemComponent implements OnInit {
   constructor(
     private modalService: BsModalService,
     private organizationItServiceService: OrganizationItServiceService,
+    private organizationItServiceItAssetService: OrganizationItServiceItAssetService,
     private organizationItAssetService: OrganizationItAssetService
   ) { 
 
@@ -118,7 +120,7 @@ export class ItServiceItemComponent implements OnInit {
       return;
     }
 
-    this.organizationItAssetService.removeItAsset(this.organizationId, this.itService.instanceId, itAsset.instanceId).subscribe(
+    this.organizationItServiceItAssetService.removeItAsset(this.organizationId, this.itService.instanceId, itAsset.instanceId).subscribe(
       response => {
         this.listItServiceItAssets();
       },
@@ -130,7 +132,7 @@ export class ItServiceItemComponent implements OnInit {
   
   private listItServiceItAssets() {
     this.loading = true;
-    this.organizationItAssetService.listItAssets(this.organizationId, this.itService.instanceId, 1, 100)
+    this.organizationItServiceItAssetService.listItAssets(this.organizationId, this.itService.instanceId, 1, 100)
       .pipe(finalize(() => this.loading = false))
       .subscribe(
         response => {
@@ -171,7 +173,7 @@ export class ItServiceItemComponent implements OnInit {
           externalIdentifier: itAsset.externalIdentifier
         };
 
-        this.organizationItAssetService.addItAssetToOrganization(this.organizationId, request).subscribe(
+        this.organizationItAssetService.addItAsset(this.organizationId, request).subscribe(
           response => {
             
             let request = {
@@ -180,7 +182,7 @@ export class ItServiceItemComponent implements OnInit {
               relevanceLevelId: (itAsset.relevance) ? itAsset.relevance.id : null
             };
     
-            this.organizationItAssetService.addItAsset(this.organizationId, this.itService.instanceId, request).subscribe(
+            this.organizationItServiceItAssetService.addItAsset(this.organizationId, this.itService.instanceId, request).subscribe(
               response => resolve(),
               err => reject(err)
             );
@@ -198,7 +200,7 @@ export class ItServiceItemComponent implements OnInit {
           relevanceLevelId: (itAsset.relevance) ? itAsset.relevance.id : null
         };
 
-        this.organizationItAssetService.addItAsset(this.organizationId, this.itService.instanceId, request).subscribe(
+        this.organizationItServiceItAssetService.addItAsset(this.organizationId, this.itService.instanceId, request).subscribe(
           response => resolve(),
           err => reject(err)
         );

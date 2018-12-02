@@ -102,7 +102,7 @@ export class ItAssetLookupModalComponent implements OnInit {
   }
 
   private loadOrganizationItAssets() {
-    this.organizationItAssetService.listItAssetsFromOrganization(this.itService.organizationId, 1, 100).subscribe(
+    this.organizationItAssetService.listItAssets(this.itService.organizationId, 1, 100).subscribe(
       response => {
         let organizationItAssets = response['data'].map(item => {
           return {
