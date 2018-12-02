@@ -43,6 +43,11 @@ export class OrganizationItAssetService {
     return this.crudService.post(url, data);
   }
 
+  patchItAssetFromItService(organizationId: number, itServiceInstanceId: number, itAssetInstanceId: number, data) {
+    let url = `${CrudService.BaseUrl}/organizations/${organizationId}/itServices/${itServiceInstanceId}/itAssets/${itAssetInstanceId}`;
+    return this.crudService.patch(url, data);
+  }
+
   removeItAsset(organizationId: number, itServiceInstanceId: number, itAssetInstanceId: number) {
     let url = `${CrudService.BaseUrl}/organizations/${organizationId}/itServices/${itServiceInstanceId}/itAssets/${itAssetInstanceId}`;
     return this.crudService.delete(url);

@@ -1,13 +1,17 @@
 <div class="d-flex justify-content-between align-items-center pl-4">
   
-  <span class="badge badge-default badge-hierarchy mx-2">Ativo TI</span>
-  <span class="badge badge-primary mx-2" title="Relevância: {{itAsset.relevance.name}}" *ngIf="itAsset.relevance">Ra {{itAsset.relevance.id}}</span>
-  <label class="mb-0">
+  <span class="badge badge-default badge-hierarchy mx-1">Ativo TI</span>
+  <span class="badge badge-primary mx-1" title="Relevância: {{itAsset.relevance.name}}" *ngIf="itAsset.relevance">Ra {{itAsset.relevance.id}}</span>
+  <label class="mx-1 mb-0">
     {{itAsset.name}}<span *ngIf="itAsset.externalIdentifier"> - {{itAsset.externalIdentifier}}</span>
   </label>
 
+  <!-- Edit IT asset -->
+  <button class="btn btn-outline-primary btn-sm ml-auto" title="Alterar relevância" (click)="editItAsset()">
+    <fa name="edit"></fa>
+  </button>
   <!-- Remove IT asset -->
-  <button class="btn btn-outline-danger btn-sm ml-auto" title="Excluir" (click)="deleteItAsset()">
+  <button class="btn btn-outline-danger btn-sm ml-1" title="Excluir" (click)="deleteItAsset()">
     <fa name="trash"></fa>
   </button>
 

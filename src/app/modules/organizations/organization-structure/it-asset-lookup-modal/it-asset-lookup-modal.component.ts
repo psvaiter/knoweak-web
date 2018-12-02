@@ -16,8 +16,6 @@ export class ItAssetLookupModalComponent implements OnInit {
   @Input() itService: OrganizationItService;
   
   itAssets: any[];
-  ratingLevels = Constants.RATING_LEVELS;
-
   selectedItAssetSource: string;
   selectedItAsset: any;
   selectedRelevanceId: number;
@@ -27,6 +25,8 @@ export class ItAssetLookupModalComponent implements OnInit {
   // Different IT asset sources that will be assigned to 'itAssets' by user choice
   private catalogItAssets: any[];
   private organizationItAssets: any[];
+  private ratingLevels = Constants.RATING_LEVELS;
+  private editMode: boolean;
 
   constructor(
     private catalogItAssetService: CatalogItAssetService,
@@ -36,8 +36,13 @@ export class ItAssetLookupModalComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.loadCatalogItAssets();
-    this.loadOrganizationItAssets();
+    if (this.selectedItAsset) {
+      this.editMode = true;
+    }
+    else {
+      this.loadCatalogItAssets();
+      this.loadOrganizationItAssets();
+    }
   }
 
   confirm() {
@@ -111,7 +116,7 @@ export class ItAssetLookupModalComponent implements OnInit {
           };
         });
 
-        this.organizationItAssets = _.orderBy(organizationItAssets, ['name']);
+        this.organizationItAssets = _.orderBy(organizationItAssets, ['displayName']);
       },
       err => {
         console.error(err);

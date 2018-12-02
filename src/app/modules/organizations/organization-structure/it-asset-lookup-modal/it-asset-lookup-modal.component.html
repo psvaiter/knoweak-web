@@ -6,14 +6,17 @@
     <div class="mb-2"><b>Serviço de TI:</b> {{itService.name}}</div>
     
     <div class="my-4">
-      <small>Escolha entre adicionar um ativo já existente na organização ou um ativo do catálogo.</small>
-      <div class="btn-group w-100 mt-2" btnRadioGroup [(ngModel)]="selectedItAssetSource">
-        <label class="btn btn-sm btn-outline-secondary w-50" btnRadio="organization" tabindex="0" role="button" (click)="selectOrganizationSource()">Organização</label>
-        <label class="btn btn-sm btn-outline-secondary w-50" btnRadio="catalog" tabindex="0" role="button" (click)="selectCatalogSource()">Catálogo</label>
+      <div *ngIf="!editMode">
+        <small>Escolha entre adicionar um ativo já existente na organização ou um ativo do catálogo.</small>
+        <div class="btn-group w-100 mt-2" btnRadioGroup [(ngModel)]="selectedItAssetSource">
+          <label class="btn btn-sm btn-outline-secondary w-50" btnRadio="organization" tabindex="0" role="button" (click)="selectOrganizationSource()">Organização</label>
+          <label class="btn btn-sm btn-outline-secondary w-50" btnRadio="catalog" tabindex="0" role="button" (click)="selectCatalogSource()">Catálogo</label>
+        </div>
       </div>
 
       <div *ngIf="selectedItAssetSource">
         <ng-select
+          [disabled]="editMode"
           [items]="itAssets"
           [searchable]="true"
           bindLabel="displayName"
@@ -38,7 +41,25 @@
           [(ngModel)]="selectedRelevanceId"
           placeholder="Selecione uma relevância">
         </ng-select>
-      </div>  
+      </div>
+
+      <div *ngIf="editMode">
+        <input disabled="true" [(ngModel)]="selectedItAsset.name"
+          type="text" class="mt-2 mb-2 form-control form-control-sm" />
+  
+        <div class="mx-2 mt-2 mb-4" style="color: #aaa">
+          Identificação: {{ selectedItAsset.externalIdentifier}}
+        </div>
+
+        <ng-select
+          [items]="ratingLevels"
+          [searchable]="true"
+          bindLabel="name"
+          bindValue="id"
+          [(ngModel)]="selectedRelevanceId"
+          placeholder="Selecione uma relevância">
+        </ng-select>
+      </div>
     </div>
     
   </div>
