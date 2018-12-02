@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { finalize } from 'rxjs/operators';
 
-import _ = require('lodash');
+import * as _ from 'lodash';
 import { BsModalService } from 'ngx-bootstrap/modal';
 
 import { Constants } from '../../../../shared/constants';

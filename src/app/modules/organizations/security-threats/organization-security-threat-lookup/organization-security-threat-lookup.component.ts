@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { finalize } from 'rxjs/operators';
-import _ = require('lodash');
+import * as _ from 'lodash';
 
 import { Constants } from '../../../../shared/constants';
 import { CatalogSecurityThreatService } from '../../../../services/api/catalog/security-threat/catalog-security-threat.service';

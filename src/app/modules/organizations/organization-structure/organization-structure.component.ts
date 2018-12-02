@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import _ = require('lodash');
+import * as _ from 'lodash';
 
 import { Organization } from '../organization/organization';
 import { OrganizationService } from '../../../services/api/organization/organization.service';

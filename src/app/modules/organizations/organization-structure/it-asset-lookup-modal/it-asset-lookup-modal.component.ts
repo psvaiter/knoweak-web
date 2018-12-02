@@ -1,5 +1,5 @@
 import { Component, OnInit, EventEmitter, Input } from '@angular/core';
-import _ = require('lodash');
+import * as _ from 'lodash';
 
 import { Constants } from '../../../../shared/constants';
 import { CatalogItAssetService } from '../../../../services/api/catalog/it-asset/catalog-it-asset.service';
