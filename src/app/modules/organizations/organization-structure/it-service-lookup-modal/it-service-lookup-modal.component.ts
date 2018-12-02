@@ -15,9 +15,9 @@ export class ItServiceLookupModalComponent implements OnInit {
   selectedRelevanceId: number;
   confirmed = new EventEmitter();
 
-  private itServices: any[];
-  private ratingLevels = Constants.RATING_LEVELS;
-  private editMode: boolean;
+  itServices: any[];
+  ratingLevels = Constants.RATING_LEVELS;
+  editMode: boolean;
 
   constructor(private catalogItServiceService: CatalogItServiceService) { 
 

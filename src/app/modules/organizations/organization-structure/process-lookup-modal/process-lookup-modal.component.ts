@@ -15,9 +15,9 @@ export class ProcessLookupModalComponent implements OnInit {
   selectedRelevanceId: number;
   confirmed = new EventEmitter();
   
-  private processes: any[];
-  private ratingLevels = Constants.RATING_LEVELS;
-  private editMode: boolean;
+  processes: any[];
+  ratingLevels = Constants.RATING_LEVELS;
+  editMode: boolean;
 
   constructor(private catalogProcessService: CatalogProcessService) { }
 

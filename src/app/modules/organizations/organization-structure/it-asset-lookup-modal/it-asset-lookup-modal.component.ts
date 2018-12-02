@@ -22,11 +22,12 @@ export class ItAssetLookupModalComponent implements OnInit {
   externalIdentifier: string;
   confirmed = new EventEmitter();
 
+  ratingLevels = Constants.RATING_LEVELS;
+  editMode: boolean;
+  
   // Different IT asset sources that will be assigned to 'itAssets' by user choice
   private catalogItAssets: any[];
   private organizationItAssets: any[];
-  private ratingLevels = Constants.RATING_LEVELS;
-  private editMode: boolean;
 
   constructor(
     private catalogItAssetService: CatalogItAssetService,
