@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import _ = require('lodash');
 import { BsModalService } from 'ngx-bootstrap/modal';
 
 import { OrganizationDepartment } from '../../organization/organization';
@@ -30,10 +31,12 @@ export class DepartmentListComponent implements OnInit {
   getOrganizationDepartments() {
     this.organizationDepartmentService.listDepartments(this.organizationId, 1, 100).subscribe(
       response => {
-        this.departments = response['data'].map(item => {
+        let departments = response['data'].map(item => {
           item.department.organizationId = this.organizationId;
           return item.department;
         });
+
+        this.departments = _.orderBy(departments, ['name']);
       },
       err => {
         console.error(err);
