@@ -6,8 +6,10 @@ import { BsModalService } from 'ngx-bootstrap/modal';
 
 import { Constants } from '../../../../shared/constants';
 import { OrganizationItService, OrganizationItAsset, RatingLevel } from '../../organization/organization';
+import { OrganizationItServiceService } from '../../../../services/api/organization/organization-it-service.service';
 import { OrganizationItAssetService } from '../../../../services/api/organization/organization-it-asset.service';
 import { ItAssetLookupModalComponent } from '../it-asset-lookup-modal/it-asset-lookup-modal.component';
+import { ItServiceLookupModalComponent } from '../it-service-lookup-modal/it-service-lookup-modal.component';
 
 @Component({
   selector: 'app-it-service-item',
@@ -18,6 +20,7 @@ export class ItServiceItemComponent implements OnInit {
 
   @Input() itService: OrganizationItService;
   @Output() delete = new EventEmitter();
+  @Output() edited = new EventEmitter();
 
   expanded: boolean;
   loading: boolean;
@@ -26,6 +29,7 @@ export class ItServiceItemComponent implements OnInit {
 
   constructor(
     private modalService: BsModalService,
+    private organizationItServiceService: OrganizationItServiceService,
     private organizationItAssetService: OrganizationItAssetService
   ) { 
 
@@ -43,6 +47,35 @@ export class ItServiceItemComponent implements OnInit {
     this.listItServiceItAssets();
   }
 
+  editItService() {
+    // Open modal
+    let modalRef = this.modalService.show(ItServiceLookupModalComponent, {
+      class: 'modal-md',
+      initialState: {
+        process: this.itService.process,
+        selectedItServiceId: this.itService.id,
+        selectedRelevanceId: (this.itService.relevance) ? this.itService.relevance.id : null
+      }
+    });
+
+    // Act on confirmation
+    modalRef.content.confirmed.subscribe(eventData => {
+      // Patch IT service
+      let request = {
+        relevanceLevelId: (eventData.relevance) ? eventData.relevance.id : null
+      };
+      this.organizationItServiceService
+        .patchItService(this.organizationId, this.itService.instanceId, request)
+        .subscribe(
+          response => {
+            this.itService.relevance = Constants.RATING_LEVELS.find(level => level.id == response['data'].relevanceLevelId)
+            this.edited.emit(this.itService);
+            modalRef.hide();
+          }
+      );
+    });
+  }
+  
   deleteItService() {
     // Emit event asking for parent component to remove from its register
     this.delete.emit(this.itService);

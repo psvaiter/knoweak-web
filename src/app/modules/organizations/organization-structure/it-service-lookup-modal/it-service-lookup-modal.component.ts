@@ -11,18 +11,22 @@ import { CatalogItServiceService } from '../../../../services/api/catalog/it-ser
 export class ItServiceLookupModalComponent implements OnInit {
 
   process: any;
-  itServices: any[];
-  ratingLevels = Constants.RATING_LEVELS;
-
   selectedItServiceId: number;
   selectedRelevanceId: number;
   confirmed = new EventEmitter();
+
+  private itServices: any[];
+  private ratingLevels = Constants.RATING_LEVELS;
+  private editMode: boolean;
 
   constructor(private catalogItServiceService: CatalogItServiceService) { 
 
   }
 
   ngOnInit() {
+    if (this.selectedItServiceId) {
+      this.editMode = true;
+    }
     this.loadItServices();
   }
 

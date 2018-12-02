@@ -6,6 +6,7 @@
     
     <div class="my-2">
       <ng-select
+        [disabled]="editMode"
         [items]="itServices"
         [searchable]="true"
         bindLabel="name"

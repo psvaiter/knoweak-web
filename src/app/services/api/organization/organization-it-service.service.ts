@@ -24,6 +24,11 @@ export class OrganizationItServiceService {
     return this.crudService.post(url, data);
   }
 
+  patchItService(organizationId: number, instanceId: number, data) {
+    let url = `${CrudService.BaseUrl}/organizations/${organizationId}/itServices/${instanceId}`;
+    return this.crudService.patch(url, data);
+  }
+
   removeItService(organizationId: number, instanceId: number) {
     let url = `${CrudService.BaseUrl}/organizations/${organizationId}/itServices/${instanceId}`;
     return this.crudService.delete(url);
