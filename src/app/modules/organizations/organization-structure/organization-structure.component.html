@@ -1,10 +1,7 @@
 <div>
-  <div class="mb-3">
-    <h5 class="mb-1">{{organization.legalName}}</h5>
-    <small class="text-muted">
-      <b>Nº DE REGISTRO:</b> {{organization.taxId}}<br>
-      <b>NOME FANTASIA:</b> {{organization.tradeName}}<br>
-    </small>
+  <div>
+    <small>{{ organization.legalName }}</small>
+    <h5><fa name="sitemap"></fa>Estrutura da organização</h5>
   </div>
 
   <app-department-list [organizationId]="organization.id"></app-department-list>
