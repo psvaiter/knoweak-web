@@ -66,8 +66,11 @@ export class ProcessItemComponent implements OnInit {
     // Act on confirmation
     modalRef.content.confirmed.subscribe(eventData => {
       // Patch process
+      let request = {
+        relevanceLevelId: (eventData.relevance) ? eventData.relevance.id : null
+      };
       this.organizationProcessService
-        .patchProcess(this.organizationId, this.process.instanceId, { relevanceLevelId: eventData.relevance.id })
+        .patchProcess(this.organizationId, this.process.instanceId, request)
         .subscribe(
           response => {
             this.process.relevance = Constants.RATING_LEVELS.find(level => level.id == response['data'].relevanceLevelId)
