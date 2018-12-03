@@ -4,7 +4,7 @@ import * as _ from 'lodash';
 import { Constants } from '../../../../shared/constants';
 import { CatalogItAssetService } from '../../../../services/api/catalog/it-asset/catalog-it-asset.service';
 import { OrganizationItAssetService } from '../../../../services/api/organization/organization-it-asset.service';
-import { OrganizationItService } from '../../organization/organization';
+import { OrganizationItService } from '../../organization';
 
 @Component({
   selector: 'app-it-asset-lookup-modal',

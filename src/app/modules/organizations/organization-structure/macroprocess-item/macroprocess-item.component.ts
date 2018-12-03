@@ -4,7 +4,7 @@ import { finalize } from 'rxjs/operators';
 import * as _ from 'lodash';
 import { BsModalService } from 'ngx-bootstrap/modal';
 
-import { OrganizationMacroprocess, OrganizationProcess, RatingLevel } from '../../organization/organization';
+import { OrganizationMacroprocess, OrganizationProcess, RatingLevel } from '../../organization';
 import { ProcessLookupModalComponent } from '../process-lookup-modal/process-lookup-modal.component';
 import { OrganizationProcessService } from '../../../../services/api/organization/organization-process.service';
 import { Constants } from '../../../../shared/constants';

@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { finalize } from 'rxjs/operators';
 import { BsModalService } from 'ngx-bootstrap/modal';
 
-import { Organization } from '../organization/organization';
+import { Organization } from '../organization';
 import { OrganizationService } from '../../../services/api/organization/organization.service';
 import { OrganizationItAssetService } from '../../../services/api/organization/organization-it-asset.service';
 import { OrganizationItAssetLookupComponent } from './organization-it-asset-lookup/organization-it-asset-lookup.component';

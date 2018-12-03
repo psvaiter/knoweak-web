@@ -1,6 +1,6 @@
 import { Component, OnInit, EventEmitter } from '@angular/core';
 import { Organization } from '../organization';
-import { OrganizationService } from '../../../../services/api/organization/organization.service';
+import { OrganizationService } from '../../../services/api/organization/organization.service';
 
 @Component({
   selector: 'app-organization-modal',

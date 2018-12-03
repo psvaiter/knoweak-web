@@ -1,5 +1,5 @@
 import { Component, OnInit, EventEmitter } from '@angular/core';
-import { OrganizationDepartment } from '../../organization/organization';
+import { OrganizationDepartment } from '../../organization';
 import { CatalogMacroprocessService } from '../../../../services/api/catalog/macroprocess/catalog-macroprocess.service';
 
 @Component({

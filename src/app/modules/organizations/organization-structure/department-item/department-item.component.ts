@@ -4,7 +4,7 @@ import { finalize } from 'rxjs/operators';
 import * as _ from 'lodash';
 import { BsModalService } from 'ngx-bootstrap/modal';
 
-import { OrganizationDepartment, OrganizationMacroprocess } from '../../organization/organization';
+import { OrganizationDepartment, OrganizationMacroprocess } from '../../organization';
 import { OrganizationMacroprocessService } from '../../../../services/api/organization/organization-macroprocess.service';
 import { MacroprocessLookupModalComponent } from '../macroprocess-lookup-modal/macroprocess-lookup-modal.component';
 

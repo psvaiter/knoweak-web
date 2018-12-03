@@ -5,7 +5,7 @@ import * as _ from 'lodash';
 import { BsModalService } from 'ngx-bootstrap/modal';
 
 import { Constants } from '../../../../shared/constants';
-import { OrganizationItService, OrganizationItAsset, RatingLevel } from '../../organization/organization';
+import { OrganizationItService, OrganizationItAsset, RatingLevel } from '../../organization';
 import { OrganizationItServiceService } from '../../../../services/api/organization/organization-it-service.service';
 import { OrganizationItServiceItAssetService } from '../../../../services/api/organization/organization-it-service-it-asset.service';
 import { OrganizationItAssetService } from '../../../../services/api/organization/organization-it-asset.service';

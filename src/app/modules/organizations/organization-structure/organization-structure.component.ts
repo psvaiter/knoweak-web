@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import * as _ from 'lodash';
 
-import { Organization } from '../organization/organization';
+import { Organization } from '../organization';
 import { OrganizationService } from '../../../services/api/organization/organization.service';
 
 @Component({

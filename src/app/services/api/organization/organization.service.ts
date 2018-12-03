@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CrudService } from '../../../shared/components/crud/crud.service';
-import { Organization } from '../../../modules/organizations/organization/organization';
+import { Organization } from '../../../modules/organizations/organization';
 
 @Injectable()
 export class OrganizationService {

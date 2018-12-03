@@ -4,7 +4,7 @@ import { finalize } from 'rxjs/operators';
 import { BsModalService } from 'ngx-bootstrap/modal';
 
 import { Constants } from '../../../shared/constants';
-import { Organization, OrganizationItAsset } from '../organization/organization';
+import { Organization, OrganizationItAsset } from '../organization';
 import { Paging } from '../../../shared/components/pagination/pagination.component';
 import { OrganizationService } from '../../../services/api/organization/organization.service';
 import { OrganizationItAssetService } from '../../../services/api/organization/organization-it-asset.service';

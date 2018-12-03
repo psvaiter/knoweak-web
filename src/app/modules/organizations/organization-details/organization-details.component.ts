@@ -3,8 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 
 import { Organization } from '../organization';
-import { CrudService } from '../../../../shared/components/crud/crud.service';
-import { CrudComponent } from '../../../../shared/components/crud/crud.component';
+import { CrudService } from '../../../shared/components/crud/crud.service';
+import { CrudComponent } from '../../../shared/components/crud/crud.component';
 
 @Component({
   selector: 'app-organization-details',
@@ -19,10 +19,10 @@ export class OrganizationDetailsComponent extends CrudComponent<Organization> im
   constructor(
     protected _crudService: CrudService,
     private location: Location,
-    private route: ActivatedRoute) {
-      
-      super(_crudService);
-      route.params.subscribe(params => this.id = params['id']);
+    private route: ActivatedRoute
+  ) {
+    super(_crudService);
+    route.params.subscribe(params => this.id = params['id']);
   }
 
   ngOnInit() {

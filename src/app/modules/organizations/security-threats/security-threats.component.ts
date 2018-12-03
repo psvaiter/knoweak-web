@@ -7,7 +7,7 @@ import { Constants } from '../../../shared/constants';
 import { OrganizationSecurityThreatLookupComponent } from './organization-security-threat-lookup/organization-security-threat-lookup.component';
 import { OrganizationService } from '../../../services/api/organization/organization.service';
 import { OrganizationSecurityThreatService } from '../../../services/api/organization/organization-security-threat.service';
-import { Organization } from '../organization/organization';
+import { Organization } from '../organization';
 import { Paging } from '../../../shared/components/pagination/pagination.component';
 
 @Component({

@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { BsModalService } from 'ngx-bootstrap/modal';
 
-import { Organization } from './organization';
+import { Organization } from '../organization';
 import { CrudService } from '../../../shared/components/crud/crud.service';
 import { CrudComponent } from '../../../shared/components/crud/crud.component';
-import { OrganizationModalComponent } from './organization-modal/organization-modal.component';
+import { OrganizationModalComponent } from '../organization-modal/organization-modal.component';
 
 @Component({
   selector: 'app-organization',

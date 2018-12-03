@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import * as _ from 'lodash';
 import { BsModalService } from 'ngx-bootstrap/modal';
 
-import { OrganizationDepartment } from '../../organization/organization';
+import { OrganizationDepartment } from '../../organization';
 import { DepartmentsLookupModalComponent } from '../departments-lookup-modal/departments-lookup-modal.component';
 import { OrganizationDepartmentService } from '../../../../services/api/organization/organization-department.service';
 
