@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { OrganizationComponent } from './organization/organization.component';
+import { OrganizationListComponent } from './organization/organization-list.component';
 import { EditOrganizationComponent } from './organization/edit-organization/edit-organization.component';
 import { OrganizationStructureComponent } from './organization-structure/organization-structure.component';
 import { AnalysisComponent } from '../../components/analysis/analysis.component';
@@ -11,7 +11,7 @@ import { OrganizationItAssetsComponent } from './organization-it-assets/organiza
 import { OrganizationItAssetVulnerabilitiesComponent } from './organization-it-asset-vulnerabilities/organization-it-asset-vulnerabilities.component';
 
 const routes: Routes = [
-    { path: '', component: OrganizationComponent },
+    { path: '', component: OrganizationListComponent },
     { path: ':id/edit', component: EditOrganizationComponent },
     { path: ':id/structure', component: OrganizationStructureComponent },
     { path: ':id/securityThreats', component: SecurityThreatsComponent },

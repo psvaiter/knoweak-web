@@ -8,10 +8,10 @@ import { OrganizationModalComponent } from './organization-modal/organization-mo
 
 @Component({
   selector: 'app-organization',
-  templateUrl: './organization.component.html',
-  styleUrls: ['./organization.component.scss']
+  templateUrl: './organization-list.component.html',
+  styleUrls: ['./organization-list.component.scss']
 })
-export class OrganizationComponent extends CrudComponent<Organization> implements OnInit {
+export class OrganizationListComponent extends CrudComponent<Organization> implements OnInit {
 
   url = CrudService.BaseUrl + '/organizations';
   

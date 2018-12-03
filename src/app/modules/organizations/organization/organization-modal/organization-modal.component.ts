@@ -10,7 +10,6 @@ import { OrganizationService } from '../../../../services/api/organization/organ
 export class OrganizationModalComponent implements OnInit {
 
   organization: Organization = new Organization();
-  confirmed = new EventEmitter();
   saved = new EventEmitter();
   errors: any[];
 

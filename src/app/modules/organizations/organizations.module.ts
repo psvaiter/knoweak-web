@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { OrganizationsRoutingModule } from './organizations-routing.module';
 import { SharedModule } from '../../shared/shared.module';
 
-import { OrganizationComponent } from '../organizations/organization/organization.component';
+import { OrganizationListComponent } from './organization/organization-list.component';
 import { EditOrganizationComponent } from '../organizations/organization/edit-organization/edit-organization.component';
 import { OrganizationStructureComponent } from '../organizations/organization-structure/organization-structure.component';
 import { OrganizationModalComponent } from './organization/organization-modal/organization-modal.component';
@@ -46,7 +46,7 @@ import { OrganizationItServiceItAssetService } from '../../services/api/organiza
 
 @NgModule({
     declarations: [
-        OrganizationComponent,
+        OrganizationListComponent,
         EditOrganizationComponent,
         OrganizationStructureComponent,
         AnalysisComponent,
