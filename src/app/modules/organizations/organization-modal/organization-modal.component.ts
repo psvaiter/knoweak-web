@@ -1,4 +1,6 @@
 import { Component, OnInit, EventEmitter } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+
 import { Organization } from '../organization';
 import { OrganizationService } from '../../../services/api/organization/organization.service';
 
@@ -12,15 +14,18 @@ export class OrganizationModalComponent implements OnInit {
   organization: Organization = new Organization();
   saved = new EventEmitter();
   errors: any[];
+  editMode: boolean;
 
   constructor(
     private organizationService: OrganizationService
-  ) { 
+  ) {
 
   }
 
   ngOnInit() {
-    
+    if (this.organization.id) {
+      this.editMode = true;
+    }
   }
 
   enableSave(): boolean {
@@ -34,8 +39,17 @@ export class OrganizationModalComponent implements OnInit {
   }
 
   save() {
+    let action: Observable<Object>;
     this.sanitizeData();
-    this.organizationService.addOrganization(this.organization).subscribe(
+
+    if (this.editMode) {
+      action = this.organizationService.patchOrganization(this.organization.id, this.organization);
+    }
+    else {
+      action = this.organizationService.addOrganization(this.organization);
+    }
+
+    action.subscribe(
       response => {
         this.errors = [];
         this.saved.emit(response['data']);
@@ -52,5 +66,5 @@ export class OrganizationModalComponent implements OnInit {
     this.organization.legalName = this.organization.legalName.trim();
     this.organization.tradeName = (this.organization.tradeName) ? this.organization.tradeName.trim() : null;
   }
-  
+
 }

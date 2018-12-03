@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Location } from '@angular/common';
+import { BsModalService } from 'ngx-bootstrap/modal';
 
 import { Organization } from '../organization';
 import { CrudService } from '../../../shared/components/crud/crud.service';
 import { CrudComponent } from '../../../shared/components/crud/crud.component';
+import { OrganizationModalComponent } from '../organization-modal/organization-modal.component';
 
 @Component({
   selector: 'app-organization-details',
@@ -18,8 +19,8 @@ export class OrganizationDetailsComponent extends CrudComponent<Organization> im
 
   constructor(
     protected _crudService: CrudService,
-    private location: Location,
-    private route: ActivatedRoute
+    private modalService: BsModalService,
+    private route: ActivatedRoute,
   ) {
     super(_crudService);
     route.params.subscribe(params => this.id = params['id']);
@@ -29,12 +30,17 @@ export class OrganizationDetailsComponent extends CrudComponent<Organization> im
     this.getSingleRecord(this.url + `/${this.id}`);
   }
 
-  patchRecord() {
-    super.patchRecord(this.url + `/${this.id}`);
-  }
+  editOrganization() {
+    let modalRef = this.modalService.show(OrganizationModalComponent, {
+      class: "modal-md",
+      initialState: {
+        organization: this.currentRecord 
+      }
+    });
 
-  goBack(): void {
-    this.location.back();
+    modalRef.content.saved.subscribe(eventData => {
+      modalRef.hide();
+    });
   }
 
 }
