@@ -1,60 +1,33 @@
 <div>
   <div *ngIf="currentRecord.id">
-    <h5>Atualização de organização</h5>
-    <form>
+    <h5><fa name="building"></fa>Detalhes da organização</h5>
 
-      <div class="entity-metadata my-4">
+      <div class="entity-metadata my-2">
         <b>Criado em:</b> {{ currentRecord.createdOn | date : "dd/MM/yyyy HH:mm" }} (UTC)<br>
         <b>Atualizado em:</b> {{ currentRecord.lastModifiedOn | date : "dd/MM/yyyy HH:mm" }} (UTC)
       </div>
 
-      <!-- Tax ID -->
-      <div class="form-group row">
-        <label for="taxId" class="col-4 col-form-label col-form-label-sm text-nowrap">
-          Nº de Registro
-        </label>
-        <div class="col">
-          <input type="text" [(ngModel)]="currentRecord.taxId" name="taxId" id="taxId" placeholder="Ex: CNPJ" class="form-control form-control-sm" />
-        </div>
+      <div class="mx-4 my-4" style="line-height: 1.5rem; font-size: 0.8rem;">
+        <b>Nº de Registro:</b> {{ currentRecord.taxId }}<br>
+        <b>Nome empresarial:</b> {{ currentRecord.legalName }}<br>
+        <b>Nome fantasia:</b> {{ currentRecord.tradeName || "(não cadastrado)" }}<br>
+        <a [routerLink]="" (click)="editOrganization()">Alterar dados</a>
       </div>
 
-      <!-- Legal name -->
-      <div class="form-group">
-        <label for="legalName" class="col-form-label col-form-label-sm text-nowrap">
-            Nome Empresarial
-        </label>
-        <div class="">
-          <input type="text" [(ngModel)]="currentRecord.legalName" name="legalName" id="legalName" class="form-control form-control-sm" />
-        </div>
-      </div>
-
-      <!-- Trade name -->
-      <div class="form-group">
-        <label for="tradeName" class="col-form-label col-form-label-sm text-nowrap">
-            Nome Fantasia
-        </label>
-        <div class="">
-          <input type="text" [(ngModel)]="currentRecord.tradeName" name="tradeName" id="tradeName" class="form-control form-control-sm" />
-        </div>
+      <div class="list-group my-4">
+        <a class="list-group-item list-group-item-action" [routerLink]="['/organizations', currentRecord.id, 'structure']">
+          <fa name="sitemap"></fa>Gerenciar estrutura
+        </a>
+        <a class="list-group-item list-group-item-action" [routerLink]="['/organizations', currentRecord.id, 'itAssets']">
+          <fa name="laptop"></fa>Gerenciar ativos de TI
+        </a>
+        <a class="list-group-item list-group-item-action" [routerLink]="['/organizations', currentRecord.id, 'securityThreats']">
+          <fa name="exclamation-triangle"></fa>Gerenciar ameaças
+        </a>
+        <a class="list-group-item list-group-item-action" [routerLink]="['/organizations', currentRecord.id, 'analyses']">
+          <fa name="calculator"></fa>Gerenciar análises
+        </a>
       </div>
       
-      <!-- Back and Save buttons -->
-      <button type="button" class="btn btn-sm btn-outline-danger"
-              (click)="goBack()">Cancelar</button>
-      <button type="submit" class="btn btn-sm btn-success" [disabled]="!hasChangedRecord()"
-              (click)="patchRecord()">Salvar</button>
-      
-      <span class="mx-2 align-middle text-success" *ngIf="loading">
-        Aguarde...
-      </span>
-      
-      <!-- Success feedback -->
-      <span class="mx-2 align-middle text-success" [class.d-none]="hasUpdated == false || hasChangedRecord()">
-        Salvo<fa name="check"></fa>
-      </span>
-    </form>
-
-    <!-- Error alert -->
-    <app-error-alert [errors]="errors"></app-error-alert>
   </div>
 </div>

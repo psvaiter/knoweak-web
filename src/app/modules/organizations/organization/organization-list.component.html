@@ -28,7 +28,7 @@
             <td>{{ record.legalName }}</td>
             <td>{{ record.createdOn | date : "dd/MM/yyyy HH:mm" }}</td>
             <td>
-              <a title="Editar" [routerLink]="['/organizations', record.id, 'edit']" class="icon-link"><fa name="edit"></fa></a>
+              <a title="Visualizar detalhes" [routerLink]="['/organizations', record.id, 'details']" class="icon-link"><fa name="info"></fa></a>
               <a title="Gerenciar estrutura" [routerLink]="['/organizations', record.id, 'structure']" class="icon-link"><fa name="sitemap"></fa></a>
               <a title="Gerenciar ativos de TI" [routerLink]="['/organizations', record.id, 'itAssets']" class="icon-link"><fa name="laptop"></fa></a>
               <a title="Gerenciar ameaças" [routerLink]="['/organizations', record.id, 'securityThreats']" class="icon-link"><fa name="exclamation-triangle"></fa></a>

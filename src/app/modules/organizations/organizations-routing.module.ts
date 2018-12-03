@@ -12,7 +12,7 @@ import { OrganizationItAssetVulnerabilitiesComponent } from './organization-it-a
 
 const routes: Routes = [
     { path: '', component: OrganizationListComponent },
-    { path: ':id/edit', component: EditOrganizationComponent },
+    { path: ':id/details', component: EditOrganizationComponent },
     { path: ':id/structure', component: OrganizationStructureComponent },
     { path: ':id/securityThreats', component: SecurityThreatsComponent },
     { path: ':id/itAssets', component: OrganizationItAssetsComponent },
