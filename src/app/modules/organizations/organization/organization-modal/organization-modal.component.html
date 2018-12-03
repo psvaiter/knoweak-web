@@ -1,0 +1,23 @@
+<app-modal modalTitle="Adicionar organização">
+  <div class="body">
+    <form>
+      <div class="form-group">
+        <label>Nº de Registro</label>
+        <input type="text" [(ngModel)]="organization.taxId" name="taxId" placeholder="Ex: CNPJ" class="form-control form-control-sm" />
+      </div>
+      <div class="form-group">
+        <label>Nome Empresarial</label>
+        <input type="text" [(ngModel)]="organization.legalName" name="legalName" class="form-control form-control-sm" />
+      </div>
+      <div class="form-group">
+        <label>Nome Fantasia</label>
+        <input type="text" [(ngModel)]="organization.tradeName" name="tradeName" class="form-control form-control-sm" />
+      </div>
+    </form>
+    <app-error-alert [errors]="errors"></app-error-alert>
+  </div>
+
+  <div class="actions">
+    <button class="btn btn-outline-success" (click)="save()" [disabled]="!enableSave()">Salvar</button>
+  </div>
+</app-modal>

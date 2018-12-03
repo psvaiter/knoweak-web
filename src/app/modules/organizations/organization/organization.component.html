@@ -1,50 +1,16 @@
 <div>
   <div>
     <h5><fa name="building"></fa>Organizações</h5>
-
-    <!-- Form to add a new record -->
-    <form>
-
-      <div class="row">
-        <div class="col-md-3">
-          <div class="form-group">
-            <label>Nº de Registro</label>
-            <input type="text" [(ngModel)]="newRecord.taxId" name="taxId" id="taxId" placeholder="Ex: CNPJ" class="form-control form-control-sm" />
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-6">
-          <div class="form-group">
-            <label>Nome Empresarial</label>
-            <input type="text" [(ngModel)]="newRecord.legalName" name="legalName" id="legalName" class="form-control form-control-sm" />
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="form-group">
-            <label>Nome Fantasia</label>
-            <input type="text" [(ngModel)]="newRecord.tradeName" name="tradeName" id="tradeName" class="form-control form-control-sm" />
-          </div>
-        </div>
-      </div>
-
-      <!-- Add button -->
-      <input type="submit" class="btn btn-sm btn-outline-secondary" value="Adicionar" (click)="createRecord(newRecord)" />
-
-      <span class="mx-2 align-middle text-success" *ngIf="loading">
-        Aguarde...
-      </span>
-
-      <!-- Success feedback -->
-      <span class="mx-2 align-middle text-success" [class.d-none]="hasCreated == false">
-        Organização adicionada<fa name="check"></fa>
-      </span>
-    </form>
-
-    <!-- Error alert -->
-    <app-error-alert [errors]="errors"></app-error-alert>
-
   </div>
+
+  <div>
+    <div class="text-right mb-2">
+      <button class="btn btn-primary btn-sm mr-2" (click)="addOrganization()">
+        <fa name="plus"></fa> Adicionar organização
+      </button>
+    </div>
+  </div>
+
   <div class="table-container">
     <div class="table-responsive">
       <table class="table table-hover">

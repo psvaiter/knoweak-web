@@ -6,6 +6,7 @@ import { SharedModule } from '../../shared/shared.module';
 import { OrganizationComponent } from '../organizations/organization/organization.component';
 import { EditOrganizationComponent } from '../organizations/organization/edit-organization/edit-organization.component';
 import { OrganizationStructureComponent } from '../organizations/organization-structure/organization-structure.component';
+import { OrganizationModalComponent } from './organization/organization-modal/organization-modal.component';
 import { DepartmentsLookupModalComponent } from './organization-structure/departments-lookup-modal/departments-lookup-modal.component';
 import { MacroprocessLookupModalComponent } from './organization-structure/macroprocess-lookup-modal/macroprocess-lookup-modal.component';
 import { ProcessLookupModalComponent } from './organization-structure/process-lookup-modal/process-lookup-modal.component';
@@ -51,6 +52,7 @@ import { OrganizationItServiceItAssetService } from '../../services/api/organiza
         AnalysisComponent,
         AnalysisDetailComponent,
         EditAnalysisComponent,
+        OrganizationModalComponent,
         DepartmentsLookupModalComponent,
         MacroprocessLookupModalComponent,
         ProcessLookupModalComponent,
@@ -75,6 +77,7 @@ import { OrganizationItServiceItAssetService } from '../../services/api/organiza
         ProcessLookupModalComponent,
         ItServiceLookupModalComponent,
         ItAssetLookupModalComponent,
+        OrganizationModalComponent,
         OrganizationSecurityThreatLookupComponent,
         OrganizationItAssetLookupComponent,
         OrganizationItAssetVulnerabilityLookupComponent
