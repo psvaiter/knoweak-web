@@ -12,7 +12,7 @@ import { MacroprocessLookupModalComponent } from './organization-structure/macro
 import { ProcessLookupModalComponent } from './organization-structure/process-lookup-modal/process-lookup-modal.component';
 import { ItServiceLookupModalComponent } from './organization-structure/it-service-lookup-modal/it-service-lookup-modal.component';
 import { ItAssetLookupModalComponent } from './organization-structure/it-asset-lookup-modal/it-asset-lookup-modal.component';
-import { OrganizationSecurityThreatLookupComponent } from './security-threats/organization-security-threat-lookup/organization-security-threat-lookup.component';
+import { OrganizationSecurityThreatLookupComponent } from './organization-security-threats/organization-security-threat-lookup/organization-security-threat-lookup.component';
 import { OrganizationItAssetLookupComponent } from './organization-it-assets/organization-it-asset-lookup/organization-it-asset-lookup.component';
 import { OrganizationItAssetVulnerabilityLookupComponent } from './organization-it-asset-vulnerabilities/organization-it-asset-vulnerability-lookup/organization-it-asset-vulnerability-lookup.component';
 import { DepartmentListComponent } from './organization-structure/department-list/department-list.component';
@@ -21,7 +21,7 @@ import { MacroprocessItemComponent } from './organization-structure/macroprocess
 import { ProcessItemComponent } from './organization-structure/process-item/process-item.component';
 import { ItServiceItemComponent } from './organization-structure/it-service-item/it-service-item.component';
 import { ItAssetItemComponent } from './organization-structure/it-asset-item/it-asset-item.component';
-import { SecurityThreatsComponent } from './security-threats/security-threats.component';
+import { OrganizationSecurityThreatsComponent } from './organization-security-threats/organization-security-threats.component';
 import { OrganizationItAssetsComponent } from './organization-it-assets/organization-it-assets.component';
 import { OrganizationItAssetVulnerabilitiesComponent } from './organization-it-asset-vulnerabilities/organization-it-asset-vulnerabilities.component';
 import { AnalysisComponent } from '../../components/analysis/analysis.component';
@@ -65,7 +65,7 @@ import { OrganizationItServiceItAssetService } from '../../services/api/organiza
         ProcessItemComponent,
         ItServiceItemComponent,
         ItAssetItemComponent,
-        SecurityThreatsComponent,
+        OrganizationSecurityThreatsComponent,
         OrganizationItAssetsComponent,
         OrganizationItAssetLookupComponent,
         OrganizationItAssetVulnerabilitiesComponent,

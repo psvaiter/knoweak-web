@@ -11,11 +11,11 @@ import { Organization } from '../organization';
 import { Paging } from '../../../shared/components/pagination/pagination.component';
 
 @Component({
-  selector: 'app-security-threats',
-  templateUrl: './security-threats.component.html',
-  styleUrls: ['./security-threats.component.scss']
+  selector: 'app-organization-security-threats',
+  templateUrl: './organization-security-threats.component.html',
+  styleUrls: ['./organization-security-threats.component.scss']
 })
-export class SecurityThreatsComponent implements OnInit {
+export class OrganizationSecurityThreatsComponent implements OnInit {
 
   loading: boolean;
   organization: Organization = new Organization();
