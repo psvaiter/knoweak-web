@@ -7,11 +7,11 @@ import { CrudService } from '../../../../shared/components/crud/crud.service';
 import { CrudComponent } from '../../../../shared/components/crud/crud.component';
 
 @Component({
-  selector: 'app-edit-organization',
-  templateUrl: './edit-organization.component.html',
-  styleUrls: ['./edit-organization.component.scss']
+  selector: 'app-organization-details',
+  templateUrl: './organization-details.component.html',
+  styleUrls: ['./organization-details.component.scss']
 })
-export class EditOrganizationComponent extends CrudComponent<Organization> implements OnInit {
+export class OrganizationDetailsComponent extends CrudComponent<Organization> implements OnInit {
   
   url = CrudService.BaseUrl + '/organizations';
   id: number;

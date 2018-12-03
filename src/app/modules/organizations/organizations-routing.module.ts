@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { OrganizationListComponent } from './organization/organization-list.component';
-import { EditOrganizationComponent } from './organization/edit-organization/edit-organization.component';
+import { OrganizationDetailsComponent } from './organization/organization-details/organization-details.component';
 import { OrganizationStructureComponent } from './organization-structure/organization-structure.component';
 import { AnalysisComponent } from '../../components/analysis/analysis.component';
 import { EditAnalysisComponent } from '../../components/analysis/edit-analysis/edit-analysis.component';
@@ -12,7 +12,7 @@ import { OrganizationItAssetVulnerabilitiesComponent } from './organization-it-a
 
 const routes: Routes = [
     { path: '', component: OrganizationListComponent },
-    { path: ':id/details', component: EditOrganizationComponent },
+    { path: ':id/details', component: OrganizationDetailsComponent },
     { path: ':id/structure', component: OrganizationStructureComponent },
     { path: ':id/securityThreats', component: SecurityThreatsComponent },
     { path: ':id/itAssets', component: OrganizationItAssetsComponent },

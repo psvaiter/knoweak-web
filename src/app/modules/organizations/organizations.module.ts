@@ -4,7 +4,7 @@ import { OrganizationsRoutingModule } from './organizations-routing.module';
 import { SharedModule } from '../../shared/shared.module';
 
 import { OrganizationListComponent } from './organization/organization-list.component';
-import { EditOrganizationComponent } from '../organizations/organization/edit-organization/edit-organization.component';
+import { OrganizationDetailsComponent } from './organization/organization-details/organization-details.component';
 import { OrganizationStructureComponent } from '../organizations/organization-structure/organization-structure.component';
 import { OrganizationModalComponent } from './organization/organization-modal/organization-modal.component';
 import { DepartmentsLookupModalComponent } from './organization-structure/departments-lookup-modal/departments-lookup-modal.component';
@@ -47,7 +47,7 @@ import { OrganizationItServiceItAssetService } from '../../services/api/organiza
 @NgModule({
     declarations: [
         OrganizationListComponent,
-        EditOrganizationComponent,
+        OrganizationDetailsComponent,
         OrganizationStructureComponent,
         AnalysisComponent,
         AnalysisDetailComponent,
