@@ -1,6 +1,6 @@
 <div *ngIf="organizationLegalName">
   <div>
-    <small>{{ organizationLegalName }}</small>
+    <small><a [routerLink]="['../details']">{{ organizationLegalName }}</a></small>
     <h5><fa name="calculator"></fa>Análises de risco</h5>
   </div>
   

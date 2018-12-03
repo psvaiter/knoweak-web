@@ -1,6 +1,6 @@
 <div>
   <div>
-    <small>{{ organization.legalName }} / {{ itAsset.name }}</small>
+    <small><a [routerLink]="['../../../details']">{{ organization.legalName }}</a> / <a [routerLink]="['../..']">Ativos de TI</a> / {{ itAsset.name }}</small>
     <h5><fa name="exclamation-triangle"></fa>Vulnerabilidades</h5>
   </div>
 
