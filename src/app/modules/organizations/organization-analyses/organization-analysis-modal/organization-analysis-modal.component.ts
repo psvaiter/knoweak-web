@@ -15,6 +15,7 @@ export class OrganizationAnalysisModalComponent implements OnInit {
   analysis: Analysis = new Analysis();
   saved = new EventEmitter();
   editMode: boolean;
+  errors = [];
 
   constructor(
     private organizationAnalysisService: OrganizationAnalysisService
