@@ -1,15 +1,15 @@
-<div *ngIf="analysisId">
+<div *ngIf="analysis">
   <div>
-    <small><a [routerLink]="['../details']">{{ currentRecord.id }}</a> / <a [routerLink]="['../..']">Análises</a> / {{ currentRecord.id }}</small>
-    <h5><fa name="calculator"></fa>Detalhes da análise número {{ currentRecord.id }}</h5>
+    <small><a [routerLink]="['../../../details']">{{ organization.legalName }}</a> / <a [routerLink]="['../..']">Análises</a> / {{ analysis.id }}</small>
+    <h5><fa name="calculator"></fa>Detalhes da análise</h5>
   </div>
   
   <div class="entity-metadata my-2">
-    <b>Criado em:</b> {{ currentRecord.createdOn | date : "dd/MM/yyyy HH:mm" }} (UTC)<br>
-    <b>Atualizado em:</b> {{ currentRecord.lastModifiedOn | date : "dd/MM/yyyy HH:mm" }} (UTC)
+    <b>Criado em:</b> {{ analysis.createdOn | date : "dd/MM/yyyy HH:mm" }} (UTC)<br>
+    <b>Atualizado em:</b> {{ analysis.lastModifiedOn | date : "dd/MM/yyyy HH:mm" }} (UTC)
   </div>
   <div class="my-4" style="line-height: 1.5rem; font-size: 0.8rem;">
-    <b>Descrição:</b> {{ currentRecord.description || "(sem descrição)" }}<br>
+    <b>Descrição:</b> {{ analysis.description || "(sem descrição)" }}<br>
     <a [routerLink]="" (click)="editAnalysis()">Alterar descrição</a>
   </div>
     

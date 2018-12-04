@@ -8,6 +8,11 @@ export class OrganizationAnalysisService {
 
   }
 
+  getAnalysisById(organizationId: number, analysisId: number) {
+    let url = `${CrudService.BaseUrl}/organizations/${organizationId}/analyses/${analysisId}`;
+    return this.crudService.get(url);
+  }
+
   createAnalysis(organizationId: number, data: { description: string, scopes?: any }) {
     let url = `${CrudService.BaseUrl}/organizations/${organizationId}/analyses`;
     return this.crudService.post(url, data);
