@@ -7,7 +7,7 @@ import { CrudComponent } from '../../../shared/components/crud/crud.component';
 import { OrganizationModalComponent } from '../organization-modal/organization-modal.component';
 
 @Component({
-  selector: 'app-organization',
+  selector: 'app-organization-list',
   templateUrl: './organization-list.component.html',
   styleUrls: ['./organization-list.component.scss']
 })
