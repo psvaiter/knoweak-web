@@ -14,7 +14,7 @@ import { ItServiceLookupModalComponent } from './organization-structure/it-servi
 import { ItAssetLookupModalComponent } from './organization-structure/it-asset-lookup-modal/it-asset-lookup-modal.component';
 import { OrganizationSecurityThreatLookupComponent } from './organization-security-threats/organization-security-threat-lookup/organization-security-threat-lookup.component';
 import { OrganizationItAssetLookupComponent } from './organization-it-assets/organization-it-asset-lookup/organization-it-asset-lookup.component';
-import { OrganizationItAssetVulnerabilityLookupComponent } from './organization-it-asset-vulnerabilities/organization-it-asset-vulnerability-lookup/organization-it-asset-vulnerability-lookup.component';
+import { OrganizationItAssetVulnerabilityLookupComponent } from './organization-it-assets/organization-it-asset-vulnerabilities/organization-it-asset-vulnerability-lookup/organization-it-asset-vulnerability-lookup.component';
 import { DepartmentListComponent } from './organization-structure/department-list/department-list.component';
 import { DepartmentItemComponent } from './organization-structure/department-item/department-item.component';
 import { MacroprocessItemComponent } from './organization-structure/macroprocess-item/macroprocess-item.component';
@@ -23,7 +23,7 @@ import { ItServiceItemComponent } from './organization-structure/it-service-item
 import { ItAssetItemComponent } from './organization-structure/it-asset-item/it-asset-item.component';
 import { OrganizationSecurityThreatsComponent } from './organization-security-threats/organization-security-threats.component';
 import { OrganizationItAssetsComponent } from './organization-it-assets/organization-it-assets.component';
-import { OrganizationItAssetVulnerabilitiesComponent } from './organization-it-asset-vulnerabilities/organization-it-asset-vulnerabilities.component';
+import { OrganizationItAssetVulnerabilitiesComponent } from './organization-it-assets/organization-it-asset-vulnerabilities/organization-it-asset-vulnerabilities.component';
 import { OrganizationAnalysesComponent } from './organization-analyses/organization-analyses.component';
 import { AnalysisDetailComponent } from './organization-analyses/analysis-detail/analysis-detail.component';
 import { EditAnalysisComponent } from './organization-analyses/edit-analysis/edit-analysis.component';

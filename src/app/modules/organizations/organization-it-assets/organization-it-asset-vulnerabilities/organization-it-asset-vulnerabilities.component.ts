@@ -3,13 +3,13 @@ import { ActivatedRoute } from '@angular/router';
 import { finalize } from 'rxjs/operators';
 import { BsModalService } from 'ngx-bootstrap/modal';
 
-import { Constants } from '../../../shared/constants';
-import { Organization, OrganizationItAsset } from '../organization';
-import { Paging } from '../../../shared/components/pagination/pagination.component';
-import { OrganizationService } from '../../../services/api/organization/organization.service';
-import { OrganizationItAssetService } from '../../../services/api/organization/organization-it-asset.service';
+import { Constants } from '../../../../shared/constants';
+import { Organization, OrganizationItAsset } from '../../organization';
+import { Paging } from '../../../../shared/components/pagination/pagination.component';
+import { OrganizationService } from '../../../../services/api/organization/organization.service';
+import { OrganizationItAssetService } from '../../../../services/api/organization/organization-it-asset.service';
 import { OrganizationItAssetVulnerabilityLookupComponent } from './organization-it-asset-vulnerability-lookup/organization-it-asset-vulnerability-lookup.component';
-import { OrganizationItAssetVulnerabilityService } from '../../../services/api/organization/organization-it-asset-vulnerability.service';
+import { OrganizationItAssetVulnerabilityService } from '../../../../services/api/organization/organization-it-asset-vulnerability.service';
 
 @Component({
   selector: 'app-organization-it-asset-vulnerabilities',

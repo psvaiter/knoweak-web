@@ -8,7 +8,7 @@ import { OrganizationAnalysesComponent } from './organization-analyses/organizat
 import { EditAnalysisComponent } from './organization-analyses/edit-analysis/edit-analysis.component';
 import { OrganizationSecurityThreatsComponent } from './organization-security-threats/organization-security-threats.component';
 import { OrganizationItAssetsComponent } from './organization-it-assets/organization-it-assets.component';
-import { OrganizationItAssetVulnerabilitiesComponent } from './organization-it-asset-vulnerabilities/organization-it-asset-vulnerabilities.component';
+import { OrganizationItAssetVulnerabilitiesComponent } from './organization-it-assets/organization-it-asset-vulnerabilities/organization-it-asset-vulnerabilities.component';
 
 const routes: Routes = [
     { path: '', component: OrganizationListComponent },
