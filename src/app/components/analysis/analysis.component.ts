@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { BsModalService } from 'ngx-bootstrap/modal';
 
 import { Analysis } from './analysis';
 import { CrudComponent } from '../../shared/components/crud/crud.component';
@@ -17,12 +18,14 @@ export class AnalysisComponent extends CrudComponent<Analysis> implements OnInit
   
   constructor(
     protected crudService: CrudService,
-    private route: ActivatedRoute) {
-      super(crudService);
-      route.params.subscribe(params => {
-        this.organizationId = params['id'];
-        this.url = `${CrudService.BaseUrl}/organizations/${this.organizationId}/analyses`;
-      });
+    private route: ActivatedRoute,
+    private modalService: BsModalService
+  ) {
+    super(crudService);
+    route.params.subscribe(params => {
+      this.organizationId = params['id'];
+      this.url = `${CrudService.BaseUrl}/organizations/${this.organizationId}/analyses`;
+    });
   }
 
   ngOnInit() {
@@ -40,6 +43,21 @@ export class AnalysisComponent extends CrudComponent<Analysis> implements OnInit
     
     // List analyses
     this.getRecords(1);
+  }
+
+  addAnalysis() {
+    // // Open modal
+    // let modalRef = this.modalService.show(OrganizationAnalysisModalComponent, {
+    //   class: "modal-md",
+    //   initialState: {
+        
+    //   }
+    // });
+
+    // // Act on confirmation
+    // modalRef.content.saved.subscribe(eventData => {
+    //   modalRef.hide();
+    // });
   }
 
 }

@@ -25,7 +25,7 @@
         <tbody>
           <tr *ngFor="let record of records">
             <td>{{ record.taxId }}</td>
-            <td>{{ record.legalName }}</td>
+            <td class="w-100">{{ record.legalName }}</td>
             <td>{{ record.createdOn | date : "dd/MM/yyyy HH:mm" }}</td>
             <td>
               <a title="Visualizar detalhes" [routerLink]="['/organizations', record.id, 'details']" class="icon-link"><fa name="info"></fa></a>

@@ -5,10 +5,15 @@
   </div>
   
   <div>
-    <!-- Form to add a new record -->
-    <form>
+    <div class="text-right mb-2">
+      <button class="btn btn-primary btn-sm mr-2" (click)="addAnalysis()">
+        <fa name="plus"></fa> Criar análise
+      </button>
+    </div>
+  </div>
 
-      <!-- Description -->
+  <div>
+    <!-- <form>
       <div class="form-group row">
         <label for="description" class="col col-form-label col-form-label-sm text-nowrap">
           Descrição da análise
@@ -17,21 +22,7 @@
           <input type="text" [(ngModel)]="newRecord.description" name="description" id="description" class="form-control form-control-sm" />
         </div>
       </div>
-
-      <!-- Select scopes to analyze -->
-
-
-      <!-- Add button -->
-      <input type="submit" class="btn btn-sm btn-outline-secondary" value="Criar nova análise" (click)="createRecord(newRecord)" />
-      <span class="mx-2 align-middle text-success" *ngIf="loading">
-        Aguarde...
-      </span>
-
-      <!-- Success feedback -->
-      <span class="mx-2 align-middle text-success" [class.d-none]="hasCreated == false">
-        Análise criada<fa name="check"></fa>
-      </span>
-    </form>
+    </form> -->
 
     <!-- Error alert -->
     <app-error-alert [errors]="errors"></app-error-alert>
@@ -50,7 +41,7 @@
       <tbody>
         <tr *ngFor="let record of records">
           <td>{{ record.id }}</td>
-          <td style="width: 99%">{{ record.description }}</td>
+          <td class="w-100">{{ record.description }}</td>
           <td>{{ record.createdOn | date : "dd/MM/yyyy HH:mm" }}</td>
           <td>
             <a title="Visualizar detalhes" [routerLink]="['/organizations', organizationId, 'analyses', record.id, 'details']" class="icon-link"><fa name="search-plus"></fa></a>
