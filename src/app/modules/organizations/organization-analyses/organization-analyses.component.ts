@@ -3,15 +3,15 @@ import { ActivatedRoute } from '@angular/router';
 import { BsModalService } from 'ngx-bootstrap/modal';
 
 import { Analysis } from './analysis';
-import { CrudComponent } from '../../shared/components/crud/crud.component';
-import { CrudService } from '../../shared/components/crud/crud.service';
+import { CrudComponent } from '../../../shared/components/crud/crud.component';
+import { CrudService } from '../../../shared/components/crud/crud.service';
 
 @Component({
-  selector: 'app-analysis',
-  templateUrl: './analysis.component.html',
-  styleUrls: ['./analysis.component.scss']
+  selector: 'app-organization-analyses',
+  templateUrl: './organization-analyses.component.html',
+  styleUrls: ['./organization-analyses.component.scss']
 })
-export class AnalysisComponent extends CrudComponent<Analysis> implements OnInit {
+export class OrganizationAnalysesComponent extends CrudComponent<Analysis> implements OnInit {
 
   organizationId: number;
   organizationLegalName: string;

@@ -24,9 +24,9 @@ import { ItAssetItemComponent } from './organization-structure/it-asset-item/it-
 import { OrganizationSecurityThreatsComponent } from './organization-security-threats/organization-security-threats.component';
 import { OrganizationItAssetsComponent } from './organization-it-assets/organization-it-assets.component';
 import { OrganizationItAssetVulnerabilitiesComponent } from './organization-it-asset-vulnerabilities/organization-it-asset-vulnerabilities.component';
-import { AnalysisComponent } from '../../components/analysis/analysis.component';
-import { AnalysisDetailComponent } from '../../components/analysis/analysis-detail/analysis-detail.component';
-import { EditAnalysisComponent } from '../../components/analysis/edit-analysis/edit-analysis.component';
+import { OrganizationAnalysesComponent } from './organization-analyses/organization-analyses.component';
+import { AnalysisDetailComponent } from './organization-analyses/analysis-detail/analysis-detail.component';
+import { EditAnalysisComponent } from './organization-analyses/edit-analysis/edit-analysis.component';
 
 import { CatalogDepartmentService } from '../../services/api/catalog/department/catalog-department.service';
 import { CatalogMacroprocessService } from '../../services/api/catalog/macroprocess/catalog-macroprocess.service';
@@ -49,7 +49,7 @@ import { OrganizationItServiceItAssetService } from '../../services/api/organiza
         OrganizationListComponent,
         OrganizationDetailsComponent,
         OrganizationStructureComponent,
-        AnalysisComponent,
+        OrganizationAnalysesComponent,
         AnalysisDetailComponent,
         EditAnalysisComponent,
         OrganizationModalComponent,
