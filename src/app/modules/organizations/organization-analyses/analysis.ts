@@ -4,6 +4,7 @@ export class Analysis {
     createdOn: Date;
     lastModifiedOn: Date;
     
+    organizationId: number;
     details: AnalysisDetail[] = [];
 }
 

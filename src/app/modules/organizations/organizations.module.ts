@@ -15,6 +15,7 @@ import { ItAssetLookupModalComponent } from './organization-structure/it-asset-l
 import { OrganizationSecurityThreatLookupComponent } from './organization-security-threats/organization-security-threat-lookup/organization-security-threat-lookup.component';
 import { OrganizationItAssetLookupComponent } from './organization-it-assets/organization-it-asset-lookup/organization-it-asset-lookup.component';
 import { OrganizationItAssetVulnerabilityLookupComponent } from './organization-it-assets/organization-it-asset-vulnerabilities/organization-it-asset-vulnerability-lookup/organization-it-asset-vulnerability-lookup.component';
+import { OrganizationAnalysisModalComponent } from './organization-analyses/organization-analysis-modal/organization-analysis-modal.component';
 import { DepartmentListComponent } from './organization-structure/department-list/department-list.component';
 import { DepartmentItemComponent } from './organization-structure/department-item/department-item.component';
 import { MacroprocessItemComponent } from './organization-structure/macroprocess-item/macroprocess-item.component';
@@ -43,6 +44,7 @@ import { OrganizationItAssetService } from '../../services/api/organization/orga
 import { OrganizationSecurityThreatService } from '../../services/api/organization/organization-security-threat.service';
 import { OrganizationItAssetVulnerabilityService } from '../../services/api/organization/organization-it-asset-vulnerability.service';
 import { OrganizationItServiceItAssetService } from '../../services/api/organization/organization-it-service-it-asset.service';
+import { OrganizationAnalysisService } from '../../services/api/organization/organization-analysis.service';
 
 @NgModule({
     declarations: [
@@ -69,7 +71,8 @@ import { OrganizationItServiceItAssetService } from '../../services/api/organiza
         OrganizationItAssetsComponent,
         OrganizationItAssetLookupComponent,
         OrganizationItAssetVulnerabilitiesComponent,
-        OrganizationItAssetVulnerabilityLookupComponent
+        OrganizationItAssetVulnerabilityLookupComponent,
+        OrganizationAnalysisModalComponent
     ],
     entryComponents: [
         DepartmentsLookupModalComponent,
@@ -80,7 +83,8 @@ import { OrganizationItServiceItAssetService } from '../../services/api/organiza
         OrganizationModalComponent,
         OrganizationSecurityThreatLookupComponent,
         OrganizationItAssetLookupComponent,
-        OrganizationItAssetVulnerabilityLookupComponent
+        OrganizationItAssetVulnerabilityLookupComponent,
+        OrganizationAnalysisModalComponent
     ],
     imports: [
         OrganizationsRoutingModule,
@@ -102,7 +106,8 @@ import { OrganizationItServiceItAssetService } from '../../services/api/organiza
         OrganizationItServiceItAssetService,
         OrganizationItAssetService,
         OrganizationSecurityThreatService,
-        OrganizationItAssetVulnerabilityService
+        OrganizationItAssetVulnerabilityService,
+        OrganizationAnalysisService
     ],
 })
 export class OrganizationsModule { }

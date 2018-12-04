@@ -5,6 +5,8 @@ import { BsModalService } from 'ngx-bootstrap/modal';
 import { Analysis } from './analysis';
 import { CrudComponent } from '../../../shared/components/crud/crud.component';
 import { CrudService } from '../../../shared/components/crud/crud.service';
+import { OrganizationAnalysisModalComponent } from './organization-analysis-modal/organization-analysis-modal.component';
+import { Organization } from '../organization';
 
 @Component({
   selector: 'app-organization-analyses',
@@ -15,6 +17,7 @@ export class OrganizationAnalysesComponent extends CrudComponent<Analysis> imple
 
   organizationId: number;
   organizationLegalName: string;
+  organization: Organization;
   
   constructor(
     protected crudService: CrudService,
@@ -34,7 +37,7 @@ export class OrganizationAnalysesComponent extends CrudComponent<Analysis> imple
       .get(`${CrudService.BaseUrl}/organizations/${this.organizationId}`)
       .subscribe(
         data => {
-          this.organizationLegalName = data['data']['legalName'];
+          this.organization = data['data'];
         },
         err => {
           console.log(err);
@@ -46,18 +49,19 @@ export class OrganizationAnalysesComponent extends CrudComponent<Analysis> imple
   }
 
   addAnalysis() {
-    // // Open modal
-    // let modalRef = this.modalService.show(OrganizationAnalysisModalComponent, {
-    //   class: "modal-md",
-    //   initialState: {
-        
-    //   }
-    // });
+    // Open modal
+    let modalRef = this.modalService.show(OrganizationAnalysisModalComponent, {
+      class: "modal-md",
+      initialState: {
+        organization: this.organization
+      }
+    });
 
-    // // Act on confirmation
-    // modalRef.content.saved.subscribe(eventData => {
-    //   modalRef.hide();
-    // });
+    // Act on confirmation
+    modalRef.content.saved.subscribe(eventData => {
+      this.getRecords(this.paging.currentPage);
+      modalRef.hide();
+    });
   }
 
 }

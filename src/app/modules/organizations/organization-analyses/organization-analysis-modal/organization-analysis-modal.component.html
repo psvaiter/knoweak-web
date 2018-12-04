@@ -1,0 +1,18 @@
+<app-modal modalTitle="Criar análise">
+  <div class="body">
+    <form>
+      <div class="form-group">
+        <label>Descrição</label>
+        <input type="text" [(ngModel)]="analysis.description" name="description" placeholder="Opcional" class="form-control form-control-sm" />
+      </div>
+      
+      <!-- TODO: add scopes here (only for !editMode) -->
+
+    </form>
+    <app-error-alert [errors]="errors"></app-error-alert>
+  </div>
+
+  <div class="actions">
+    <button class="btn btn-outline-success" (click)="save()">Gerar análise</button>
+  </div>
+</app-modal>
