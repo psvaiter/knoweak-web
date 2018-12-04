@@ -9,11 +9,11 @@ import { OrganizationService } from '../../../../services/api/organization/organ
 import { OrganizationAnalysisService } from '../../../../services/api/organization/organization-analysis.service';
 
 @Component({
-  selector: 'app-edit-analysis',
-  templateUrl: './edit-analysis.component.html',
-  styleUrls: ['./edit-analysis.component.scss']
+  selector: 'app-organization-analysis-detail',
+  templateUrl: './organization-analysis-detail.component.html',
+  styleUrls: ['./organization-analysis-detail.component.scss']
 })
-export class EditAnalysisComponent implements OnInit {
+export class OrganizationAnalysisDetailComponent implements OnInit {
 
   organization: Organization;
   analysis: Analysis;

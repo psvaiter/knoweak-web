@@ -5,7 +5,7 @@ import { OrganizationListComponent } from './organization-list/organization-list
 import { OrganizationDetailsComponent } from './organization-details/organization-details.component';
 import { OrganizationStructureComponent } from './organization-structure/organization-structure.component';
 import { OrganizationAnalysesComponent } from './organization-analyses/organization-analyses.component';
-import { EditAnalysisComponent } from './organization-analyses/edit-analysis/edit-analysis.component';
+import { OrganizationAnalysisDetailComponent } from './organization-analyses/organization-analysis-detail/organization-analysis-detail.component';
 import { OrganizationSecurityThreatsComponent } from './organization-security-threats/organization-security-threats.component';
 import { OrganizationItAssetsComponent } from './organization-it-assets/organization-it-assets.component';
 import { OrganizationItAssetVulnerabilitiesComponent } from './organization-it-assets/organization-it-asset-vulnerabilities/organization-it-asset-vulnerabilities.component';
@@ -18,7 +18,7 @@ const routes: Routes = [
     { path: ':id/itAssets', component: OrganizationItAssetsComponent },
     { path: ':id/itAssets/:instanceId/vulnerabilities', component: OrganizationItAssetVulnerabilitiesComponent },
     { path: ':id/analyses', component: OrganizationAnalysesComponent },
-    { path: ':id/analyses/:analysisId/details', component: EditAnalysisComponent },
+    { path: ':id/analyses/:analysisId/details', component: OrganizationAnalysisDetailComponent },
 ];
 
 @NgModule({
