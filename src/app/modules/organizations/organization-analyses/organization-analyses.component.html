@@ -12,22 +12,6 @@
     </div>
   </div>
 
-  <div>
-    <!-- <form>
-      <div class="form-group row">
-        <label for="description" class="col col-form-label col-form-label-sm text-nowrap">
-          Descrição da análise
-        </label>
-        <div class="col-9">
-          <input type="text" [(ngModel)]="newRecord.description" name="description" id="description" class="form-control form-control-sm" />
-        </div>
-      </div>
-    </form> -->
-
-    <!-- Error alert -->
-    <app-error-alert [errors]="errors"></app-error-alert>
-
-  </div>
   <div class="table-container">
     <table class="table table-hover">
       <thead class="thead-light">
@@ -39,6 +23,12 @@
         </tr>
       </thead>
       <tbody>
+        <tr *ngIf="loading">
+          <td colspan="4">Carregando...</td>
+        </tr>
+        <tr *ngIf="!loading && (!records || !records.length)">
+          <td colspan="4">Ainda não existem análises para esta organização</td>
+        </tr>
         <tr *ngFor="let record of records">
           <td>{{ record.id }}</td>
           <td class="w-100">{{ record.description }}</td>
@@ -46,9 +36,6 @@
           <td>
             <a title="Visualizar detalhes" [routerLink]="['/organizations', organizationId, 'analyses', record.id, 'details']" class="icon-link"><fa name="search-plus"></fa></a>
           </td>
-        </tr>
-        <tr *ngIf="!loading && (records == null || records.length == 0)">
-          <td colspan="4">Nenhum registro encontrado</td>
         </tr>
       </tbody>
     </table>

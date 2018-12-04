@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 
 import { Analysis } from '../analysis';
@@ -18,7 +17,6 @@ export class EditAnalysisComponent extends CrudComponent<Analysis> implements On
 
   constructor(
     private crudService: CrudService,
-    private location: Location,
     private route: ActivatedRoute
   ) { 
     super(crudService);
@@ -39,7 +37,8 @@ export class EditAnalysisComponent extends CrudComponent<Analysis> implements On
     super.patchRecord(this.url);
   }
 
-  goBack(): void {
-    this.location.back();
+  editAnalysis() {
+
   }
+
 }
