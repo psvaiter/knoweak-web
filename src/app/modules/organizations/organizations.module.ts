@@ -26,7 +26,7 @@ import { OrganizationSecurityThreatsComponent } from './organization-security-th
 import { OrganizationItAssetsComponent } from './organization-it-assets/organization-it-assets.component';
 import { OrganizationItAssetVulnerabilitiesComponent } from './organization-it-assets/organization-it-asset-vulnerabilities/organization-it-asset-vulnerabilities.component';
 import { OrganizationAnalysesComponent } from './organization-analyses/organization-analyses.component';
-import { AnalysisDetailComponent } from './organization-analyses/analysis-detail/analysis-detail.component';
+import { OrganizationAnalysisReportComponent } from './organization-analyses/organization-analysis-report/organization-analysis-report.component';
 import { EditAnalysisComponent } from './organization-analyses/edit-analysis/edit-analysis.component';
 
 import { CatalogDepartmentService } from '../../services/api/catalog/department/catalog-department.service';
@@ -52,7 +52,7 @@ import { OrganizationAnalysisService } from '../../services/api/organization/org
         OrganizationDetailsComponent,
         OrganizationStructureComponent,
         OrganizationAnalysesComponent,
-        AnalysisDetailComponent,
+        OrganizationAnalysisReportComponent,
         EditAnalysisComponent,
         OrganizationModalComponent,
         DepartmentsLookupModalComponent,

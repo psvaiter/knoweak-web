@@ -7,11 +7,11 @@ import { CrudComponent } from '../../../../shared/components/crud/crud.component
 import { CrudService } from '../../../../shared/components/crud/crud.service';
 
 @Component({
-  selector: 'app-analysis-detail',
-  templateUrl: './analysis-detail.component.html',
-  styleUrls: ['./analysis-detail.component.scss']
+  selector: 'app-organization-analysis-report',
+  templateUrl: './organization-analysis-report.component.html',
+  styleUrls: ['./organization-analysis-report.component.scss']
 })
-export class AnalysisDetailComponent extends CrudComponent<AnalysisDetail> implements OnInit {
+export class OrganizationAnalysisReportComponent extends CrudComponent<AnalysisDetail> implements OnInit {
 
   analysisId: number;
   organizationId: number;
