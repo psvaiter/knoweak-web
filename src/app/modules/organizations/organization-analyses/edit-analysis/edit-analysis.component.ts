@@ -3,8 +3,8 @@ import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 
 import { Analysis } from '../analysis';
-import { CrudComponent } from '../../../shared/components/crud/crud.component';
-import { CrudService } from '../../../shared/components/crud/crud.service';
+import { CrudComponent } from '../../../../shared/components/crud/crud.component';
+import { CrudService } from '../../../../shared/components/crud/crud.service';
 
 @Component({
   selector: 'app-edit-analysis',
