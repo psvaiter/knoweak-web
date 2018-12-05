@@ -7,6 +7,7 @@ import { CrudComponent } from '../../../shared/components/crud/crud.component';
 import { CrudService } from '../../../shared/components/crud/crud.service';
 import { OrganizationAnalysisModalComponent } from './organization-analysis-modal/organization-analysis-modal.component';
 import { Organization } from '../organization';
+import { OrganizationAnalysisService } from '../../../services/api/organization/organization-analysis.service';
 
 @Component({
   selector: 'app-organization-analyses',
@@ -16,13 +17,13 @@ import { Organization } from '../organization';
 export class OrganizationAnalysesComponent extends CrudComponent<Analysis> implements OnInit {
 
   organizationId: number;
-  organizationLegalName: string;
   organization: Organization;
   
   constructor(
     protected crudService: CrudService,
     private route: ActivatedRoute,
-    private modalService: BsModalService
+    private modalService: BsModalService,
+    private organizationAnalysisService: OrganizationAnalysisService
   ) {
     super(crudService);
     route.params.subscribe(params => {
@@ -62,6 +63,20 @@ export class OrganizationAnalysesComponent extends CrudComponent<Analysis> imple
       this.getRecords(this.paging.currentPage);
       modalRef.hide();
     });
+  }
+
+  deleteAnalysis(analysis: Analysis) {
+    if (!confirm(`Tem certeza que deseja remover a análise ${analysis.id}?`)) {
+      return;
+    }
+    this.organizationAnalysisService.deleteAnalysis(this.organization.id, analysis.id).subscribe(
+      response => {
+        this.getRecords(this.paging.currentPage);
+      },
+      err => {
+        console.error(err);
+      }
+    );
   }
 
 }

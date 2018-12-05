@@ -23,4 +23,9 @@ export class OrganizationAnalysisService {
     return this.crudService.patch(url, data);
   }
 
+  deleteAnalysis(organizationId: number, analysisId:number) {
+    let url = `${CrudService.BaseUrl}/organizations/${organizationId}/analyses/${analysisId}`;
+    return this.crudService.delete(url);
+  }
+
 }
