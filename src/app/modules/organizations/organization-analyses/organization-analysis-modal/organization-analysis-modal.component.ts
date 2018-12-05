@@ -1,8 +1,9 @@
 import { Component, OnInit, EventEmitter } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+
+import { Organization } from '../../organization';
 import { Analysis } from '../analysis';
 import { OrganizationAnalysisService } from '../../../../services/api/organization/organization-analysis.service';
-import { Organization } from '../../organization';
-import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'app-organization-analysis-modal',
@@ -15,6 +16,7 @@ export class OrganizationAnalysisModalComponent implements OnInit {
   analysis: Analysis = new Analysis();
   saved = new EventEmitter();
   editMode: boolean;
+  scopeOption: string = "all";
   errors = [];
 
   constructor(

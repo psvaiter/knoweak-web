@@ -1,14 +1,22 @@
 <app-modal modalTitle="Criar análise">
   <div class="body">
-    <form>
-      <div class="form-group">
-        <label>Descrição</label>
-        <input type="text" [(ngModel)]="analysis.description" name="description" placeholder="Opcional" class="form-control form-control-sm" />
+    <div class="form-group">
+      <label>Descrição</label>
+      <input type="text" [(ngModel)]="analysis.description" name="description" placeholder="Opcional" class="form-control form-control-sm" />
+    </div>
+    
+    <!-- Scopes selection (only for !editMode) -->
+    <div *ngIf="!editMode">
+      Opção de escopos
+      <div class="btn-group w-100 mt-2" btnRadioGroup [(ngModel)]="scopeOption">
+        <label class="btn btn-sm btn-outline-secondary w-50" btnRadio="all" tabindex="0" role="button">Organização inteira</label>
+        <label class="btn btn-sm btn-outline-secondary w-50" btnRadio="custom" tabindex="0" role="button">Selecionar escopos</label>
       </div>
-      
-      <!-- TODO: add scopes here (only for !editMode) -->
-
-    </form>
+      <div *ngIf="scopeOption == 'custom'">
+        Em breve...
+      </div>
+    </div>
+    
     <app-error-alert [errors]="errors"></app-error-alert>
   </div>
 
