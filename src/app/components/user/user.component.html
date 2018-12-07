@@ -11,7 +11,7 @@
           Nome completo
         </label>
         <div class="col-8">
-          <input type="text" [(ngModel)]="newRecord.fullName" name="fullName" id="fullName" class="form-control form-control-sm" />
+          <input type="text" maxlength="128" [(ngModel)]="newRecord.fullName" name="fullName" id="fullName" class="form-control form-control-sm" />
         </div>
       </div>
 
@@ -21,7 +21,7 @@
           Email
         </label>
         <div class="col-9">
-          <input type="email" [(ngModel)]="newRecord.email" name="email" id="email" class="form-control form-control-sm" />
+          <input type="email" maxlength="255" [(ngModel)]="newRecord.email" name="email" id="email" class="form-control form-control-sm" />
         </div>
       </div>
 
@@ -31,7 +31,7 @@
           Senha
         </label>
         <div class="col-9">
-          <input type="password" [(ngModel)]="newRecord.password" name="password" id="password" class="form-control form-control-sm" />
+          <input type="password" maxlength="128" [(ngModel)]="newRecord.password" name="password" id="password" class="form-control form-control-sm" />
         </div>
       </div>
 
