@@ -2,7 +2,7 @@
   <div class="body">
     <div class="form-group">
       <label>Descrição</label>
-      <input type="text" [(ngModel)]="analysis.description" name="description" placeholder="Opcional" class="form-control form-control-sm" />
+      <input type="text" maxlength="1024" [(ngModel)]="analysis.description" name="description" placeholder="Opcional" class="form-control form-control-sm" />
     </div>
     
     <!-- Scopes selection (only for !editMode) -->
