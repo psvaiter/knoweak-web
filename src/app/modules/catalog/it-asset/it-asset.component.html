@@ -27,7 +27,7 @@
             Nome
           </label>
           <div class="col-9">
-            <input type="text" [(ngModel)]="newRecord.name" name="name" id="name" class="form-control form-control-sm" />
+            <input type="text" maxlength="128" [(ngModel)]="newRecord.name" name="name" id="name" class="form-control form-control-sm" />
           </div>
         </div>
 
@@ -37,7 +37,7 @@
             Descrição
           </label>
           <div class="col-9">
-            <input type="text" [(ngModel)]="newRecord.description" name="description" id="description" class="form-control form-control-sm" />
+            <input type="text" maxlength="255" [(ngModel)]="newRecord.description" name="description" id="description" class="form-control form-control-sm" />
           </div>
         </div>
 
