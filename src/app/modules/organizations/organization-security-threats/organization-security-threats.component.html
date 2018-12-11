@@ -32,8 +32,8 @@
             <span *ngIf="!securityThreat.threatLevel">Não cadastrado</span>
           </td>
           <td>
-            <a title="Alterar grau" [routerLink]="" (click)="editItem(securityThreat)"><fa name="edit"></fa></a>
-            <a title="Remover" [routerLink]="" (click)="removeItem(securityThreat)"><fa name="trash"></fa></a>
+            <a title="Alterar grau" [routerLink]="" (click)="editItem(securityThreat)" class="icon-link"><fa name="edit"></fa></a>
+            <a title="Remover" [routerLink]="" (click)="removeItem(securityThreat)" class="icon-link text-danger"><fa name="trash"></fa></a>
           </td>
         </tr>
       </tbody>

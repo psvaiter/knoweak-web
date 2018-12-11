@@ -2,13 +2,13 @@
   <nav aria-label="Page navigation" *ngIf="paging && paging.totalRecords > 0">
     <span>Exibindo {{ getCurrentStart() }} a {{ getCurrentEnd() }} de {{ paging.totalRecords }}</span>
     <ul class="pagination">
-      <li class="page-item" *ngIf="paging.currentPage > 1">
+      <li class="page-item" [class.invisible]="paging.currentPage == 1">
         <a class="page-link" (click)="goPrev()" aria-label="Previous">
           <span aria-hidden="true">&laquo; Ant.</span>
           <span class="sr-only">Previous</span>
         </a>
       </li>
-      <li class="page-item" *ngIf="paging.currentPage < paging.totalPages">
+      <li class="page-item" [class.invisible]="paging.currentPage >= paging.totalPages">
         <a class="page-link" (click)="goNext()" aria-label="Next">
           <span aria-hidden="true">Próx. &raquo;</span>
           <span class="sr-only">Next</span>

@@ -96,6 +96,7 @@ h5, .h5 {
 .sidebar-heading {
   font-size: .75rem;
   text-transform: uppercase;
+  border-bottom: 1px solid #e5e5e5;
 }
 
 /*
@@ -113,9 +114,6 @@ h5, .h5 {
 /*
  * Utilities
  */
-
-.border-top { border-top: 1px solid #e5e5e5; }
-.border-bottom { border-bottom: 1px solid #e5e5e5; }
 
 // Used to display CreatedOn and LastModifiedOn
 .entity-metadata {
