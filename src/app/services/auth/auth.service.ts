@@ -69,7 +69,7 @@ export class AuthService {
 
   public isAuthenticated(): boolean {
     // Check whether the current time is past the Access Token's expiry time
-    return new Date().getTime() < JSON.parse(localStorage.getItem('access_token_expires_at'));
+    return Date.now() < JSON.parse(localStorage.getItem('access_token_expires_at'));
   }
 
   public userHasScopes(scopes: Array<string>): boolean {
@@ -78,11 +78,9 @@ export class AuthService {
   }
   
   private setSession(authResult): void {
-    let accessTokenExpiresAt  = new Date().getTime() + (authResult.expiresIn * 1000);
+    let accessTokenExpiresAt = Date.now() + (authResult.expiresIn * 1000);
     let grantedScopes = (authResult.scope) ? authResult.scope.split(' ') : this.requestedScopes;
-
-    // Get user info from ID token
-    let idTokenPayload = this.jwt.decodeToken(authResult.idToken);
+    let idTokenPayload = this.jwt.decodeToken(authResult.idToken);  // Get user info from ID token
 
     // Save 'public' info to local storage
     localStorage.setItem('id_token', authResult.idToken);
@@ -103,8 +101,9 @@ export class AuthService {
 
     const source = Observable.of(accessTokenExpiresAt).flatMap(
       expiresAt => {
-        var refreshAt = expiresAt - (1000 * 60); // Refresh 1 min before expiry
-        return Observable.timer(Math.max(1, refreshAt - Date.now()));
+        let refreshAt = expiresAt - (1000 * 60); // Refresh 1 min before expiry
+        let delay = refreshAt - Date.now();
+        return Observable.timer(delay);
       });
 
     // Once the delay time from above is  reached, 
@@ -115,15 +114,13 @@ export class AuthService {
   }
 
   private unscheduleRenewal() {
-    if (!this.refreshSubscription) {
-      return;
+    if (this.refreshSubscription) {
+      this.refreshSubscription.unsubscribe();
     }
-    this.refreshSubscription.unsubscribe();
   }
   
   private renewToken() {
     this.auth0.checkSession({}, (err, result) => {
-      console.log(result);
       if (err) {
         //alert(`Could not get a new token using silent authentication (${err.error}).`);
         console.log(err);
