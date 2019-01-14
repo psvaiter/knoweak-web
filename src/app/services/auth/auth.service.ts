@@ -9,17 +9,19 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 @Injectable()
 export class AuthService {
 
+  requestedScopes: string[] = ["openid", "profile"];
+  
   auth0 = new auth0.WebAuth({
     clientID: environment.auth0.clientID,
     domain: environment.auth0.domain,
-    audience: 'knoweak-api-localhost',
+    audience: environment.auth0.audience,
     responseType: 'token id_token',
     redirectUri: window.location.origin + environment.auth0.redirectPath,
-    scope: 'openid profile'
+    scope: this.requestedScopes.join(' ')
   });
 
   jwt = new JwtHelperService();
-
+  
   constructor(public router: Router) { }
 
   public login() {
@@ -33,7 +35,7 @@ export class AuthService {
       if (authResult && authResult.accessToken && authResult.idToken) {
         window.location.hash = '';
         this.setSession(authResult);
-        this.router.navigate(['/dashboard']);
+        this.router.navigate(['/']);
       }
       else if (err) {
         this.router.navigate(['/']);
@@ -43,18 +45,18 @@ export class AuthService {
   }
 
   private setSession(authResult): void {
-    // Set the time that the Access Token will expire at
-    // We should not open the Access Token
-    let expiresAt = (authResult.expiresIn * 1000) + new Date().getTime();
+    let accessTokenExpiresAt  = new Date().getTime() + (authResult.expiresIn * 1000);
+    let grantedScopes = (authResult.scope) ? authResult.scope.split(' ') : this.requestedScopes;
 
-    // Get some other info from ID token
+    // Get user info from ID token
     let idTokenPayload = this.jwt.decodeToken(authResult.idToken);
 
-    // Save them to local storage
+    // Save 'public' info to local storage
     localStorage.setItem('id_token', authResult.idToken);
     localStorage.setItem('name', idTokenPayload.name);
     localStorage.setItem('access_token', authResult.accessToken);
-    localStorage.setItem('expires_at', expiresAt.toString());
+    localStorage.setItem('access_token_expires_at', JSON.stringify(accessTokenExpiresAt));
+    localStorage.setItem('granted_scopes', JSON.stringify(grantedScopes));
   }
 
   public logout(): void {
@@ -62,7 +64,14 @@ export class AuthService {
     localStorage.removeItem('id_token');
     localStorage.removeItem('name');
     localStorage.removeItem('access_token');
-    localStorage.removeItem('expires_at');
+    localStorage.removeItem('access_token_expires_at');
+    localStorage.removeItem('granted_scopes');
+
+    // Do we need this?
+    // this.auth0.logout({
+    //   clientID: environment.auth0.clientID,
+    //   returnTo: window.location.origin
+    // });
     
     // Go back to the home route
     this.router.navigate(['/']);
@@ -70,7 +79,11 @@ export class AuthService {
 
   public isAuthenticated(): boolean {
     // Check whether the current time is past the Access Token's expiry time
-    const expiresAt = JSON.parse(localStorage.getItem('expires_at') || '{}');
-    return new Date().getTime() < expiresAt;
+    return new Date().getTime() < JSON.parse(localStorage.getItem('access_token_expires_at') || '{}');
+  }
+
+  public userHasScopes(scopes: Array<string>): boolean {
+    const grantedScopes = JSON.parse(localStorage.getItem('granted_scopes'));
+    return scopes.every(scope => grantedScopes.includes(scope));
   }
 }
