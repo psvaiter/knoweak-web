@@ -3,6 +3,7 @@ import { CommonModule } from "@angular/common";
 import { FormsModule } from "@angular/forms";
 
 import { AngularFontAwesomeModule } from "angular-font-awesome";
+import { NgxSpinnerModule } from "ngx-spinner";
 import { NgSelectModule } from "@ng-select/ng-select";
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { ButtonsModule } from 'ngx-bootstrap/buttons';
@@ -24,6 +25,7 @@ import { ModalComponent } from "./components/modal/modal.component";
         CommonModule,
         FormsModule,
         AngularFontAwesomeModule,
+        NgxSpinnerModule,
         NgSelectModule,
         ModalModule.forRoot(),
         ButtonsModule.forRoot()
@@ -32,6 +34,7 @@ import { ModalComponent } from "./components/modal/modal.component";
         CommonModule,
         FormsModule,
         AngularFontAwesomeModule,
+        NgxSpinnerModule,
         NgSelectModule,
         ErrorAlertComponent,
         PaginationComponent,
