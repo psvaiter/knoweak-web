@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+
 import { environment } from '../../../environments/environment';
 import * as auth0 from 'auth0-js';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { Observable } from 'rxjs';
 
 (window as any).global = window;
 
@@ -21,6 +23,7 @@ export class AuthService {
   });
 
   jwt = new JwtHelperService();
+  private refreshSubscription: any;
   
   constructor(public router: Router) { }
 
@@ -44,21 +47,6 @@ export class AuthService {
     });
   }
 
-  private setSession(authResult): void {
-    let accessTokenExpiresAt  = new Date().getTime() + (authResult.expiresIn * 1000);
-    let grantedScopes = (authResult.scope) ? authResult.scope.split(' ') : this.requestedScopes;
-
-    // Get user info from ID token
-    let idTokenPayload = this.jwt.decodeToken(authResult.idToken);
-
-    // Save 'public' info to local storage
-    localStorage.setItem('id_token', authResult.idToken);
-    localStorage.setItem('name', idTokenPayload.name);
-    localStorage.setItem('access_token', authResult.accessToken);
-    localStorage.setItem('access_token_expires_at', JSON.stringify(accessTokenExpiresAt));
-    localStorage.setItem('granted_scopes', JSON.stringify(grantedScopes));
-  }
-
   public logout(): void {
     // Remove tokens and expiry time from localStorage
     localStorage.removeItem('id_token');
@@ -66,6 +54,8 @@ export class AuthService {
     localStorage.removeItem('access_token');
     localStorage.removeItem('access_token_expires_at');
     localStorage.removeItem('granted_scopes');
+
+    this.unscheduleRenewal();
 
     // Do we need this?
     // this.auth0.logout({
@@ -79,11 +69,69 @@ export class AuthService {
 
   public isAuthenticated(): boolean {
     // Check whether the current time is past the Access Token's expiry time
-    return new Date().getTime() < JSON.parse(localStorage.getItem('access_token_expires_at') || '{}');
+    return new Date().getTime() < JSON.parse(localStorage.getItem('access_token_expires_at'));
   }
 
   public userHasScopes(scopes: Array<string>): boolean {
     const grantedScopes = JSON.parse(localStorage.getItem('granted_scopes'));
     return scopes.every(scope => grantedScopes.includes(scope));
   }
+  
+  private setSession(authResult): void {
+    let accessTokenExpiresAt  = new Date().getTime() + (authResult.expiresIn * 1000);
+    let grantedScopes = (authResult.scope) ? authResult.scope.split(' ') : this.requestedScopes;
+
+    // Get user info from ID token
+    let idTokenPayload = this.jwt.decodeToken(authResult.idToken);
+
+    // Save 'public' info to local storage
+    localStorage.setItem('id_token', authResult.idToken);
+    localStorage.setItem('name', idTokenPayload.name);
+    localStorage.setItem('access_token', authResult.accessToken);
+    localStorage.setItem('access_token_expires_at', JSON.stringify(accessTokenExpiresAt));
+    localStorage.setItem('granted_scopes', JSON.stringify(grantedScopes));
+
+    this.scheduleRenewal();
+  }
+
+  private scheduleRenewal() {
+    if (!this.isAuthenticated()) {
+      return;
+    }
+
+    const accessTokenExpiresAt = JSON.parse(localStorage.getItem('access_token_expires_at'));
+
+    const source = Observable.of(accessTokenExpiresAt).flatMap(
+      expiresAt => {
+        var refreshAt = expiresAt - (1000 * 60); // Refresh 1 min before expiry
+        return Observable.timer(Math.max(1, refreshAt - Date.now()));
+      });
+
+    // Once the delay time from above is  reached, 
+    // get a new JWT and schedule additional refreshes
+    this.refreshSubscription = source.subscribe(() => {
+      this.renewToken();
+    });
+  }
+
+  private unscheduleRenewal() {
+    if (!this.refreshSubscription) {
+      return;
+    }
+    this.refreshSubscription.unsubscribe();
+  }
+  
+  private renewToken() {
+    this.auth0.checkSession({}, (err, result) => {
+      console.log(result);
+      if (err) {
+        //alert(`Could not get a new token using silent authentication (${err.error}).`);
+        console.log(err);
+      } 
+      else {
+        this.setSession(result);
+      }
+    });
+  }
+
 }
