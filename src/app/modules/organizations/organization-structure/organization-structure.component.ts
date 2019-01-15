@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import * as _ from 'lodash';
+import { finalize } from 'rxjs/operators';
 
 import { Organization } from '../organization';
 import { OrganizationService } from '../../../services/api/organization/organization.service';
@@ -12,6 +13,7 @@ import { OrganizationService } from '../../../services/api/organization/organiza
 })
 export class OrganizationStructureComponent implements OnInit {
 
+  loading: boolean;
   organization: Organization = new Organization();
 
   constructor(
@@ -26,14 +28,17 @@ export class OrganizationStructureComponent implements OnInit {
   }
 
   getOrganization() {
-    this.organizationService.getById(this.organization.id).subscribe(
-      data => {
-        this.organization = data['data'];
-      },
-      err => {
-        console.error(err);
-      }
-    );
+    this.loading = true;
+    this.organizationService.getById(this.organization.id)
+      .pipe(finalize(() => this.loading = false))
+      .subscribe(
+        data => {
+          this.organization = data['data'];
+        },
+        err => {
+          console.error(err);
+        }
+      );
   }
 
 }
