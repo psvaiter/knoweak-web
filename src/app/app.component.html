@@ -1,18 +1,41 @@
 <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
-  <button type="button" class="btn btn-sm btn-secondary mx-1 d-sm-block d-md-none" (click)="toggleSidebar()">
+  <button *ngIf="auth.isAuthenticated()" type="button" class="btn btn-sm btn-secondary mx-1 d-sm-block d-md-none" (click)="toggleSidebar()">
     <fa name="bars"></fa>
   </button>
   <a class="navbar-brand mx-3" href="#">knoweak - A <b>Know Your Weakness</b> Tool</a>
   <ul class="navbar-nav px-3">
     <li class="nav-item text-nowrap">
-      <a class="nav-link" [routerLink]="" (click)="login()" *ngIf="!auth.isAuthenticated()">Entrar</a>
+      <a class="nav-link" [routerLink]="" (click)="login()" *ngIf="!auth.isAuthenticated()">Login</a>
       <a class="nav-link" [routerLink]="" (click)="logout()" *ngIf="auth.isAuthenticated()">Sair</a>
     </li>
   </ul>
 </nav>
 
-<div class="container-fluid py-2" *ngIf="!auth.isAuthenticated()">
-  Você precisa estar logado para ter acesso ao sistema.
+<div class="container-fluid" *ngIf="!auth.isAuthenticated()">
+  
+  <div class="card-group py-4">
+    <div class="card text-center">
+      <div class="card-img-top pt-3"><fa size="4x" name="building"></fa></div>
+      <div class="card-body">
+        Gerencie organizações e suas estruturas.
+      </div>
+    </div>
+
+    <div class="card text-center">
+      <div class="card-img-top pt-3"><fa size="4x" name="sitemap"></fa></div>
+      <div class="card-body">
+        Catalogue processos, ativos, ameaças etc. para reutilização em outras organizações.
+      </div>
+    </div>
+
+    <div class="card text-center">
+      <div class="card-img-top pt-3"><fa size="4x" name="calculator"></fa></div>
+      <div class="card-body">
+        Calcule impacto, probabilidade e risco de incidentes de Segurança da Informação.
+      </div>
+    </div>
+  </div>
+  
 </div>
 
 <div class="container-fluid" *ngIf="auth.isAuthenticated()">
