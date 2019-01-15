@@ -5,11 +5,20 @@
 </div>
 
 <div class="my-structured-list">
-  <ul class="list-group" *ngIf="departments?.length > 0">
+  <ul class="list-group" *ngIf="departments?.length > 0; else emptyList">
     <li class="list-group-item" *ngFor="let department of departments" [ngClass]="{'expanded': expanded}">
       
       <app-department-item [department]="department" (delete)="removeDepartment($event)"></app-department-item>
 
     </li>
   </ul>
+
+  <ng-template #emptyList>
+    <div class="my-2 text-center alert alert-warning" *ngIf="loading">
+      Carregando...
+    </div>
+    <div class="my-2 text-center alert alert-info" *ngIf="!loading">
+      Não existem departamentos cadastrados.
+    </div>
+  </ng-template>
 </div>
