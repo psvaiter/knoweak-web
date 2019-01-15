@@ -7,13 +7,18 @@
         <b>Atualizado em:</b> {{ currentRecord.lastModifiedOn | date : "dd/MM/yyyy HH:mm" }} (UTC)
       </div>
 
-      <div class="mx-4 my-4" style="line-height: 1.5rem; font-size: 0.8rem;">
-        <b>Nº de Registro:</b> {{ currentRecord.taxId }}<br>
-        <b>Nome empresarial:</b> {{ currentRecord.legalName }}<br>
-        <b>Nome fantasia:</b> {{ currentRecord.tradeName || "(não cadastrado)" }}<br>
-        <a [routerLink]="" (click)="editOrganization()">Alterar dados</a>
+      <div class="card border-primary my-4">
+        <h6 class="card-header">Dados básicos</h6>
+        <div class="card-body" style="line-height: 1.5rem; font-size: 0.8rem;">
+          <p class="card-text">
+            Nº de Registro: {{ currentRecord.taxId }}<br>
+            Nome empresarial: {{ currentRecord.legalName }}<br>
+            Nome fantasia: {{ currentRecord.tradeName || "(não cadastrado)" }}<br>
+          </p>
+          <a class="" [routerLink]="" (click)="editOrganization()">Alterar dados</a>
+        </div>
       </div>
-
+      
       <div class="list-group my-4">
         <a class="list-group-item list-group-item-action" [routerLink]="['/organizations', currentRecord.id, 'structure']">
           <fa name="sitemap"></fa>Gerenciar estrutura
