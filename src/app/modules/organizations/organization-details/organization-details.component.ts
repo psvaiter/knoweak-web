@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { BsModalService } from 'ngx-bootstrap/modal';
 
+import { AuthService } from '../../../services/auth/auth.service';
 import { Organization } from '../organization';
 import { CrudService } from '../../../shared/components/crud/crud.service';
 import { CrudComponent } from '../../../shared/components/crud/crud.component';
@@ -18,6 +19,7 @@ export class OrganizationDetailsComponent extends CrudComponent<Organization> im
   id: number;
 
   constructor(
+    private auth: AuthService,
     protected _crudService: CrudService,
     private modalService: BsModalService,
     private route: ActivatedRoute,

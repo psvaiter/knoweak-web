@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { finalize } from 'rxjs/operators';
 import { BsModalService } from 'ngx-bootstrap/modal';
 
+import { AuthService } from '../../../services/auth/auth.service';
 import { Organization } from '../organization';
 import { OrganizationService } from '../../../services/api/organization/organization.service';
 import { OrganizationItAssetService } from '../../../services/api/organization/organization-it-asset.service';
@@ -20,9 +21,11 @@ export class OrganizationItAssetsComponent implements OnInit {
   organization: Organization = new Organization();
   itAssets: any[];
   paging: Paging = new Paging();
+  userCanManage: boolean;
 
   constructor(
     private activatedRoute: ActivatedRoute,
+    private auth: AuthService,
     private modalService: BsModalService,
     private organizationService: OrganizationService,
     private organizationItAssetService: OrganizationItAssetService
@@ -35,6 +38,8 @@ export class OrganizationItAssetsComponent implements OnInit {
   ngOnInit() {
     this.loadOrganizationData();
     this.loadItAssets();
+
+    this.userCanManage = this.auth.userHasScopes(['manage:organizations']);
   }
 
   addItem() {

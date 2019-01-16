@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { BsModalService } from 'ngx-bootstrap/modal';
 
+import { AuthService } from '../../../../services/auth/auth.service';
 import { Organization } from '../../organization';
 import { Analysis } from '../analysis';
 import { OrganizationAnalysisModalComponent } from '../organization-analysis-modal/organization-analysis-modal.component';
@@ -23,6 +24,7 @@ export class OrganizationAnalysisDetailComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private auth: AuthService,
     private modalService: BsModalService,
     private organizationService: OrganizationService,
     private organizationAnalysisService: OrganizationAnalysisService

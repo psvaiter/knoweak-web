@@ -10,7 +10,7 @@
   </div>
   <div class="my-4" style="line-height: 1.5rem; font-size: 0.8rem;">
     <b>Descrição:</b> {{ analysis.description || "(sem descrição)" }}<br>
-    <a [routerLink]="" (click)="editAnalysis()">Alterar descrição</a>
+    <a *ngIf="auth.userHasScopes(['update:analyses'])" [routerLink]="" (click)="editAnalysis()">Alterar descrição</a>
   </div>
     
   <app-organization-analysis-report></app-organization-analysis-report>

@@ -4,6 +4,7 @@ import { finalize } from 'rxjs/operators';
 import { BsModalService } from 'ngx-bootstrap/modal';
 
 import { Constants } from '../../../shared/constants';
+import { AuthService } from '../../../services/auth/auth.service';
 import { OrganizationSecurityThreatLookupComponent } from './organization-security-threat-lookup/organization-security-threat-lookup.component';
 import { OrganizationService } from '../../../services/api/organization/organization.service';
 import { OrganizationSecurityThreatService } from '../../../services/api/organization/organization-security-threat.service';
@@ -21,9 +22,11 @@ export class OrganizationSecurityThreatsComponent implements OnInit {
   organization: Organization = new Organization();
   securityThreats: any[];
   paging: Paging = new Paging();
+  userCanManage: boolean;
 
   constructor(
     private route: ActivatedRoute,
+    private auth: AuthService,
     private modalService: BsModalService,
     private organizationService: OrganizationService,
     private organizationSecurityThreatService: OrganizationSecurityThreatService
@@ -36,6 +39,8 @@ export class OrganizationSecurityThreatsComponent implements OnInit {
   ngOnInit() {
     this.loadOrganizationData();
     this.loadSecurityThreats();
+
+    this.userCanManage = this.auth.userHasScopes(['manage:organizations']);
   }
 
   addItem() {

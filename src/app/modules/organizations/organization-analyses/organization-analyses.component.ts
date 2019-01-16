@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { BsModalService } from 'ngx-bootstrap/modal';
 
+import { AuthService } from '../../../services/auth/auth.service';
 import { Analysis } from './analysis';
 import { CrudComponent } from '../../../shared/components/crud/crud.component';
 import { CrudService } from '../../../shared/components/crud/crud.service';
@@ -22,6 +23,7 @@ export class OrganizationAnalysesComponent extends CrudComponent<Analysis> imple
   constructor(
     protected crudService: CrudService,
     private route: ActivatedRoute,
+    private auth: AuthService,
     private modalService: BsModalService,
     private organizationAnalysisService: OrganizationAnalysisService
   ) {

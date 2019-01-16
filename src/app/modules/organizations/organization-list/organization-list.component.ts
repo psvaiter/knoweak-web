@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { finalize } from 'rxjs/operators';
 
+import { AuthService } from '../../../services/auth/auth.service';
 import { Organization } from '../organization';
 import { OrganizationModalComponent } from '../organization-modal/organization-modal.component';
 import { OrganizationService } from '../../../services/api/organization/organization.service';
@@ -19,6 +20,7 @@ export class OrganizationListComponent implements OnInit {
   organizations: Organization[];
   
   constructor(
+    private auth: AuthService,
     private modalService: BsModalService,
     private organizationService: OrganizationService
   ) {

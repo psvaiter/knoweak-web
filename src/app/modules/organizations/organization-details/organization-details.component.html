@@ -15,7 +15,7 @@
             Nome empresarial: {{ currentRecord.legalName }}<br>
             Nome fantasia: {{ currentRecord.tradeName || "(não cadastrado)" }}<br>
           </p>
-          <a class="" [routerLink]="" (click)="editOrganization()">Alterar dados</a>
+          <a *ngIf="auth.userHasScopes(['update:organizations'])" [routerLink]="" (click)="editOrganization()">Alterar dados</a>
         </div>
       </div>
       

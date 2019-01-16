@@ -3,7 +3,7 @@
     <small><a [routerLink]="['../details']">{{ organization.legalName }}</a></small>
     <h5><fa name="exclamation-triangle"></fa>Ameaças</h5>
   </div>
-  <div class="d-flex">
+  <div class="d-flex" *ngIf="userCanManage">
     <!-- Add new security threat to organization -->
     <input type="button" class="btn btn-sm btn-primary ml-auto" value="Adicionar ameaça" (click)="addItem()" />
   </div>
@@ -32,8 +32,8 @@
             <span *ngIf="!securityThreat.threatLevel">Não cadastrado</span>
           </td>
           <td>
-            <a title="Alterar grau" [routerLink]="" (click)="editItem(securityThreat)" class="icon-link"><fa name="edit"></fa></a>
-            <a title="Remover" [routerLink]="" (click)="removeItem(securityThreat)" class="icon-link text-danger"><fa name="trash"></fa></a>
+            <a *ngIf="userCanManage" title="Alterar grau" [routerLink]="" (click)="editItem(securityThreat)" class="icon-link"><fa name="edit"></fa></a>
+            <a *ngIf="userCanManage" title="Remover" [routerLink]="" (click)="removeItem(securityThreat)" class="icon-link text-danger"><fa name="trash"></fa></a>
           </td>
         </tr>
       </tbody>

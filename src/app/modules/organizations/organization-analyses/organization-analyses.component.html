@@ -5,7 +5,7 @@
   </div>
   
   <div>
-    <div class="text-right mb-2">
+    <div class="text-right mb-2" *ngIf="auth.userHasScopes(['create:analyses'])">
       <button class="btn btn-primary btn-sm" (click)="addAnalysis()">
         <fa name="plus"></fa> Criar análise
       </button>
@@ -35,7 +35,7 @@
           <td>{{ record.createdOn | date : "dd/MM/yyyy HH:mm" }}</td>
           <td>
             <a title="Visualizar detalhes" [routerLink]="['/organizations', organizationId, 'analyses', record.id, 'details']" class="icon-link"><fa name="search-plus"></fa></a>
-            <a title="Excluir" [routerLink]="" (click)="deleteAnalysis(record)" class="icon-link text-danger"><fa name="trash"></fa></a>
+            <a *ngIf="auth.userHasScopes(['delete:analyses'])" title="Excluir" [routerLink]="" (click)="deleteAnalysis(record)" class="icon-link text-danger"><fa name="trash"></fa></a>
           </td>
         </tr>
       </tbody>

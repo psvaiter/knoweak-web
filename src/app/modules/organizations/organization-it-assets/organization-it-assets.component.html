@@ -3,7 +3,7 @@
     <small><a [routerLink]="['../details']">{{ organization.legalName }}</a></small>
     <h5><fa name="laptop"></fa>Ativos de TI</h5>
   </div>
-  <div class="d-flex">
+  <div class="d-flex" *ngIf="userCanManage">
     <!-- Add new IT asset to organization -->
     <input type="button" class="btn btn-sm btn-primary ml-auto" value="Adicionar ativo de TI" (click)="addItem()" />
   </div>
@@ -30,8 +30,8 @@
           <td class="w-50">{{ itAsset.externalIdentifier || "-" }}</td>
           <td>
             <a title="Gerenciar vulnerabilidades" [routerLink]="[itAsset.instanceId, 'vulnerabilities']" class="icon-link"><fa name="exclamation-triangle"></fa></a>
-            <a title="Editar" [routerLink]="" (click)="editItem(itAsset)" class="icon-link"><fa name="edit"></fa></a>
-            <a title="Remover" [routerLink]="" (click)="removeItem(itAsset)" class="icon-link text-danger"><fa name="trash"></fa></a>
+            <a *ngIf="userCanManage" title="Editar" [routerLink]="" (click)="editItem(itAsset)" class="icon-link"><fa name="edit"></fa></a>
+            <a *ngIf="userCanManage" title="Remover" [routerLink]="" (click)="removeItem(itAsset)" class="icon-link text-danger"><fa name="trash"></fa></a>
           </td>
         </tr>
       </tbody>

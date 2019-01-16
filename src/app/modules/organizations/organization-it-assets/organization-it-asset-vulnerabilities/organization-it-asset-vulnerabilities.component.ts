@@ -4,6 +4,7 @@ import { finalize } from 'rxjs/operators';
 import { BsModalService } from 'ngx-bootstrap/modal';
 
 import { Constants } from '../../../../shared/constants';
+import { AuthService } from '../../../../services/auth/auth.service';
 import { Organization, OrganizationItAsset } from '../../organization';
 import { Paging } from '../../../../shared/components/pagination/pagination.component';
 import { OrganizationService } from '../../../../services/api/organization/organization.service';
@@ -23,9 +24,11 @@ export class OrganizationItAssetVulnerabilitiesComponent implements OnInit {
   itAsset: OrganizationItAsset = new OrganizationItAsset();
   vulnerabilities: any[];
   paging: Paging = new Paging();
+  userCanManage: boolean;
 
   constructor(
     private activatedRoute: ActivatedRoute,
+    private auth: AuthService,
     private modalService: BsModalService,
     private organizationService: OrganizationService,
     private organizationItAssetService: OrganizationItAssetService,
@@ -41,6 +44,8 @@ export class OrganizationItAssetVulnerabilitiesComponent implements OnInit {
     this.loadOrganizationData();
     this.loadItAssetData();
     this.loadVulnerabilities();
+
+    this.userCanManage = this.auth.userHasScopes(['manage:organizations']);
   }
 
   addItem() {

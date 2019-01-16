@@ -4,7 +4,7 @@
     <h5><fa name="exclamation-triangle"></fa>Vulnerabilidades</h5>
   </div>
 
-  <div class="d-flex">
+  <div class="d-flex" *ngIf="userCanManage">
     <!-- Add new vulnerability to IT asset -->
     <input type="button" class="btn btn-sm btn-primary ml-auto" value="Cadastrar vulnerabilidade" (click)="addItem()" />
   </div>
@@ -32,8 +32,8 @@
           <td class="w-50">{{ (vulnerability.level) ? vulnerability.level.id : "-" }}</td>
           <!-- <td class="w-50">{{ (vulnerability.securityThreat.threatLevel) ? vulnerability.securityThreat.threatLevel.id : "-" }}</td> -->
           <td>
-            <a title="Editar" [routerLink]="" (click)="editItem(vulnerability)"><fa name="edit"></fa></a>
-            <a title="Remover" [routerLink]="" (click)="removeItem(vulnerability)"><fa name="trash"></fa></a>
+            <a *ngIf="userCanManage" title="Editar" [routerLink]="" (click)="editItem(vulnerability)" class="icon-link"><fa name="edit"></fa></a>
+            <a *ngIf="userCanManage" title="Remover" [routerLink]="" (click)="removeItem(vulnerability)" class="icon-link text-danger"><fa name="trash"></fa></a>
           </td>
         </tr>
       </tbody>
