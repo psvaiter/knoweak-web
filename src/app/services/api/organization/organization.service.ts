@@ -4,8 +4,13 @@ import { Organization } from '../../../modules/organizations/organization';
 
 @Injectable()
 export class OrganizationService {
-
+  
   constructor(private crudService: CrudService) { }
+
+  listOrganizations(page: number, recordsPerPage: number = 10) {
+    let url = `${CrudService.BaseUrl}/organizations`;
+    return this.crudService.getPage(url, page, recordsPerPage);
+  }
 
   getById(organizationId: number) {
     let url = `${CrudService.BaseUrl}/organizations/${organizationId}`;

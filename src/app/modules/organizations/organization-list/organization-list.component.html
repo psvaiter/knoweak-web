@@ -24,21 +24,21 @@
         </thead>
         <tbody>
           <tr *ngIf="loading">
-            <td colspan="3">Carregando...</td>
+            <td colspan="4">Carregando...</td>
           </tr>
-          <tr *ngIf="!loading && (!records || !records.length)">
-            <td colspan="3">Nenhuma organização cadastrada</td>
+          <tr *ngIf="!loading && (!organizations || !organizations.length)">
+            <td colspan="4">Nenhuma organização cadastrada</td>
           </tr>
-          <tr *ngFor="let record of records">
-            <td>{{ record.taxId }}</td>
-            <td class="w-100">{{ record.legalName }}</td>
-            <td>{{ record.createdOn | date : "dd/MM/yyyy HH:mm" }}</td>
+          <tr *ngFor="let organization of organizations">
+            <td>{{ organization.taxId }}</td>
+            <td class="w-100">{{ organization.legalName }}</td>
+            <td>{{ organization.createdOn | date : "dd/MM/yyyy HH:mm" }}</td>
             <td>
-              <a title="Visualizar detalhes" [routerLink]="['/organizations', record.id, 'details']" class="icon-link"><fa name="info"></fa></a>
-              <a title="Gerenciar estrutura" [routerLink]="['/organizations', record.id, 'structure']" class="icon-link"><fa name="sitemap"></fa></a>
-              <a title="Gerenciar ativos de TI" [routerLink]="['/organizations', record.id, 'itAssets']" class="icon-link"><fa name="laptop"></fa></a>
-              <a title="Gerenciar ameaças" [routerLink]="['/organizations', record.id, 'securityThreats']" class="icon-link"><fa name="exclamation-triangle"></fa></a>
-              <a title="Gerenciar análises" [routerLink]="['/organizations', record.id, 'analyses']" class="icon-link"><fa name="calculator"></fa></a>
+              <a title="Visualizar detalhes" [routerLink]="['/organizations', organization.id, 'details']" class="icon-link"><fa name="info"></fa></a>
+              <a title="Gerenciar estrutura" [routerLink]="['/organizations', organization.id, 'structure']" class="icon-link"><fa name="sitemap"></fa></a>
+              <a title="Gerenciar ativos de TI" [routerLink]="['/organizations', organization.id, 'itAssets']" class="icon-link"><fa name="laptop"></fa></a>
+              <a title="Gerenciar ameaças" [routerLink]="['/organizations', organization.id, 'securityThreats']" class="icon-link"><fa name="exclamation-triangle"></fa></a>
+              <a title="Gerenciar análises" [routerLink]="['/organizations', organization.id, 'analyses']" class="icon-link"><fa name="calculator"></fa></a>
             </td>
           </tr>
         </tbody>

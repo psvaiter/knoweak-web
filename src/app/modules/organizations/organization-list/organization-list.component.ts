@@ -1,45 +1,71 @@
 import { Component, OnInit } from '@angular/core';
 import { BsModalService } from 'ngx-bootstrap/modal';
+import { finalize } from 'rxjs/operators';
 
 import { Organization } from '../organization';
-import { CrudService } from '../../../shared/components/crud/crud.service';
-import { CrudComponent } from '../../../shared/components/crud/crud.component';
 import { OrganizationModalComponent } from '../organization-modal/organization-modal.component';
+import { OrganizationService } from '../../../services/api/organization/organization.service';
+import { Paging } from '../../../shared/components/pagination/pagination.component';
 
 @Component({
   selector: 'app-organization-list',
   templateUrl: './organization-list.component.html',
   styleUrls: ['./organization-list.component.scss']
 })
-export class OrganizationListComponent extends CrudComponent<Organization> implements OnInit {
+export class OrganizationListComponent implements OnInit {
 
-  url = CrudService.BaseUrl + '/organizations';
+  loading: boolean;
+  paging: Paging = new Paging();
+  organizations: Organization[];
   
   constructor(
-    private crudService: CrudService,
-    private modalService: BsModalService
+    private modalService: BsModalService,
+    private organizationService: OrganizationService
   ) {
-    super(crudService);
+    
   }
 
   ngOnInit() {
-    this.getRecords(1);
+    this.listOrganizations();
   }
 
   addOrganization() {
     // Open modal
     let modalRef = this.modalService.show(OrganizationModalComponent, {
       class: "modal-md",
-      initialState: {
-        
-      }
+      initialState: {}
     });
 
     // Act on confirmation
     modalRef.content.saved.subscribe(eventData => {
-      this.getRecords(this.paging.currentPage);
+      this.listOrganizations(this.paging.currentPage);
       modalRef.hide();
     });
+  }
+
+  listOrganizations(page: number = 1) {
+    this.organizations = null;
+    this.loading = true;
+
+    this.organizationService.listOrganizations(page)
+      .pipe(finalize(() => this.loading = false))
+      .subscribe(
+        response => {
+          this.organizations = response['data'];
+          this.paging = Object.assign(this.paging, response['paging']);
+        },
+        err => {
+          console.error(err);
+        }
+      );
+  }
+  
+  getPrevPage() {
+    this.listOrganizations(this.paging.currentPage - 1);
+  }
+
+  getNextPage() {
+    this.listOrganizations(this.paging.currentPage + 1);
   }
 
 }
