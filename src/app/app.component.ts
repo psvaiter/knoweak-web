@@ -6,13 +6,12 @@ import { AuthService } from './services/auth/auth.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-
 export class AppComponent {
-  title = 'app';
   isOpen = false;
 
   constructor(public auth: AuthService) {
     auth.registerCallback();
+    auth.scheduleRenewal();
   }
 
   toggleSidebar() {

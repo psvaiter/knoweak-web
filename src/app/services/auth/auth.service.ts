@@ -77,22 +77,7 @@ export class AuthService {
     return scopes.every(scope => grantedScopes.includes(scope));
   }
   
-  private setSession(authResult): void {
-    let accessTokenExpiresAt = Date.now() + (authResult.expiresIn * 1000);
-    let grantedScopes = (authResult.scope) ? authResult.scope.split(' ') : this.requestedScopes;
-    let idTokenPayload = this.jwt.decodeToken(authResult.idToken);  // Get user info from ID token
-
-    // Save 'public' info to local storage
-    localStorage.setItem('id_token', authResult.idToken);
-    localStorage.setItem('name', idTokenPayload.name);
-    localStorage.setItem('access_token', authResult.accessToken);
-    localStorage.setItem('access_token_expires_at', JSON.stringify(accessTokenExpiresAt));
-    localStorage.setItem('granted_scopes', JSON.stringify(grantedScopes));
-
-    this.scheduleRenewal();
-  }
-
-  private scheduleRenewal() {
+  public scheduleRenewal() {
     if (!this.isAuthenticated()) {
       return;
     }
@@ -113,12 +98,27 @@ export class AuthService {
     });
   }
 
-  private unscheduleRenewal() {
+  public unscheduleRenewal() {
     if (this.refreshSubscription) {
       this.refreshSubscription.unsubscribe();
     }
   }
-  
+
+  private setSession(authResult): void {
+    let accessTokenExpiresAt = Date.now() + (authResult.expiresIn * 1000);
+    let grantedScopes = (authResult.scope) ? authResult.scope.split(' ') : this.requestedScopes;
+    let idTokenPayload = this.jwt.decodeToken(authResult.idToken);  // Get user info from ID token
+
+    // Save 'public' info to local storage
+    localStorage.setItem('id_token', authResult.idToken);
+    localStorage.setItem('name', idTokenPayload.name);
+    localStorage.setItem('access_token', authResult.accessToken);
+    localStorage.setItem('access_token_expires_at', JSON.stringify(accessTokenExpiresAt));
+    localStorage.setItem('granted_scopes', JSON.stringify(grantedScopes));
+
+    this.scheduleRenewal();
+  }
+
   private renewToken() {
     this.auth0.checkSession({}, (err, result) => {
       if (err) {
