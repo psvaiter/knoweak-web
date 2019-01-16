@@ -23,6 +23,12 @@
           </tr>
         </thead>
         <tbody>
+          <tr *ngIf="loading">
+            <td colspan="3">Carregando...</td>
+          </tr>
+          <tr *ngIf="!loading && (!records || !records.length)">
+            <td colspan="3">Nenhuma organização cadastrada</td>
+          </tr>
           <tr *ngFor="let record of records">
             <td>{{ record.taxId }}</td>
             <td class="w-100">{{ record.legalName }}</td>
