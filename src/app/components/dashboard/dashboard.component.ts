@@ -16,7 +16,7 @@ export class DashboardComponent implements OnInit {
     return localStorage.getItem('name');
   }
 
-  getExpirationIsoDate() : string {
-    return localStorage.getItem('expires_at');
+  getAccessTokenExpiry() : string {
+    return localStorage.getItem('access_token_expires_at');
   }
 }
