@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { BsModalService } from 'ngx-bootstrap/modal';
+import { finalize } from 'rxjs/operators';
 
 import { AuthService } from '../../../services/auth/auth.service';
 import { Organization } from '../organization';
-import { CrudService } from '../../../shared/components/crud/crud.service';
-import { CrudComponent } from '../../../shared/components/crud/crud.component';
+import { OrganizationService } from '../../../services/api/organization/organization.service';
 import { OrganizationModalComponent } from '../organization-modal/organization-modal.component';
 
 @Component({
@@ -13,24 +13,24 @@ import { OrganizationModalComponent } from '../organization-modal/organization-m
   templateUrl: './organization-details.component.html',
   styleUrls: ['./organization-details.component.scss']
 })
-export class OrganizationDetailsComponent extends CrudComponent<Organization> implements OnInit {
+export class OrganizationDetailsComponent implements OnInit {
   
-  url = CrudService.BaseUrl + '/organizations';
-  id: number;
+  organizationId: number;
+  organization: Organization;
   canUpdate: boolean;
+  loading: boolean;
 
   constructor(
     private auth: AuthService,
-    protected _crudService: CrudService,
+    private organizationService: OrganizationService,
     private modalService: BsModalService,
     private route: ActivatedRoute,
   ) {
-    super(_crudService);
-    route.params.subscribe(params => this.id = params['id']);
+    route.params.subscribe(params => this.organizationId = params['id']);
   }
 
   ngOnInit() {
-    this.getSingleRecord(this.url + `/${this.id}`);
+    this.getOrganization();
     this.canUpdate = this.auth.userHasScopes(['update:organizations']);
   }
 
@@ -38,13 +38,28 @@ export class OrganizationDetailsComponent extends CrudComponent<Organization> im
     let modalRef = this.modalService.show(OrganizationModalComponent, {
       class: "modal-md",
       initialState: {
-        organization: this.currentRecord 
+        organization: this.organization
       }
     });
 
     modalRef.content.saved.subscribe(eventData => {
       modalRef.hide();
     });
+  }
+
+  private getOrganization() {
+    this.loading = true;
+
+    this.organizationService.getById(this.organizationId)
+      .pipe(finalize(() => this.loading = false))
+      .subscribe(
+        response => {
+          this.organization = response['data'];
+        },
+        err => {
+          console.error(err);
+        }
+      );
   }
 
 }

@@ -1,35 +1,35 @@
 <div>
-  <div *ngIf="currentRecord.id">
-    <h5><fa name="building"></fa>Detalhes da organização</h5>
-
+  <h5><fa name="building"></fa>Detalhes da organização</h5>
+  <div *ngIf="!organization && loading">Carregando...</div>
+  <div *ngIf="organization">
       <div class="entity-metadata my-2">
-        <b>Criado em:</b> {{ currentRecord.createdOn | date : "dd/MM/yyyy HH:mm" }} (UTC)<br>
-        <b>Atualizado em:</b> {{ currentRecord.lastModifiedOn | date : "dd/MM/yyyy HH:mm" }} (UTC)
+        <b>Criado em:</b> {{ organization.createdOn | date : "dd/MM/yyyy HH:mm" }} (UTC)<br>
+        <b>Atualizado em:</b> {{ organization.lastModifiedOn | date : "dd/MM/yyyy HH:mm" }} (UTC)
       </div>
 
       <div class="card border-primary my-4">
         <h6 class="card-header">Dados básicos</h6>
         <div class="card-body" style="line-height: 1.5rem; font-size: 0.8rem;">
           <p class="card-text">
-            Nº de Registro: {{ currentRecord.taxId }}<br>
-            Nome empresarial: {{ currentRecord.legalName }}<br>
-            Nome fantasia: {{ currentRecord.tradeName || "(não cadastrado)" }}<br>
+            Nº de Registro: {{ organization.taxId }}<br>
+            Nome empresarial: {{ organization.legalName }}<br>
+            Nome fantasia: {{ organization.tradeName || "(não cadastrado)" }}<br>
           </p>
           <a *ngIf="canUpdate" [routerLink]="" (click)="editOrganization()">Alterar dados</a>
         </div>
       </div>
       
       <div class="list-group my-4">
-        <a class="list-group-item list-group-item-action" [routerLink]="['/organizations', currentRecord.id, 'structure']">
+        <a class="list-group-item list-group-item-action" [routerLink]="['/organizations', organization.id, 'structure']">
           <fa name="sitemap"></fa>Gerenciar estrutura
         </a>
-        <a class="list-group-item list-group-item-action" [routerLink]="['/organizations', currentRecord.id, 'itAssets']">
+        <a class="list-group-item list-group-item-action" [routerLink]="['/organizations', organization.id, 'itAssets']">
           <fa name="laptop"></fa>Gerenciar ativos de TI
         </a>
-        <a class="list-group-item list-group-item-action" [routerLink]="['/organizations', currentRecord.id, 'securityThreats']">
+        <a class="list-group-item list-group-item-action" [routerLink]="['/organizations', organization.id, 'securityThreats']">
           <fa name="exclamation-triangle"></fa>Gerenciar ameaças
         </a>
-        <a class="list-group-item list-group-item-action" [routerLink]="['/organizations', currentRecord.id, 'analyses']">
+        <a class="list-group-item list-group-item-action" [routerLink]="['/organizations', organization.id, 'analyses']">
           <fa name="calculator"></fa>Gerenciar análises
         </a>
       </div>
