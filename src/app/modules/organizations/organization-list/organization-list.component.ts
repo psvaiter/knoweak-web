@@ -18,6 +18,7 @@ export class OrganizationListComponent implements OnInit {
   loading: boolean;
   paging: Paging = new Paging();
   organizations: Organization[];
+  canCreate: boolean;
   
   constructor(
     private auth: AuthService,
@@ -29,6 +30,7 @@ export class OrganizationListComponent implements OnInit {
 
   ngOnInit() {
     this.listOrganizations();
+    this.canCreate = this.auth.userHasScopes(['create:organizations']);
   }
 
   addOrganization() {

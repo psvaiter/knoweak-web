@@ -19,6 +19,8 @@ export class OrganizationAnalysesComponent extends CrudComponent<Analysis> imple
 
   organizationId: number;
   organization: Organization;
+  canCreate: boolean;
+  canDelete: boolean;
   
   constructor(
     protected crudService: CrudService,
@@ -35,6 +37,8 @@ export class OrganizationAnalysesComponent extends CrudComponent<Analysis> imple
   }
 
   ngOnInit() {
+    this.canCreate = this.auth.userHasScopes(['create:analyses']);
+    this.canDelete = this.auth.userHasScopes(['delete:analyses']);
     // Get the organization legal name
     this._crudService
       .get(`${CrudService.BaseUrl}/organizations/${this.organizationId}`)

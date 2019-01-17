@@ -17,6 +17,7 @@ export class OrganizationDetailsComponent extends CrudComponent<Organization> im
   
   url = CrudService.BaseUrl + '/organizations';
   id: number;
+  canUpdate: boolean;
 
   constructor(
     private auth: AuthService,
@@ -30,6 +31,7 @@ export class OrganizationDetailsComponent extends CrudComponent<Organization> im
 
   ngOnInit() {
     this.getSingleRecord(this.url + `/${this.id}`);
+    this.canUpdate = this.auth.userHasScopes(['update:organizations']);
   }
 
   editOrganization() {

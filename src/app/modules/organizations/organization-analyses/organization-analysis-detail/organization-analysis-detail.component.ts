@@ -18,6 +18,7 @@ export class OrganizationAnalysisDetailComponent implements OnInit {
 
   organization: Organization;
   analysis: Analysis;
+  canUpdate: boolean;
 
   private organizationId: number;
   private analysisId: number;
@@ -40,6 +41,7 @@ export class OrganizationAnalysisDetailComponent implements OnInit {
   ngOnInit() {
     this.getOrganizationData();
     this.getAnalysisData();
+    this.canUpdate = this.auth.userHasScopes(['update:analyses']);
   }
 
   editAnalysis() {
