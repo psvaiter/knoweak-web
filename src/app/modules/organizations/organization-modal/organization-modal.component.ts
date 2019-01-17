@@ -2,7 +2,7 @@ import { Component, OnInit, EventEmitter } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
 import { Organization } from '../organization';
-import { OrganizationService } from '../../../services/api/organization/organization.service';
+import { OrganizationService, OrganizationPatchRequest } from '../../../services/api/organization/organization.service';
 
 @Component({
   selector: 'app-organization-modal',
@@ -11,6 +11,7 @@ import { OrganizationService } from '../../../services/api/organization/organiza
 })
 export class OrganizationModalComponent implements OnInit {
 
+  persistedOrganization: Organization;
   organization: Organization = new Organization();
   saved = new EventEmitter();
   errors: any[];
@@ -25,6 +26,7 @@ export class OrganizationModalComponent implements OnInit {
   ngOnInit() {
     if (this.organization.id) {
       this.editMode = true;
+      this.persistedOrganization = Object.assign({}, this.organization);
     }
   }
 
@@ -35,6 +37,9 @@ export class OrganizationModalComponent implements OnInit {
     if (!this.organization.legalName || !this.organization.legalName.trim()) {
       return false;
     }
+    if (this.editMode) {
+      return this.hasChangedData();
+    }
     return true;
   }
 
@@ -43,7 +48,8 @@ export class OrganizationModalComponent implements OnInit {
     this.sanitizeData();
 
     if (this.editMode) {
-      action = this.organizationService.patchOrganization(this.organization.id, this.organization);
+      let patchData = this.getChanges(this.persistedOrganization, this.organization);
+      action = this.organizationService.patchOrganization(this.organization.id, patchData);
     }
     else {
       action = this.organizationService.addOrganization(this.organization);
@@ -61,10 +67,39 @@ export class OrganizationModalComponent implements OnInit {
     );
   }
 
+  hasChangedData(): any {
+    return JSON.stringify(this.persistedOrganization) != JSON.stringify(this.organization);
+  }
+
   private sanitizeData() {
     this.organization.taxId = this.organization.taxId.trim();
     this.organization.legalName = this.organization.legalName.trim();
     this.organization.tradeName = (this.organization.tradeName) ? this.organization.tradeName.trim() : null;
+  }
+
+  private getChanges(oldData: any, newData: any): any {
+    
+    if (typeof oldData !== "object" || typeof newData !== "object") {
+      return null;
+    }
+
+    let result: any = {};
+    for (const key in newData) {
+
+      let value = newData[key];
+      if (value != oldData[key]) {
+        if (typeof value === "string" && !value) {
+          // Set null when value is an empty string
+          result[key] = null;
+        }
+        else {
+          // Copy value if changed
+          result[key] = value;
+        }
+      }
+    }
+
+    return result;
   }
 
 }

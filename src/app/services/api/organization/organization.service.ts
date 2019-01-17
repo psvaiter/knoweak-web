@@ -22,9 +22,15 @@ export class OrganizationService {
     return this.crudService.post(url, data);
   }
 
-  patchOrganization(organizationId: number, data: Organization) {
+  patchOrganization(organizationId: number, data: OrganizationPatchRequest) {
     let url = `${CrudService.BaseUrl}/organizations/${organizationId}`;
     return this.crudService.patch(url, data);
   }
 
+}
+
+export interface OrganizationPatchRequest {
+  taxId?: string;
+  legalName?: string;
+  tradeName?: string;
 }
