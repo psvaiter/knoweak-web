@@ -19,6 +19,7 @@ export class OrganizationAnalysisReportComponent implements OnInit {
   records: AnalysisDetail[];
   loading: boolean;
   paging: Paging = new Paging();
+  showDetails: boolean;
 
   constructor(
     private location: Location,
