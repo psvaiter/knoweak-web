@@ -1,38 +1,63 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
+import { finalize } from 'rxjs/operators';
 
 import { AnalysisDetail } from '../analysis';
-import { CrudComponent } from '../../../../shared/components/crud/crud.component';
-import { CrudService } from '../../../../shared/components/crud/crud.service';
+import { Paging } from '../../../../shared/components/pagination/pagination.component';
+import { OrganizationAnalysisService } from '../../../../services/api/organization/organization-analysis.service';
 
 @Component({
   selector: 'app-organization-analysis-report',
   templateUrl: './organization-analysis-report.component.html',
   styleUrls: ['./organization-analysis-report.component.scss']
 })
-export class OrganizationAnalysisReportComponent extends CrudComponent<AnalysisDetail> implements OnInit {
+export class OrganizationAnalysisReportComponent implements OnInit {
 
-  analysisId: number;
   organizationId: number;
+  analysisId: number;
+  records: AnalysisDetail[];
+  loading: boolean;
+  paging: Paging = new Paging();
 
   constructor(
-    private crudService: CrudService,
     private location: Location,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private organizationAnalysisService: OrganizationAnalysisService
   ) { 
-    super(crudService);
-
-    // Read route params and build url
     route.paramMap.subscribe(params => {
       this.organizationId = +params.get("id");
       this.analysisId = +params.get("analysisId");
-      this.url = `${CrudService.BaseUrl}/organizations/${this.organizationId}/analyses/${this.analysisId}/details`;
     });
   }
 
   ngOnInit() {
-    this.getRecords(1);
+    this.listAnalysisDetails(1);
+  }
+
+  private listAnalysisDetails(page: number) {
+    this.loading = true;
+    this.records = [];
+
+    this.organizationAnalysisService.listAnalysisDetails(this.organizationId, this.analysisId, page)
+      .pipe(finalize(() => this.loading = false))
+      .subscribe(
+        response => {
+          this.records = response['data'];
+          this.paging = Object.assign(this.paging, response['paging']);
+        },
+        err => {
+          console.error(err);
+        }
+      );
+  }
+
+  getPrevPage() {
+    this.listAnalysisDetails(this.paging.currentPage - 1);
+  }
+
+  getNextPage() {
+    this.listAnalysisDetails(this.paging.currentPage + 1);
   }
 
 }

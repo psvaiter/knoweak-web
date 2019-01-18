@@ -28,4 +28,9 @@ export class OrganizationAnalysisService {
     return this.crudService.delete(url);
   }
 
+  listAnalysisDetails(organizationId: number, analysisId: number, page: number, recordsPerPage: number = 50) {
+    let url = `${CrudService.BaseUrl}/organizations/${organizationId}/analyses/${analysisId}/details`;
+    return this.crudService.getPage(url, page, recordsPerPage);
+  }
+
 }
