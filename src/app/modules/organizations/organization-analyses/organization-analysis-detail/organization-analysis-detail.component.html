@@ -1,4 +1,4 @@
-<div *ngIf="analysis">
+<div *ngIf="organization && analysis">
   <div>
     <small><a [routerLink]="['../../../details']">{{ organization.legalName }}</a> / <a [routerLink]="['../..']">Análises</a> / {{ analysis.id }}</small>
     <h5><fa name="calculator"></fa>Detalhes da análise</h5>
