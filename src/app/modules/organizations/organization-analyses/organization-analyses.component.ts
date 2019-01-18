@@ -1,58 +1,50 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { BsModalService } from 'ngx-bootstrap/modal';
+import { finalize } from 'rxjs/operators';
 
 import { AuthService } from '../../../services/auth/auth.service';
 import { Analysis } from './analysis';
-import { CrudComponent } from '../../../shared/components/crud/crud.component';
-import { CrudService } from '../../../shared/components/crud/crud.service';
 import { OrganizationAnalysisModalComponent } from './organization-analysis-modal/organization-analysis-modal.component';
 import { Organization } from '../organization';
+import { OrganizationService } from '../../../services/api/organization/organization.service';
 import { OrganizationAnalysisService } from '../../../services/api/organization/organization-analysis.service';
+import { Paging } from '../../../shared/components/pagination/pagination.component';
 
 @Component({
   selector: 'app-organization-analyses',
   templateUrl: './organization-analyses.component.html',
   styleUrls: ['./organization-analyses.component.scss']
 })
-export class OrganizationAnalysesComponent extends CrudComponent<Analysis> implements OnInit {
+export class OrganizationAnalysesComponent implements OnInit {
 
   organizationId: number;
   organization: Organization;
   canCreate: boolean;
   canDelete: boolean;
   
+  loading: boolean;
+  paging: Paging = new Paging();
+  records: any[];
+  
   constructor(
-    protected crudService: CrudService,
     private route: ActivatedRoute,
     private auth: AuthService,
     private modalService: BsModalService,
+    private organizationService: OrganizationService,
     private organizationAnalysisService: OrganizationAnalysisService
   ) {
-    super(crudService);
     route.params.subscribe(params => {
       this.organizationId = params['id'];
-      this.url = `${CrudService.BaseUrl}/organizations/${this.organizationId}/analyses`;
     });
   }
 
   ngOnInit() {
     this.canCreate = this.auth.userHasScopes(['create:analyses']);
     this.canDelete = this.auth.userHasScopes(['delete:analyses']);
-    // Get the organization legal name
-    this._crudService
-      .get(`${CrudService.BaseUrl}/organizations/${this.organizationId}`)
-      .subscribe(
-        data => {
-          this.organization = data['data'];
-        },
-        err => {
-          console.log(err);
-        }
-      );
     
-    // List analyses
-    this.getRecords(1);
+    this.getOrganization();
+    this.listAnalyses(1);
   }
 
   addAnalysis() {
@@ -66,7 +58,7 @@ export class OrganizationAnalysesComponent extends CrudComponent<Analysis> imple
 
     // Act on confirmation
     modalRef.content.saved.subscribe(eventData => {
-      this.getRecords(this.paging.currentPage);
+      this.listAnalyses(this.paging.currentPage);
       modalRef.hide();
     });
   }
@@ -77,12 +69,50 @@ export class OrganizationAnalysesComponent extends CrudComponent<Analysis> imple
     }
     this.organizationAnalysisService.deleteAnalysis(this.organization.id, analysis.id).subscribe(
       response => {
-        this.getRecords(this.paging.currentPage);
+        this.listAnalyses(this.paging.currentPage);
       },
       err => {
         console.error(err);
       }
     );
+  }
+  
+  getPrevPage() {
+    this.listAnalyses(this.paging.currentPage - 1);
+  }
+
+  getNextPage() {
+    this.listAnalyses(this.paging.currentPage + 1);
+  }
+
+  private getOrganization() {
+    this.organizationService.getById(this.organizationId)
+      .subscribe(
+        response => {
+          this.organization = response['data'];
+        },
+        err => {
+          console.error(err);
+        }
+     );
+  }
+
+  private listAnalyses(page: number) {
+    this.loading = true;
+    this.records = [];
+
+    this.organizationAnalysisService.listAnalyses(this.organizationId, page)
+      .pipe(finalize(() => this.loading = false))
+      .subscribe(
+        response => {
+          console.log(response);
+          this.records = response['data'];
+          this.paging = response['paging'];
+        },
+        err => {
+          console.error(err);
+        }
+      );
   }
 
 }
