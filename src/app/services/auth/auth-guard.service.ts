@@ -12,11 +12,13 @@ export class AuthGuardService implements CanActivate {
   }
 
   canActivate(route: ActivatedRouteSnapshot) {
-    const allowedScope: string = route.data.scope;
-    if (!allowedScope) {
-      return false;
+    const allowedScope: string = route.data.scope || '';
+    if (this.authService.userHasScopes(allowedScope.split(" "))) {
+      return true;
     }
-    return this.authService.userHasScopes(allowedScope.split(" "));
+
+    this.router.navigate(['403']);
+    return false;
   }
 
 }

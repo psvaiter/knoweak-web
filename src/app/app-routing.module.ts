@@ -7,6 +7,7 @@ import { UserComponent } from "./components/user/user.component";
 import { EditUserComponent } from "./components/user/edit-user/edit-user.component";
 import { PageNotFoundComponent } from "./components/page-not-found/page-not-found.component";
 import { AuthGuardService } from "./services/auth/auth-guard.service";
+import { ForbiddenComponent } from "./shared/components/forbidden/forbidden.component";
 
 const appRoutes: Routes = [
     { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
@@ -26,6 +27,7 @@ const appRoutes: Routes = [
     },
     { path: 'users', component: UserComponent },
     { path: 'users/:id/edit', component: EditUserComponent },
+    { path: '403', component: ForbiddenComponent },
     { path: '**', component: PageNotFoundComponent }
 ]
   

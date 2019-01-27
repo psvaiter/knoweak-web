@@ -11,12 +11,14 @@ import { ButtonsModule } from 'ngx-bootstrap/buttons';
 import { ErrorAlertComponent } from "./components/error-alert/error-alert.component";
 import { PaginationComponent } from "./components/pagination/pagination.component";
 import { ModalComponent } from "./components/modal/modal.component";
+import { ForbiddenComponent } from './components/forbidden/forbidden.component';
 
 @NgModule({
     declarations: [
         ErrorAlertComponent,
         PaginationComponent,
-        ModalComponent
+        ModalComponent,
+        ForbiddenComponent
     ],
     entryComponents: [
         ModalComponent
