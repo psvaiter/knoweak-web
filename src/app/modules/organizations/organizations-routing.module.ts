@@ -9,6 +9,7 @@ import { OrganizationAnalysisDetailComponent } from './organization-analyses/org
 import { OrganizationSecurityThreatsComponent } from './organization-security-threats/organization-security-threats.component';
 import { OrganizationItAssetsComponent } from './organization-it-assets/organization-it-assets.component';
 import { OrganizationItAssetVulnerabilitiesComponent } from './organization-it-assets/organization-it-asset-vulnerabilities/organization-it-asset-vulnerabilities.component';
+import { AuthGuardService } from '../../services/auth/auth-guard.service';
 
 const routes: Routes = [
     { path: '', component: OrganizationListComponent },
@@ -17,14 +18,22 @@ const routes: Routes = [
     { path: ':id/securityThreats', component: OrganizationSecurityThreatsComponent },
     { path: ':id/itAssets', component: OrganizationItAssetsComponent },
     { path: ':id/itAssets/:instanceId/vulnerabilities', component: OrganizationItAssetVulnerabilitiesComponent },
-    { path: ':id/analyses', component: OrganizationAnalysesComponent },
-    { path: ':id/analyses/:analysisId/details', component: OrganizationAnalysisDetailComponent },
+    {
+        path: ':id/analyses',
+        component: OrganizationAnalysesComponent,
+        canActivate: [AuthGuardService],
+        data: { scope: 'read:analyses' }
+    },
+    { 
+        path: ':id/analyses/:analysisId/details', 
+        component: OrganizationAnalysisDetailComponent,
+        canActivate: [AuthGuardService],
+        data: { scope: 'read:analyses' }
+    }
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule],
-  providers: [
-  ]
+  exports: [RouterModule]
 })
 export class OrganizationsRoutingModule { }

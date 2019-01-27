@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { SharedModule } from './shared/shared.module';
 import { AuthService } from './services/auth/auth.service';
+import { AuthGuardService } from './services/auth/auth-guard.service';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { UserComponent } from './components/user/user.component';
 import { EditUserComponent } from './components/user/edit-user/edit-user.component';
@@ -37,6 +38,7 @@ import { CrudComponent } from './shared/components/crud/crud.component';
   providers: [
     CrudService,
     AuthService,
+    AuthGuardService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptorService,

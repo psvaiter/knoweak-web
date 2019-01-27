@@ -74,6 +74,9 @@ export class AuthService {
 
   public userHasScopes(scopes: Array<string>): boolean {
     const grantedScopes = JSON.parse(localStorage.getItem('granted_scopes'));
+    if (!grantedScopes) {
+      return false;
+    }
     return scopes.every(scope => grantedScopes.includes(scope));
   }
   
