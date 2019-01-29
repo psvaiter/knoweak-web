@@ -2,15 +2,18 @@
   <div class="body">
     <div class="form-group">
       <label>Descrição</label>
-      <input type="text" maxlength="1024" [(ngModel)]="analysis.description" name="description" placeholder="Opcional" class="form-control form-control-sm" />
+      <input type="text" maxlength="1024" [(ngModel)]="analysis.description" name="description" class="form-control form-control-sm" />
     </div>
     
     <!-- Scopes selection (only for !editMode) -->
     <div *ngIf="!editMode">
-      Opção de escopos
+      Defina a abrangência da análise
       <div class="btn-group w-100 mt-2" btnRadioGroup [(ngModel)]="scopeOption">
         <label class="btn btn-sm btn-outline-secondary w-50" btnRadio="all" tabindex="0" role="button">Organização inteira</label>
         <label class="btn btn-sm btn-outline-secondary w-50" btnRadio="custom" tabindex="0" role="button">Selecionar escopos</label>
+      </div>
+      <div *ngIf="scopeOption == 'all'">
+        Todos os departamentos, macroprocessos e processos serão incluídos para análise.
       </div>
       <div *ngIf="scopeOption == 'custom'">
         Em breve...
