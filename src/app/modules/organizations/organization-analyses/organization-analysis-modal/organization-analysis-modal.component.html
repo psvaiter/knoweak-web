@@ -12,14 +12,18 @@
         <label class="btn btn-sm btn-outline-secondary w-50" btnRadio="all" tabindex="0" role="button">Organização inteira</label>
         <label class="btn btn-sm btn-outline-secondary w-50" btnRadio="custom" tabindex="0" role="button">Selecionar escopos</label>
       </div>
-      <div *ngIf="scopeOption == 'all'">
-        Todos os departamentos, macroprocessos e processos serão incluídos para análise.
+
+      <div class="analysis-scope">
+        <div *ngIf="scopeOption == 'all'">
+          Todos os departamentos, macroprocessos e processos serão incluídos para análise.
+        </div>
+        <div *ngIf="scopeOption == 'custom'">
+          <app-organization-analysis-scope-selection
+            [organizationId]="organization.id">
+          </app-organization-analysis-scope-selection>
+        </div>
       </div>
-      <div *ngIf="scopeOption == 'custom'">
-        <app-organization-analysis-scope-selection
-          [organizationId]="organization.id">
-        </app-organization-analysis-scope-selection>
-      </div>
+
     </div>
     
     <app-error-alert [errors]="errors"></app-error-alert>
