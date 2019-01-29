@@ -28,6 +28,7 @@ import { OrganizationItAssetVulnerabilitiesComponent } from './organization-it-a
 import { OrganizationAnalysesComponent } from './organization-analyses/organization-analyses.component';
 import { OrganizationAnalysisDetailComponent } from './organization-analyses/organization-analysis-detail/organization-analysis-detail.component';
 import { OrganizationAnalysisReportComponent } from './organization-analyses/organization-analysis-report/organization-analysis-report.component';
+import { OrganizationAnalysisScopeSelectionComponent } from './organization-analyses/organization-analysis-scope-selection/organization-analysis-scope-selection.component';
 
 import { CatalogDepartmentService } from '../../services/api/catalog/department/catalog-department.service';
 import { CatalogMacroprocessService } from '../../services/api/catalog/macroprocess/catalog-macroprocess.service';
@@ -72,7 +73,8 @@ import { OrganizationAnalysisService } from '../../services/api/organization/org
         OrganizationItAssetLookupComponent,
         OrganizationItAssetVulnerabilitiesComponent,
         OrganizationItAssetVulnerabilityLookupComponent,
-        OrganizationAnalysisModalComponent
+        OrganizationAnalysisModalComponent,
+        OrganizationAnalysisScopeSelectionComponent
     ],
     entryComponents: [
         DepartmentsLookupModalComponent,

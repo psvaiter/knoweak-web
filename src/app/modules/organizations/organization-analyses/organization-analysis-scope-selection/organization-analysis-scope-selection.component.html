@@ -1,0 +1,16 @@
+<div class="analysis-scope">
+  <div *ngIf="loading">
+    Carregando opções...
+  </div>
+  <div *ngIf="!loading">
+    <label>Departamentos</label>
+    <ng-select
+        [items]="departments"
+        [multiple]="true"
+        bindLabel="name"
+        bindValue="id"
+        [closeOnSelect]="false"
+        [(ngModel)]="selectedDepartments">
+    </ng-select>
+  </div>
+</div>
