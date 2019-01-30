@@ -1,8 +1,9 @@
-import { Component, OnInit, EventEmitter } from '@angular/core';
+import { Component, OnInit, EventEmitter, ViewChild, Output } from '@angular/core';
 
 import { Organization } from '../../organization';
 import { Analysis } from '../analysis';
 import { OrganizationAnalysisService } from '../../../../services/api/organization/organization-analysis.service';
+import { OrganizationAnalysisScopeSelectionComponent } from '../organization-analysis-scope-selection/organization-analysis-scope-selection.component';
 
 @Component({
   selector: 'app-organization-analysis-modal',
@@ -13,10 +14,14 @@ export class OrganizationAnalysisModalComponent implements OnInit {
 
   organization: Organization;
   analysis: Analysis = new Analysis();
-  saved = new EventEmitter();
   editMode: boolean;
-  scopeOption: string = "all";
+  scopeOption: string = "all";  // all | custom
   errors = [];
+
+  @Output() saved = new EventEmitter();
+
+  @ViewChild(OrganizationAnalysisScopeSelectionComponent)
+  private scopeComponent: OrganizationAnalysisScopeSelectionComponent;
 
   constructor(
     private organizationAnalysisService: OrganizationAnalysisService
@@ -37,15 +42,24 @@ export class OrganizationAnalysisModalComponent implements OnInit {
       this.updateAnalysis();
     }
     else {
-      this.createAnalysis();
+      let scopes = this.getSelectedScopes();  
+      
+      if (!scopes && this.scopeOption == "custom") {
+        // Just make sure the user really wants to analyze everything
+        alert("Escolha um escopo ou altere a opção para \"Organização inteira\".");
+        return;
+      }
+
+      this.createAnalysis(scopes);
     }
   }
 
-  createAnalysis() {
+  private createAnalysis(scopes) {
     let request = { 
       description: this.analysis.description,
-      //scopes: getSelectedScopes()
+      scopes: scopes || null
     };
+
     this.organizationAnalysisService.createAnalysis(this.organization.id, request)
       .subscribe(
         response => {
@@ -57,7 +71,7 @@ export class OrganizationAnalysisModalComponent implements OnInit {
       );
   }
 
-  updateAnalysis() {
+  private updateAnalysis() {
     let request = { 
       description: this.analysis.description 
     };
@@ -73,8 +87,22 @@ export class OrganizationAnalysisModalComponent implements OnInit {
       );
   }
 
-  sanitizeData() {
+  private sanitizeData() {
     this.analysis.description = (this.analysis.description) ? this.analysis.description.trim() : null;
+  }
+
+  private getSelectedScopes() {
+    let selectedDepartments = this.scopeComponent.selectedDepartments;
+
+    if (!selectedDepartments) {
+      return null;
+    }
+
+    let scopes = selectedDepartments
+      .filter(item => item != null)
+      .map(item => { return { departmentId: item }; });
+
+    return scopes || null;
   }
 
 }
