@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { finalize } from 'rxjs/operators';
 import { OrganizationDepartmentService } from '../../../../services/api/organization/organization-department.service';
-import _ = require('lodash');
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-organization-analysis-scope-selection',
