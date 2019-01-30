@@ -1,5 +1,4 @@
 import { Component, OnInit, EventEmitter } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
 
 import { Organization } from '../../organization';
 import { Analysis } from '../analysis';
@@ -32,25 +31,46 @@ export class OrganizationAnalysisModalComponent implements OnInit {
   }
 
   save() {
-    let action: Observable<Object>;
     this.sanitizeData();
 
-    let request = { description: this.analysis.description };
     if (this.editMode) {
-      action = this.organizationAnalysisService.patchAnalysis(this.organization.id, this.analysis.id, request);
+      this.updateAnalysis();
     }
     else {
-      action = this.organizationAnalysisService.createAnalysis(this.organization.id, request);
+      this.createAnalysis();
     }
+  }
 
-    action.subscribe(
-      response => {
-        this.saved.emit(this.analysis);
-      },
-      err => {
-        console.error(err);
-      }
-    );
+  createAnalysis() {
+    let request = { 
+      description: this.analysis.description,
+      //scopes: getSelectedScopes()
+    };
+    this.organizationAnalysisService.createAnalysis(this.organization.id, request)
+      .subscribe(
+        response => {
+          this.saved.emit(this.analysis);
+        },
+        err => {
+          console.error(err);
+        }
+      );
+  }
+
+  updateAnalysis() {
+    let request = { 
+      description: this.analysis.description 
+    };
+
+    this.organizationAnalysisService.patchAnalysis(this.organization.id, this.analysis.id, request)
+      .subscribe(
+        response => {
+          this.saved.emit(this.analysis);
+        },
+        err => {
+          console.error(err);
+        }
+      );
   }
 
   sanitizeData() {
