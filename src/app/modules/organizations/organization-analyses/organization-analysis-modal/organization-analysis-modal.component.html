@@ -14,14 +14,17 @@
       </div>
 
       <div class="analysis-scope">
-        <div *ngIf="scopeOption == 'all'">
+        
+        <div [class.d-none]="scopeOption != 'all'">
           Todos os departamentos, macroprocessos e processos serão incluídos para análise.
         </div>
-        <div *ngIf="scopeOption == 'custom'">
+
+        <div [class.d-none]="scopeOption != 'custom'">
           <app-organization-analysis-scope-selection
             [organizationId]="organization.id">
           </app-organization-analysis-scope-selection>
         </div>
+        
       </div>
 
     </div>
