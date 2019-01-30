@@ -95,7 +95,7 @@ export class ItServiceItemComponent implements OnInit {
     // Act on confirmation
     modalRef.content.confirmed.subscribe(eventData => {
       let organizationItAsset = new OrganizationItAsset();
-      organizationItAsset.instanceId = eventData.instanceId;
+      organizationItAsset.instanceId = eventData.itAssetInstanceId;
       organizationItAsset.id = eventData.itAssetId;
       organizationItAsset.relevance = eventData.relevance;
       organizationItAsset.externalIdentifier = eventData.externalIdentifier;
@@ -167,7 +167,9 @@ export class ItServiceItemComponent implements OnInit {
     return new Promise((resolve, reject) => {
   
       if (!itAsset.instanceId) {
-        
+        // It's not an organization IT asset yet
+        // Add to organization and then to organization IT service
+
         let request = {
           itAssetId: itAsset.id,
           externalIdentifier: itAsset.externalIdentifier
@@ -194,6 +196,9 @@ export class ItServiceItemComponent implements OnInit {
         );
       }
       else {
+        // It's already an organization IT asset
+        // Add to organization IT service
+
         let request = {
           itServiceInstanceId: this.itService.instanceId,
           itAssetInstanceId: itAsset.instanceId,
