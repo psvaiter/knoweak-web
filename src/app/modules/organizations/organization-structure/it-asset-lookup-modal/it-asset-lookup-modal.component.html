@@ -30,7 +30,7 @@
           placeholder="Preencha uma identificação para o ativo" />
 
         <div *ngIf="selectedItAssetSource == 'organization'" class="mx-2 mt-2 mb-4" style="color: #aaa">
-          Identificação: {{externalIdentifier || "(Selecione um ativo)"}}
+          Identificação: {{ (!selectedItAsset) ? "(Selecione um ativo)" : (externalIdentifier || "(sem identificação)") }}
         </div>
 
         <ng-select
