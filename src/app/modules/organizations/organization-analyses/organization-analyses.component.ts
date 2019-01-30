@@ -105,7 +105,6 @@ export class OrganizationAnalysesComponent implements OnInit {
       .pipe(finalize(() => this.loading = false))
       .subscribe(
         response => {
-          console.log(response);
           this.records = response['data'];
           this.paging = response['paging'];
         },
