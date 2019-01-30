@@ -14,7 +14,6 @@ export class OrganizationDepartment {
     macroprocesses: OrganizationMacroprocess[] = [];
 
     organizationId: number;
-    selectedMacroprocessId: number;
 }
   
 export class OrganizationMacroprocess {
@@ -25,9 +24,6 @@ export class OrganizationMacroprocess {
     
     organizationId: number;
     department: OrganizationDepartment;
-
-    selectedProcessId: number;
-    selectedProcessRelevanceId: number;
 }
   
 export class OrganizationProcess {
@@ -39,9 +35,6 @@ export class OrganizationProcess {
 
     organizationId: number;
     macroprocess: OrganizationMacroprocess;
-
-    selectedItServiceId: number;
-    selectedItServiceRelevanceId: number;
 }
   
 export class OrganizationItService {
@@ -53,10 +46,6 @@ export class OrganizationItService {
     
     organizationId: number;
     process: OrganizationProcess;
-    
-    selectedItem: any;
-    selectedExternalIdentifier: string;
-    selectedItAssetRelevanceId: number;
 }
   
 export class OrganizationItAsset {
