@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Router } from '@angular/router';
 import { BsModalService } from 'ngx-bootstrap/modal';
 
 import { Constants } from '../../../../shared/constants';
@@ -20,6 +21,7 @@ export class ItAssetItemComponent implements OnInit {
   private organizationId: number;
 
   constructor(
+    private router: Router,
     private modalService: BsModalService,
     private organizationItServiceItAssetService: OrganizationItServiceItAssetService
   ) {
@@ -64,4 +66,7 @@ export class ItAssetItemComponent implements OnInit {
     this.delete.emit(this.itAsset);
   }
 
+  manageVulnerabilities() {
+    this.router.navigate(['/organizations', this.organizationId, 'itAssets', this.itAsset.instanceId, 'vulnerabilities']);
+  }
 }
