@@ -6,6 +6,7 @@
   }"></i>
   <span class="badge badge-default badge-hierarchy mx-1">Serviço TI</span>
   <span class="badge badge-primary mx-1" title="Relevância: {{itService.relevance.name}}" *ngIf="itService.relevance">Rs {{itService.relevance.id}}</span>
+  <span class="badge badge-primary badge-outlined mx-1" title="Relevância: indefinida" *ngIf="!itService.relevance">Rs ?</span>
   <label class="mx-1 mb-0">{{itService.name}}</label>
 
   <!-- Edit process -->

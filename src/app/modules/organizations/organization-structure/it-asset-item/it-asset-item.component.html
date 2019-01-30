@@ -2,6 +2,7 @@
   
   <span class="badge badge-default badge-hierarchy mx-1">Ativo TI</span>
   <span class="badge badge-primary mx-1" title="Relevância: {{itAsset.relevance.name}}" *ngIf="itAsset.relevance">Ra {{itAsset.relevance.id}}</span>
+  <span class="badge badge-primary badge-outlined mx-1" title="Relevância: indefinida" *ngIf="!itAsset.relevance">Ra ?</span>
   <label class="mx-1 mb-0">
     {{itAsset.name}}<span *ngIf="itAsset.externalIdentifier"> - {{itAsset.externalIdentifier}}</span>
   </label>
