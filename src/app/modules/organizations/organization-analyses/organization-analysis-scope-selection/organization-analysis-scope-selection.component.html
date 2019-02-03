@@ -13,6 +13,7 @@
         [closeOnSelect]="false"
         (add)="onAddDepartment($event)"
         (remove)="onRemoveDepartment($event)"
+        (clear)="onClearDepartments()"
         placeholder="Selecione um ou mais departamentos"
         [(ngModel)]="selectedDepartments">
     </ng-select>
@@ -32,6 +33,7 @@
         [closeOnSelect]="false"
         (add)="onAddMacroprocess($event)"
         (remove)="onRemoveMacroprocess($event)"
+        (clear)="onClearMacroprocesses()"
         placeholder="Selecione um ou mais macroprocessos"
         [(ngModel)]="selectedMacroprocesses">
     </ng-select>

@@ -79,6 +79,12 @@ export class OrganizationAnalysisScopeSelectionComponent implements OnInit {
     this.macroprocesses = this.macroprocesses.filter(item => item.department.id != departmentId);
   }
 
+  onClearDepartments() {
+    this.selectedMacroprocesses = null;
+    this.macroprocesses = null;
+    this.onClearMacroprocesses();
+  }
+
   listMacroprocesses(departmentId: number) {
     this.loadingMacroprocesses = true;
     this.organizationMacroprocessService.list(this.organizationId, 1, 100, departmentId)
@@ -123,6 +129,11 @@ export class OrganizationAnalysisScopeSelectionComponent implements OnInit {
 
     // Remove child processes
     this.processes = this.processes.filter(item => item.macroprocess.instanceId != macroprocessInstanceId);
+  }
+
+  onClearMacroprocesses() {
+    this.selectedProcesses = null;
+    this.processes = null;
   }
   
   listProcesses(macroprocessInstanceId: number) {
