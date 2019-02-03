@@ -61,6 +61,7 @@ export class CrudComponent<TEntity> {
   }
 
   createRecord(newRecord: TEntity) {
+    this.hasCreated = false;
     this.persisting = true;
 
     this._crudService.post(this.url, newRecord)
@@ -90,6 +91,7 @@ export class CrudComponent<TEntity> {
   }
 
   patchRecord(url: string): void {
+    this.hasUpdated = false;
     this.persisting = true;
     let patchRequestBody = this.buildPatchRequestBody();
 
