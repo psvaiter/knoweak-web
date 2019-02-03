@@ -28,9 +28,12 @@
           <td colspan="3">Nenhuma vulnerabilidade cadastrada</td>
         </tr>
         <tr *ngFor="let vulnerability of vulnerabilities">
-          <td class="w-50">{{ vulnerability.securityThreat.name }}</td>
-          <td class="w-50">{{ (vulnerability.level) ? vulnerability.level.id : "-" }}</td>
-          <!-- <td class="w-50">{{ (vulnerability.securityThreat.threatLevel) ? vulnerability.securityThreat.threatLevel.id : "-" }}</td> -->
+          <td>{{ vulnerability.securityThreat.name }}</td>
+          <td>
+            <span *ngIf="vulnerability.level">{{ vulnerability.level.id }} - {{ vulnerability.level.name }}</span>
+            <span *ngIf="!vulnerability.level">Não cadastrado</span>
+          </td>
+          <!-- <td>{{ (vulnerability.securityThreat.threatLevel) ? vulnerability.securityThreat.threatLevel.id : "-" }}</td> -->
           <td>
             <a *ngIf="userCanManage" title="Editar" [routerLink]="" (click)="editItem(vulnerability)" class="icon-link"><fa name="edit"></fa></a>
             <a *ngIf="userCanManage" title="Remover" [routerLink]="" (click)="removeItem(vulnerability)" class="icon-link text-danger"><fa name="trash"></fa></a>
