@@ -10,8 +10,8 @@
             <input type="text" maxlength="128" name="name" id="name" class="form-control form-control-sm" [(ngModel)]="newRecord.name" /> 
           </div>      
         </div>
-        <input type="submit" class="btn btn-sm btn-outline-secondary" value="Adicionar" (click)="createRecord(newRecord)" />
-        <span class="mx-2 align-middle text-success" *ngIf="loading">
+        <input type="submit" [disabled]="persisting" class="btn btn-sm btn-outline-secondary" value="Adicionar" (click)="createRecord(newRecord)" />
+        <span class="mx-2 align-middle text-success" *ngIf="persisting">
           Aguarde...
         </span>
 
@@ -37,6 +37,12 @@
             </tr>
           </thead>
           <tbody>
+            <tr *ngIf="loading">
+              <td colspan="4">Carregando...</td>
+            </tr>
+            <tr *ngIf="!loading && (!records || !records.length)">
+              <td colspan="4">Nenhum registro encontrado</td>
+            </tr>
             <tr *ngFor="let record of records">
               <td>{{ record.name }}</td>
               <td>{{ record.createdOn | date : "dd/MM/yyyy HH:mm" }}</td>
