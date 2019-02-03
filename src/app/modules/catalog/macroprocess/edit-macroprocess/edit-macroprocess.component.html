@@ -23,7 +23,7 @@
         <button type="submit" class="btn btn-sm btn-success" [disabled]="!hasChangedRecord()"
                 (click)="patchRecord()">Salvar</button>
         
-        <span class="mx-2 align-middle text-success" *ngIf="loading">
+        <span class="mx-2 align-middle text-success" *ngIf="persisting">
           Aguarde...
         </span>
         
