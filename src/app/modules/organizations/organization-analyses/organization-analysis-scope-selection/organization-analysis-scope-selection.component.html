@@ -1,59 +1,57 @@
 <div>
-  <div *ngIf="loading">
-    Carregando opções...
-  </div>
-  <div *ngIf="!loading">
 
-    <div>
-      <label>Departamentos</label>
-      <ng-select
-          [items]="departments"
-          [loading]="loadingDepartments"
-          loadingText="Carregando..."
-          [multiple]="true"
-          bindLabel="name"
-          bindValue="id"
-          [closeOnSelect]="false"
-          (add)="onAddDepartment($event)"
-          (remove)="onRemoveDepartment($event)"
-          placeholder="Selecione um ou mais departamentos"
-          [(ngModel)]="selectedDepartments">
-      </ng-select>
-    </div>
-    
-    <div class="mt-2">
-      <label>Macroprocessos</label>
-      <ng-select
-          [items]="macroprocesses"
-          [loading]="loadingMacroprocesses"
-          loadingText="Carregando..."
-          [multiple]="true"
-          [groupBy]="groupByDepartmentFn"
-          bindLabel="name"
-          bindValue="instanceId"
-          [closeOnSelect]="false"
-          (add)="onAddMacroprocess($event)"
-          (remove)="onRemoveMacroprocess($event)"
-          placeholder="Selecione um ou mais macroprocessos"
-          [(ngModel)]="selectedMaroprocesses">
-      </ng-select>
-    </div>
-
-    <div class="mt-2">
-      <label>Processos</label>
-      <ng-select
-          [items]="processes"
-          [loading]="loadingProcesses"
-          loadingText="Carregando..."
-          [multiple]="true"
-          [groupBy]="groupByMacroprocessFn"
-          bindLabel="name"
-          bindValue="id"
-          [closeOnSelect]="false"
-          placeholder="Selecione um ou mais processos"
-          [(ngModel)]="selectedProcesses">
-      </ng-select>
-    </div>
-    
+  <div>
+    <label>Departamentos</label>
+    <ng-select
+        [items]="departments"
+        [loading]="loadingDepartments"
+        loadingText="Carregando..."
+        notFoundText="Nenhum item encontrado"
+        [multiple]="true"
+        bindLabel="name"
+        bindValue="id"
+        [closeOnSelect]="false"
+        (add)="onAddDepartment($event)"
+        (remove)="onRemoveDepartment($event)"
+        placeholder="Selecione um ou mais departamentos"
+        [(ngModel)]="selectedDepartments">
+    </ng-select>
   </div>
+  
+  <div class="mt-2">
+    <label>Macroprocessos</label>
+    <ng-select
+        [items]="macroprocesses"
+        [loading]="loadingMacroprocesses"
+        loadingText="Carregando..."
+        notFoundText="Nenhum item encontrado"
+        [multiple]="true"
+        [groupBy]="groupByDepartmentFn"
+        bindLabel="name"
+        bindValue="instanceId"
+        [closeOnSelect]="false"
+        (add)="onAddMacroprocess($event)"
+        (remove)="onRemoveMacroprocess($event)"
+        placeholder="Selecione um ou mais macroprocessos"
+        [(ngModel)]="selectedMaroprocesses">
+    </ng-select>
+  </div>
+
+  <div class="mt-2">
+    <label>Processos</label>
+    <ng-select
+        [items]="processes"
+        [loading]="loadingProcesses"
+        loadingText="Carregando..."
+        notFoundText="Nenhum item encontrado"
+        [multiple]="true"
+        [groupBy]="groupByMacroprocessFn"
+        bindLabel="name"
+        bindValue="id"
+        [closeOnSelect]="false"
+        placeholder="Selecione um ou mais processos"
+        [(ngModel)]="selectedProcesses">
+    </ng-select>
+  </div>
+    
 </div>
