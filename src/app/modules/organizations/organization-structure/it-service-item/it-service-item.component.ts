@@ -172,7 +172,7 @@ export class ItServiceItemComponent implements OnInit {
 
         let request = {
           itAssetId: itAsset.id,
-          externalIdentifier: itAsset.externalIdentifier
+          externalIdentifier: this.sanitizeText(itAsset.externalIdentifier)
         };
 
         this.organizationItAssetService.addItAsset(this.organizationId, request).subscribe(
@@ -212,6 +212,10 @@ export class ItServiceItemComponent implements OnInit {
       }
 
     });
+  }
+
+  private sanitizeText(input: string): string {
+    return input = (input) ? input.trim() : null;
   }
 
 }

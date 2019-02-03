@@ -64,7 +64,7 @@ export class OrganizationItAssetLookupComponent implements OnInit {
   private addItAsset() {
     let request = {
       itAssetId: this.selectedItAssetId,
-      externalIdentifier: this.externalIdentifier
+      externalIdentifier: this.sanitizeText(this.externalIdentifier)
     };
     this.organizationItAssetService.addItAsset(this.organization.id, request)
       .subscribe(
@@ -79,7 +79,7 @@ export class OrganizationItAssetLookupComponent implements OnInit {
 
   private patchItAsset(): any {
     let request = {
-      externalIdentifier: this.externalIdentifier
+      externalIdentifier: this.sanitizeText(this.externalIdentifier)
     };
     this.organizationItAssetService.patchItAsset(this.organization.id, this.itAsset.instanceId, request)
       .subscribe(
@@ -90,6 +90,10 @@ export class OrganizationItAssetLookupComponent implements OnInit {
           console.error(err);
         }
       );
+  }
+
+  private sanitizeText(input: string): string {
+    return input = (input) ? input.trim() : null;
   }
 
 }

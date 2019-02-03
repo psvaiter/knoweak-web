@@ -72,9 +72,13 @@ export class OrganizationModalComponent implements OnInit {
   }
 
   private sanitizeData() {
-    this.organization.taxId = this.organization.taxId.trim();
-    this.organization.legalName = this.organization.legalName.trim();
-    this.organization.tradeName = (this.organization.tradeName) ? this.organization.tradeName.trim() : null;
+    this.organization.taxId = this.sanitizeText(this.organization.taxId);
+    this.organization.legalName = this.sanitizeText(this.organization.legalName);
+    this.organization.tradeName = this.sanitizeText(this.organization.tradeName);
+  }
+  
+  private sanitizeText(input: string): string {
+    return input = (input) ? input.trim() : null;
   }
 
   private getChanges(oldData: any, newData: any): any {
