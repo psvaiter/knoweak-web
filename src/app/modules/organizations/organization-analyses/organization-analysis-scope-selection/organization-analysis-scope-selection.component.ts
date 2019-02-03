@@ -98,7 +98,6 @@ export class OrganizationAnalysisScopeSelectionComponent implements OnInit {
           });
           this.macroprocesses = (this.macroprocesses || []).concat(macroprocesses);
           this.macroprocesses = _.orderBy(this.macroprocesses, ['department.name', 'name']);
-          console.log(this.macroprocesses);
         },
         err => {
           console.error(err);
@@ -149,7 +148,6 @@ export class OrganizationAnalysisScopeSelectionComponent implements OnInit {
           });
           this.processes = (this.processes || []).concat(processes);
           this.processes = _.orderBy(this.processes, ['macroprocess.department.name', 'macroprocess.name', 'name']);
-          console.log(this.processes);
         },
         err => {
           console.error(err);
