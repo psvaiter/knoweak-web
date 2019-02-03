@@ -60,17 +60,20 @@ export class OrganizationAnalysisScopeSelectionComponent implements OnInit {
   }
   
   onRemoveDepartment(department){
-    let departmentId = department.value.id;
+    let departmentId = department.id || department.value.id;
     
     // Remove selection of macroprocesses corresponding to department unselected
-    this.selectedMacroprocesses = this.selectedMacroprocesses.filter(instanceId => {
-      let macroprocess = this.macroprocesses.find(item => item.instanceId == instanceId);
-      if (macroprocess.department.id == departmentId) {
-        this.onRemoveMacroprocess(macroprocess);
-        return false;
-      }
-      return true;
-    });
+    if (this.selectedMacroprocesses) {
+
+      this.selectedMacroprocesses = this.selectedMacroprocesses.filter(instanceId => {
+        let macroprocess = this.macroprocesses.find(item => item.instanceId == instanceId);
+        if (macroprocess.department.id == departmentId) {
+          this.onRemoveMacroprocess(macroprocess);
+          return false;
+        }
+        return true;
+      });
+    }
     
     // Remove macroprocesses from list
     this.macroprocesses = this.macroprocesses.filter(item => item.department.id != departmentId);
@@ -110,10 +113,13 @@ export class OrganizationAnalysisScopeSelectionComponent implements OnInit {
     let macroprocessInstanceId = macroprocess.instanceId || macroprocess.value.instanceId;
     
     // Remove selection of processes corresponding to macroprocess unselected
-    this.selectedProcesses = this.selectedProcesses.filter(instanceId => {
-      let process = this.processes.find(item => item.instanceId == instanceId);
-      return process.macroprocess.instanceId != macroprocessInstanceId;
-    });
+    if (this.selectedProcesses) {
+      
+      this.selectedProcesses = this.selectedProcesses.filter(instanceId => {
+        let process = this.processes.find(item => item.instanceId == instanceId);
+        return process.macroprocess.instanceId != macroprocessInstanceId;
+      });
+    }
 
     // Remove child processes
     this.processes = this.processes.filter(item => item.macroprocess.instanceId != macroprocessInstanceId);
