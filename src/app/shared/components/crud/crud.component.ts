@@ -3,6 +3,7 @@ import { finalize } from 'rxjs/operators';
 
 import { CrudService } from './crud.service';
 import { Paging } from '../pagination/pagination.component';
+import { Utils } from '../../utils';
 
 @Component({
   selector: 'app-crud',
@@ -63,6 +64,7 @@ export class CrudComponent<TEntity> {
   createRecord(newRecord: TEntity) {
     this.hasCreated = false;
     this.persisting = true;
+    this.errors = [];
 
     this._crudService.post(this.url, newRecord)
       .pipe(finalize(() => this.persisting = false))
@@ -74,18 +76,10 @@ export class CrudComponent<TEntity> {
           // Erase filled data
           this.newRecord = <TEntity> {};
           this.hasCreated = true;
-          this.errors = [];
         },
         err => {
           this.hasCreated = false;
-          
-          console.error(err);
-          this.errors = err['error'].errors;
-          if (!this.errors) {
-            this.errors = [{
-              message: JSON.stringify(err['error'])
-            }];
-          }
+          this.errors = Utils.getErrors(err);
         }
       );
   }
@@ -93,6 +87,8 @@ export class CrudComponent<TEntity> {
   patchRecord(url: string): void {
     this.hasUpdated = false;
     this.persisting = true;
+    this.errors = [];
+
     let patchRequestBody = this.buildPatchRequestBody();
 
     this._crudService.patch(url, patchRequestBody)
@@ -103,18 +99,10 @@ export class CrudComponent<TEntity> {
           this.currentRecord = Object.assign({}, this.persistedRecord);
           
           this.hasUpdated = true;
-          this.errors = [];
         },
         err => {
           this.hasUpdated = false;
-          
-          console.error(err);
-          this.errors = err['error'].errors;
-          if (!this.errors) {
-            this.errors = [{
-              message: JSON.stringify(err['error'])
-            }];
-          }
+          this.errors = Utils.getErrors(err);
         }
       );
   }
