@@ -10,32 +10,34 @@
 
   <!-- List of organization IT assets -->
   <div class="table-container">
-    <table class="table table-hover">
-      <thead class="thead-light">
-        <tr>
-          <th>Ativo de TI</th>
-          <th>Identificação</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngIf="loading">
-          <td colspan="3">Carregando...</td>
-        </tr>
-        <tr *ngIf="!loading && (!itAssets || !itAssets.length)">
-          <td colspan="3">Nenhum ativo de TI cadastrado</td>
-        </tr>
-        <tr *ngFor="let itAsset of itAssets">
-          <td class="w-50">{{ itAsset.name }}</td>
-          <td class="w-50">{{ itAsset.externalIdentifier || "-" }}</td>
-          <td>
-            <a title="Gerenciar vulnerabilidades" [routerLink]="[itAsset.instanceId, 'vulnerabilities']" class="icon-link"><fa name="exclamation-triangle"></fa></a>
-            <a *ngIf="userCanManage" title="Editar" [routerLink]="" (click)="editItem(itAsset)" class="icon-link"><fa name="edit"></fa></a>
-            <a *ngIf="userCanManage" title="Remover" [routerLink]="" (click)="removeItem(itAsset)" class="icon-link text-danger"><fa name="trash"></fa></a>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="table-responsive">
+      <table class="table table-hover">
+        <thead class="thead-light">
+          <tr>
+            <th>Ativo de TI</th>
+            <th>Identificação</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngIf="loading">
+            <td colspan="3">Carregando...</td>
+          </tr>
+          <tr *ngIf="!loading && (!itAssets || !itAssets.length)">
+            <td colspan="3">Nenhum ativo de TI cadastrado</td>
+          </tr>
+          <tr *ngFor="let itAsset of itAssets">
+            <td class="w-50">{{ itAsset.name }}</td>
+            <td class="w-50">{{ itAsset.externalIdentifier || "-" }}</td>
+            <td>
+              <a title="Gerenciar vulnerabilidades" [routerLink]="[itAsset.instanceId, 'vulnerabilities']" class="icon-link"><fa name="exclamation-triangle"></fa></a>
+              <a *ngIf="userCanManage" title="Editar" [routerLink]="" (click)="editItem(itAsset)" class="icon-link"><fa name="edit"></fa></a>
+              <a *ngIf="userCanManage" title="Remover" [routerLink]="" (click)="removeItem(itAsset)" class="icon-link text-danger"><fa name="trash"></fa></a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
     <app-pagination 
       [paging]="paging"
       (goPrevPage)="getPrevPage()"

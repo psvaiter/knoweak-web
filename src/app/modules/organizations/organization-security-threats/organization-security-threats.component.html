@@ -10,34 +10,36 @@
 
   <!-- List of organization security threats -->
   <div class="table-container">
-    <table class="table table-hover">
-      <thead class="thead-light">
-        <tr>
-          <th>Ameaça</th>
-          <th>Grau</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngIf="loading">
-          <td colspan="3">Carregando...</td>
-        </tr>
-        <tr *ngIf="!loading && (!securityThreats || !securityThreats.length)">
-          <td colspan="3">Nenhuma ameaça cadastrada</td>
-        </tr>
-        <tr *ngFor="let securityThreat of securityThreats">
-          <td class="w-100">{{ securityThreat.name }}</td>
-          <td class="text-nowrap">
-            <span *ngIf="securityThreat.threatLevel">{{ securityThreat.threatLevel.id }} - {{ securityThreat.threatLevel.name }}</span>
-            <span *ngIf="!securityThreat.threatLevel">Não cadastrado</span>
-          </td>
-          <td>
-            <a *ngIf="userCanManage" title="Alterar grau" [routerLink]="" (click)="editItem(securityThreat)" class="icon-link"><fa name="edit"></fa></a>
-            <a *ngIf="userCanManage" title="Remover" [routerLink]="" (click)="removeItem(securityThreat)" class="icon-link text-danger"><fa name="trash"></fa></a>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="table-responsive">
+      <table class="table table-hover">
+        <thead class="thead-light">
+          <tr>
+            <th>Ameaça</th>
+            <th>Grau</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngIf="loading">
+            <td colspan="3">Carregando...</td>
+          </tr>
+          <tr *ngIf="!loading && (!securityThreats || !securityThreats.length)">
+            <td colspan="3">Nenhuma ameaça cadastrada</td>
+          </tr>
+          <tr *ngFor="let securityThreat of securityThreats">
+            <td class="w-100">{{ securityThreat.name }}</td>
+            <td class="text-nowrap">
+              <span *ngIf="securityThreat.threatLevel">{{ securityThreat.threatLevel.id }} - {{ securityThreat.threatLevel.name }}</span>
+              <span *ngIf="!securityThreat.threatLevel">Não cadastrado</span>
+            </td>
+            <td>
+              <a *ngIf="userCanManage" title="Alterar grau" [routerLink]="" (click)="editItem(securityThreat)" class="icon-link"><fa name="edit"></fa></a>
+              <a *ngIf="userCanManage" title="Remover" [routerLink]="" (click)="removeItem(securityThreat)" class="icon-link text-danger"><fa name="trash"></fa></a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
     <app-pagination 
       [paging]="paging"
       (goPrevPage)="getPrevPage()"

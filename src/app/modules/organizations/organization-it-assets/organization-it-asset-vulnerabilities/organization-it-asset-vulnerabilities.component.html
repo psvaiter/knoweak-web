@@ -11,36 +11,38 @@
 
   <!-- List of organization IT asset vulnerabilities -->
   <div class="table-container">
-    <table class="table table-hover">
-      <thead class="thead-light">
-        <tr>
-          <th class="w-100">Ameaça</th>
-          <th>Gv</th>
-          <!-- <th>Ga</th> -->
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngIf="loading">
-          <td colspan="3">Carregando...</td>
-        </tr>
-        <tr *ngIf="!loading && (!vulnerabilities || !vulnerabilities.length)">
-          <td colspan="3">Nenhuma vulnerabilidade cadastrada</td>
-        </tr>
-        <tr *ngFor="let vulnerability of vulnerabilities">
-          <td>{{ vulnerability.securityThreat.name }}</td>
-          <td>
-            <span *ngIf="vulnerability.level">{{ vulnerability.level.id }} - {{ vulnerability.level.name }}</span>
-            <span *ngIf="!vulnerability.level">Não cadastrado</span>
-          </td>
-          <!-- <td>{{ (vulnerability.securityThreat.threatLevel) ? vulnerability.securityThreat.threatLevel.id : "-" }}</td> -->
-          <td>
-            <a *ngIf="userCanManage" title="Editar" [routerLink]="" (click)="editItem(vulnerability)" class="icon-link"><fa name="edit"></fa></a>
-            <a *ngIf="userCanManage" title="Remover" [routerLink]="" (click)="removeItem(vulnerability)" class="icon-link text-danger"><fa name="trash"></fa></a>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="table-responsive">
+      <table class="table table-hover">
+        <thead class="thead-light">
+          <tr>
+            <th class="w-100">Ameaça</th>
+            <th>Gv</th>
+            <!-- <th>Ga</th> -->
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngIf="loading">
+            <td colspan="3">Carregando...</td>
+          </tr>
+          <tr *ngIf="!loading && (!vulnerabilities || !vulnerabilities.length)">
+            <td colspan="3">Nenhuma vulnerabilidade cadastrada</td>
+          </tr>
+          <tr *ngFor="let vulnerability of vulnerabilities">
+            <td>{{ vulnerability.securityThreat.name }}</td>
+            <td>
+              <span *ngIf="vulnerability.level">{{ vulnerability.level.id }} - {{ vulnerability.level.name }}</span>
+              <span *ngIf="!vulnerability.level">Não cadastrado</span>
+            </td>
+            <!-- <td>{{ (vulnerability.securityThreat.threatLevel) ? vulnerability.securityThreat.threatLevel.id : "-" }}</td> -->
+            <td>
+              <a *ngIf="userCanManage" title="Editar" [routerLink]="" (click)="editItem(vulnerability)" class="icon-link"><fa name="edit"></fa></a>
+              <a *ngIf="userCanManage" title="Remover" [routerLink]="" (click)="removeItem(vulnerability)" class="icon-link text-danger"><fa name="trash"></fa></a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
     <app-pagination 
       [paging]="paging"
       (goPrevPage)="getPrevPage()"
