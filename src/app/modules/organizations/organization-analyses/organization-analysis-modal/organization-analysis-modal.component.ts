@@ -92,15 +92,23 @@ export class OrganizationAnalysisModalComponent implements OnInit {
   }
 
   private getSelectedScopes() {
-    let selectedDepartments = this.scopeComponent.selectedDepartments;
+    let processes = this.scopeComponent.processes;
+    let selectedProcesses = this.scopeComponent.selectedProcesses;
 
-    if (!selectedDepartments) {
+    if (!selectedProcesses) {
       return null;
     }
 
-    let scopes = selectedDepartments
+    let scopes = selectedProcesses
       .filter(item => item != null)
-      .map(item => { return { departmentId: item }; });
+      .map(processInstanceId => {
+        let process = processes.find(p => p.instanceId == processInstanceId);
+        return {
+          departmentId: process.macroprocess.department.id,
+          macroprocessId: process.macroprocess.id,
+          processId: process.id
+        };
+      });
 
     return scopes || null;
   }
