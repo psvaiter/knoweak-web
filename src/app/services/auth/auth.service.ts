@@ -42,7 +42,7 @@ export class AuthService {
       }
       else if (err) {
         this.router.navigate(['/']);
-        console.log(err);
+        console.error(err);
       }
     });
   }
@@ -126,7 +126,7 @@ export class AuthService {
     this.auth0.checkSession({}, (err, result) => {
       if (err) {
         //alert(`Could not get a new token using silent authentication (${err.error}).`);
-        console.log(err);
+        console.error(err.error);
       } 
       else {
         this.setSession(result);
