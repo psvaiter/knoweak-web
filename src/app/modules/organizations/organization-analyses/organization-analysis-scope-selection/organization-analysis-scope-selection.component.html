@@ -33,7 +33,7 @@
         (add)="onAddMacroprocess($event)"
         (remove)="onRemoveMacroprocess($event)"
         placeholder="Selecione um ou mais macroprocessos"
-        [(ngModel)]="selectedMaroprocesses">
+        [(ngModel)]="selectedMacroprocesses">
     </ng-select>
   </div>
 
@@ -47,7 +47,7 @@
         [multiple]="true"
         [groupBy]="groupByMacroprocessFn"
         bindLabel="name"
-        bindValue="id"
+        bindValue="instanceId"
         [closeOnSelect]="false"
         placeholder="Selecione um ou mais processos"
         [(ngModel)]="selectedProcesses">
