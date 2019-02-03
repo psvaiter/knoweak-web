@@ -4,6 +4,7 @@ import { Organization } from '../../organization';
 import { Analysis } from '../analysis';
 import { OrganizationAnalysisService } from '../../../../services/api/organization/organization-analysis.service';
 import { OrganizationAnalysisScopeSelectionComponent } from '../organization-analysis-scope-selection/organization-analysis-scope-selection.component';
+import { Utils } from '../../../../shared/utils';
 
 @Component({
   selector: 'app-organization-analysis-modal',
@@ -64,7 +65,7 @@ export class OrganizationAnalysisModalComponent implements OnInit {
           this.saved.emit(this.analysis);
         },
         err => {
-          console.error(err);
+          this.errors = Utils.getErrors(err);
         }
       );
   }
@@ -80,7 +81,7 @@ export class OrganizationAnalysisModalComponent implements OnInit {
           this.saved.emit(this.analysis);
         },
         err => {
-          console.error(err);
+          this.errors = Utils.getErrors(err);
         }
       );
   }
