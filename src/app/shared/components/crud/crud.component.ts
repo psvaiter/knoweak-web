@@ -24,22 +24,25 @@ export class CrudComponent<TEntity> {
   hasCreated: boolean = false;
   hasUpdated: boolean = false;
   loading: boolean = false;
+  persisting: boolean = false;
 
   constructor(protected _crudService: CrudService) { }
 
   getRecords(page: number, recordsPerPage: number = this.DefaultRecordsPerPage) {
     this.loading = true;
+    this.records = [];
+
     this._crudService.getPage(this.url, page, recordsPerPage)
-    .pipe(finalize(() => {this.loading = false;}))
-    .subscribe(
-      data => {
-        this.records = data['data'];
-        this.paging = Object.assign(this.paging, data['paging']);
-      },
-      err => {
-        console.error(err);
-      }
-    );
+      .pipe(finalize(() => this.loading = false))
+      .subscribe(
+        data => {
+          this.records = data['data'];
+          this.paging = Object.assign(this.paging, data['paging']);
+        },
+        err => {
+          console.error(err);
+        }
+      );
   }
 
   getSingleRecord(url: string) {
@@ -58,62 +61,60 @@ export class CrudComponent<TEntity> {
   }
 
   createRecord(newRecord: TEntity) {
-    this.loading = true;
-    this._crudService.post(this.url, newRecord).subscribe(
-      data => {
-        this.loading = false;
+    this.persisting = true;
 
-        // Update listing
-        this.getRecords(this.paging.currentPage);
-        this.paging = Object.assign(this.paging, data['paging']);
+    this._crudService.post(this.url, newRecord)
+      .pipe(finalize(() => this.persisting = false))
+      .subscribe(
+        data => {
+          // Update listing
+          this.getRecords(this.paging.currentPage);
 
-        // Erase filled data
-        this.newRecord = <TEntity> {};
-        this.hasCreated = true;
-        this.errors = [];
-      },
-      err => {
-        this.loading = false;
-        this.hasCreated = false;
-        
-        console.error(err);
-        this.errors = err['error'].errors;
-        if (!this.errors) {
-          this.errors = [{
-            message: JSON.stringify(err['error'])
-          }];
+          // Erase filled data
+          this.newRecord = <TEntity> {};
+          this.hasCreated = true;
+          this.errors = [];
+        },
+        err => {
+          this.hasCreated = false;
+          
+          console.error(err);
+          this.errors = err['error'].errors;
+          if (!this.errors) {
+            this.errors = [{
+              message: JSON.stringify(err['error'])
+            }];
+          }
         }
-      }
-    );
+      );
   }
 
   patchRecord(url: string): void {
-    this.loading = true;
-    
+    this.persisting = true;
     let patchRequestBody = this.buildPatchRequestBody();
 
-    this._crudService.patch(url, patchRequestBody).subscribe(
-      data => {
-        this.loading = false;
-        this.persistedRecord = data['data'];
-        this.currentRecord = Object.assign({}, this.persistedRecord);
-        
-        this.hasUpdated = true;
-        this.errors = [];
-      },
-      err => {
-        this.loading = false;
-        this.hasUpdated = true;
-        
-        console.error(err);
-        this.errors = err['error'].errors;
-        if (!this.errors) {
-          this.errors = [{
-            message: JSON.stringify(err['error'])
-          }];
+    this._crudService.patch(url, patchRequestBody)
+      .pipe(finalize(() => this.persisting = false))
+      .subscribe(
+        data => {
+          this.persistedRecord = data['data'];
+          this.currentRecord = Object.assign({}, this.persistedRecord);
+          
+          this.hasUpdated = true;
+          this.errors = [];
+        },
+        err => {
+          this.hasUpdated = false;
+          
+          console.error(err);
+          this.errors = err['error'].errors;
+          if (!this.errors) {
+            this.errors = [{
+              message: JSON.stringify(err['error'])
+            }];
+          }
         }
-      }
-    );
+      );
   }
 
   hasChangedRecord(): boolean {
