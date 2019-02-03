@@ -16,7 +16,10 @@ export class Utils {
       case 409:
       case 422: return response['error'].errors;
 
-      default: return [{ message: "Ocorreu um erro inesperado"}];
+      default: {
+        console.error(response);
+        return [{ message: "Ocorreu um erro inesperado"}];
+      }
     }
   }
 
