@@ -6,9 +6,7 @@ import { BsModalService } from 'ngx-bootstrap/modal';
 
 import { Constants } from '../../../../shared/constants';
 import { OrganizationItService, OrganizationItAsset, RatingLevel } from '../../organization';
-import { OrganizationItServiceService } from '../../../../services/api/organization/organization-it-service.service';
 import { OrganizationItServiceItAssetService } from '../../../../services/api/organization/organization-it-service-it-asset.service';
-import { OrganizationItAssetService } from '../../../../services/api/organization/organization-it-asset.service';
 import { ItAssetLookupModalComponent } from '../it-asset-lookup-modal/it-asset-lookup-modal.component';
 import { ItServiceLookupModalComponent } from '../it-service-lookup-modal/it-service-lookup-modal.component';
 import { Utils } from '../../../../shared/utils';
@@ -31,9 +29,7 @@ export class ItServiceItemComponent implements OnInit {
 
   constructor(
     private modalService: BsModalService,
-    private organizationItServiceService: OrganizationItServiceService,
-    private organizationItServiceItAssetService: OrganizationItServiceItAssetService,
-    private organizationItAssetService: OrganizationItAssetService
+    private organizationItServiceItAssetService: OrganizationItServiceItAssetService
   ) { 
 
   }
@@ -82,21 +78,9 @@ export class ItServiceItemComponent implements OnInit {
     });
 
     // Act on confirmation
-    modalRef.content.confirmed.subscribe(eventData => {
-      let organizationItAsset = new OrganizationItAsset();
-      organizationItAsset.instanceId = eventData.itAssetInstanceId;
-      organizationItAsset.id = eventData.itAssetId;
-      organizationItAsset.relevance = eventData.relevance;
-      organizationItAsset.externalIdentifier = eventData.externalIdentifier;
-
-      this.requestAddItAsset(organizationItAsset)
-        .then(() => {
-          this.listItServiceItAssets();
-          modalRef.hide();
-        })
-        .catch(err => {
-          console.error(err);
-        });
+    modalRef.content.added.subscribe(() => {
+      this.listItServiceItAssets();
+      modalRef.hide();
     });
   }
 
@@ -109,15 +93,16 @@ export class ItServiceItemComponent implements OnInit {
       return;
     }
 
-    this.organizationItServiceItAssetService.removeItAsset(this.organizationId, this.itService.instanceId, itAsset.instanceId).subscribe(
-      response => {
-        this.listItServiceItAssets();
-      },
-      err => {
-        let messages = Utils.getErrors(err).map(e => e.message);
-        alert(messages.join(" | "));
-      }
-    );
+    this.organizationItServiceItAssetService.removeItAsset(this.organizationId, this.itService.instanceId, itAsset.instanceId)
+      .subscribe(
+        response => {
+          this.listItServiceItAssets();
+        },
+        err => {
+          let messages = Utils.getErrors(err).map(e => e.message);
+          alert(messages.join(" | "));
+        }
+      );
   }
   
   private listItServiceItAssets() {
@@ -151,61 +136,6 @@ export class ItServiceItemComponent implements OnInit {
           this.itAssets = _.orderBy(itAssets, ['name', 'externalIdentifier']);
         }
       );
-  }
-
-  private requestAddItAsset(itAsset: OrganizationItAsset): Promise<void> {
-    return new Promise((resolve, reject) => {
-  
-      if (!itAsset.instanceId) {
-        // It's not an organization IT asset yet
-        // Add to organization and then to organization IT service
-
-        let request = {
-          itAssetId: itAsset.id,
-          externalIdentifier: this.sanitizeText(itAsset.externalIdentifier)
-        };
-
-        this.organizationItAssetService.addItAsset(this.organizationId, request).subscribe(
-          response => {
-            
-            let request = {
-              itServiceInstanceId: this.itService.instanceId,
-              itAssetInstanceId: response['data'].instanceId,
-              relevanceLevelId: (itAsset.relevance) ? itAsset.relevance.id : null
-            };
-    
-            this.organizationItServiceItAssetService.addItAsset(this.organizationId, this.itService.instanceId, request).subscribe(
-              response => resolve(),
-              err => reject(err)
-            );
-
-          },
-          err => {
-            reject(err);
-          }
-        );
-      }
-      else {
-        // It's already an organization IT asset
-        // Add to organization IT service
-
-        let request = {
-          itServiceInstanceId: this.itService.instanceId,
-          itAssetInstanceId: itAsset.instanceId,
-          relevanceLevelId: (itAsset.relevance) ? itAsset.relevance.id : null
-        };
-
-        this.organizationItServiceItAssetService.addItAsset(this.organizationId, this.itService.instanceId, request).subscribe(
-          response => resolve(),
-          err => reject(err)
-        );
-      }
-
-    });
-  }
-
-  private sanitizeText(input: string): string {
-    return input = (input) ? input.trim() : null;
   }
 
 }

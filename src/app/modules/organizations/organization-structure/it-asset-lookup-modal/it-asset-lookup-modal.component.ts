@@ -1,10 +1,12 @@
-import { Component, OnInit, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
 import * as _ from 'lodash';
 
 import { Constants } from '../../../../shared/constants';
 import { CatalogItAssetService } from '../../../../services/api/catalog/it-asset/catalog-it-asset.service';
 import { OrganizationItAssetService } from '../../../../services/api/organization/organization-it-asset.service';
-import { OrganizationItService } from '../../organization';
+import { OrganizationItService, OrganizationItAsset } from '../../organization';
+import { OrganizationItServiceItAssetService } from '../../../../services/api/organization/organization-it-service-it-asset.service';
+import { Utils } from '../../../../shared/utils';
 
 @Component({
   selector: 'app-it-asset-lookup-modal',
@@ -14,16 +16,18 @@ import { OrganizationItService } from '../../organization';
 export class ItAssetLookupModalComponent implements OnInit {
 
   @Input() itService: OrganizationItService;
+  @Output() added: EventEmitter<void> = new EventEmitter<void>();
   
+  editMode: boolean;
+
+  organizationId: number;
   itAssets: any[];
   selectedItAssetSource: string;
   selectedItAsset: any;
-  selectedRelevanceId: number;
   externalIdentifier: string;
-  confirmed = new EventEmitter();
-
   ratingLevels = Constants.RATING_LEVELS;
-  editMode: boolean;
+  selectedRelevanceId: number;
+  errors: any[]
   
   // Different IT asset sources that will be assigned to 'itAssets' by user choice
   private catalogItAssets: any[];
@@ -31,12 +35,15 @@ export class ItAssetLookupModalComponent implements OnInit {
 
   constructor(
     private catalogItAssetService: CatalogItAssetService,
-    private organizationItAssetService: OrganizationItAssetService
+    private organizationItAssetService: OrganizationItAssetService,
+    private organizationItServiceItAssetService: OrganizationItServiceItAssetService
   ) {
 
   }
 
   ngOnInit() {
+    this.organizationId = this.itService.organizationId;
+    
     if (this.selectedItAsset) {
       this.editMode = true;
     }
@@ -47,12 +54,20 @@ export class ItAssetLookupModalComponent implements OnInit {
   }
 
   confirm() {
-    this.confirmed.emit({
-      itAssetInstanceId: this.selectedItAsset.instanceId,
-      itAssetId: this.selectedItAsset.id,
-      externalIdentifier: this.externalIdentifier,
-      relevance: Constants.RATING_LEVELS.find(level => level.id == this.selectedRelevanceId)
-    });
+    this.errors = null;
+
+    if (this.editMode) {
+
+    }
+    else {
+      this.addItAsset(this.selectedItAsset);
+    }
+    // this.confirmed.emit({
+    //   itAssetInstanceId: this.selectedItAsset.instanceId,
+    //   itAssetId: this.selectedItAsset.id,
+    //   externalIdentifier: this.externalIdentifier,
+    //   relevance: Constants.RATING_LEVELS.find(level => level.id == this.selectedRelevanceId)
+    // });
   }
 
   selectCatalogSource() {
@@ -83,6 +98,7 @@ export class ItAssetLookupModalComponent implements OnInit {
   private cleanup() {
     this.selectedItAsset = null;
     this.externalIdentifier = null;
+    this.errors = null;
   }
 
   private loadCatalogItAssets() {
@@ -123,6 +139,53 @@ export class ItAssetLookupModalComponent implements OnInit {
         console.error(err);
       }
     );
+  }
+
+  private addItAsset(itAsset: OrganizationItAsset) {
+
+      let isItAssetInOrganization = itAsset.instanceId;
+      if (isItAssetInOrganization) {
+        
+        this.addItServiceItAsset(itAsset.instanceId, this.selectedRelevanceId)
+          .then(() => this.added.emit())
+          .catch((err) => this.errors = Utils.getErrors(err));
+      }
+      else {
+        
+        this.addOrganizationItAsset(itAsset.id, this.externalIdentifier)
+          .then((response) => {
+            let itAssetInstanceId = response['data'].instanceId;
+            return this.addItServiceItAsset(itAssetInstanceId, this.selectedRelevanceId);
+          })
+          .then(() => this.added.emit())
+          .catch((err) => this.errors = Utils.getErrors(err));
+      }
+  }
+
+  private addItServiceItAsset(itAssetInstanceId: number, relevanceLevelId: number): Promise<any> {
+    return new Promise<any>((resolve, reject) => {
+      
+      let request = {
+        itAssetInstanceId: itAssetInstanceId,
+        relevanceLevelId: relevanceLevelId
+      };
+      
+      this.organizationItServiceItAssetService.addItAsset(this.organizationId, this.itService.instanceId, request)
+        .subscribe(resolve, reject);
+    });
+  }
+
+  private addOrganizationItAsset(itAssetId: number, externalIdentifier: string): Promise<any> {
+    return new Promise<any>((resolve, reject) => {
+      
+      let request = {
+        itAssetId: itAssetId,
+        externalIdentifier: Utils.sanitizeText(externalIdentifier)
+      };
+
+      this.organizationItAssetService.addItAsset(this.organizationId, request)
+        .subscribe(resolve, reject);
+    });
   }
 
 }

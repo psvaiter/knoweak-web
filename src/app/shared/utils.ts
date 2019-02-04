@@ -23,4 +23,12 @@ export class Utils {
     }
   }
 
+  /**
+   * Makes empty string into null and removes leading and trailing spaces when it has any content.
+   * @param input Any text
+   */
+  static sanitizeText(input: string): string {
+    return input = (input) ? input.trim() : null;
+  }
+
 }
