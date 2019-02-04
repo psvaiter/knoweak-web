@@ -1,7 +1,11 @@
-import { Component, OnInit, EventEmitter } from '@angular/core';
+import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
 import * as _ from 'lodash';
-import { CatalogProcessService } from '../../../../services/api/catalog/process/catalog-process.service';
+
 import { Constants } from '../../../../shared/constants';
+import { OrganizationMacroprocess, OrganizationProcess } from '../../organization';
+import { CatalogProcessService } from '../../../../services/api/catalog/process/catalog-process.service';
+import { OrganizationProcessService } from '../../../../services/api/organization/organization-process.service';
+import { Utils } from '../../../../shared/utils';
 
 @Component({
   selector: 'app-process-lookup-modal',
@@ -10,29 +14,44 @@ import { Constants } from '../../../../shared/constants';
 })
 export class ProcessLookupModalComponent implements OnInit {
 
-  macroprocess: any;
-  selectedProcessId: number;
-  selectedRelevanceId: number;
-  confirmed = new EventEmitter();
+  @Input() organizationId: number;
+  @Input() macroprocess: OrganizationMacroprocess;
+  @Input() selectedProcess: OrganizationProcess;
+  @Output() added: EventEmitter<void> = new EventEmitter<void>();
+  @Output() edited: EventEmitter<OrganizationProcess> = new EventEmitter<OrganizationProcess>();
   
-  processes: any[];
-  ratingLevels = Constants.RATING_LEVELS;
   editMode: boolean;
+  processes: any[];
+  selectedProcessId: number;
+  ratingLevels = Constants.RATING_LEVELS;
+  selectedRelevanceId: number;
+  errors: any[];
 
-  constructor(private catalogProcessService: CatalogProcessService) { }
+  constructor(
+    private catalogProcessService: CatalogProcessService,
+    private organizationProcessService: OrganizationProcessService
+  ) {
+
+  }
 
   ngOnInit() {
-    if (this.selectedProcessId) {
+    if (this.selectedProcess) {
+      this.selectedProcessId = this.selectedProcess.id;
+      this.selectedRelevanceId = (this.selectedProcess.relevance) ? this.selectedProcess.relevance.id : null;
       this.editMode = true;
     }
     this.loadProcesses();
   }
 
   confirm() {
-    this.confirmed.emit({
-      processId: this.selectedProcessId,
-      relevance: Constants.RATING_LEVELS.find(level => level.id == this.selectedRelevanceId)
-    });
+    this.errors = null;
+
+    if (this.editMode) {
+      this.patchProcess(this.selectedRelevanceId);
+    }
+    else {
+      this.addProcess(this.selectedProcessId, this.selectedRelevanceId);
+    }
   }
 
   private loadProcesses() {
@@ -43,5 +62,40 @@ export class ProcessLookupModalComponent implements OnInit {
       }
     );
   }
-  
+
+  private addProcess(processId: number, relevanceLevelId: number) {
+    let request = {
+      macroprocessInstanceId: this.macroprocess.instanceId,
+      processId: processId,
+      relevanceLevelId: relevanceLevelId
+    };
+
+    this.organizationProcessService.addProcess(this.organizationId, request)
+      .subscribe(
+        response => {
+          this.added.emit();
+        },
+        err => {
+          this.errors = Utils.getErrors(err);
+        }
+      );
+  }
+
+  private patchProcess(relevanceLevelId: number) {
+    let request = {
+      relevanceLevelId: relevanceLevelId 
+    };
+    
+    this.organizationProcessService.patchProcess(this.organizationId, this.selectedProcess.instanceId, request)
+      .subscribe(
+        response => {
+          this.selectedProcess.relevance = Constants.RATING_LEVELS.find(level => level.id == relevanceLevelId);
+          this.edited.emit(this.selectedProcess);
+        },
+        err => {
+          this.errors = Utils.getErrors(err);
+        }
+    );
+  }
+
 }

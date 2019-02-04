@@ -54,18 +54,15 @@ export class MacroprocessItemComponent implements OnInit {
     let modalRef = this.modalService.show(ProcessLookupModalComponent, {
       class: 'modal-md',
       initialState: {
+        organizationId: this.organizationId,
         macroprocess: this.macroprocess
       }
     });
 
     // Act on confirmation
-    modalRef.content.confirmed.subscribe(eventData => {
-      let organizationProcess = new OrganizationProcess();
-      organizationProcess.id = eventData.processId;
-      organizationProcess.relevance = eventData.relevance;
-
-      this.requestAddProcess(organizationProcess)
-        .then(() => modalRef.hide());
+    modalRef.content.added.subscribe(() => {
+      this.listMacroprocessProcesses();
+      modalRef.hide();
     });
   }
 
@@ -115,29 +112,6 @@ export class MacroprocessItemComponent implements OnInit {
           this.processes = _.orderBy(processes, ['name']);
         }
       );
-  }
-
-  private requestAddProcess(process: OrganizationProcess): Promise<void> {
-    let promise = new Promise<void>((resolve, reject) => {
-      let request = {
-        macroprocessInstanceId: this.macroprocess.instanceId,
-        processId: process.id,
-        relevanceLevelId: (process.relevance) ? process.relevance.id : null
-      };
-
-      this.organizationProcessService.addProcess(this.organizationId, request).subscribe(
-        response => {
-          this.listMacroprocessProcesses();
-          resolve();
-        },
-        err => {
-          console.error(err);
-          reject();
-        }
-      );
-    });
-
-    return promise;
   }
 
 }

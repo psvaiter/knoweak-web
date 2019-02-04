@@ -58,27 +58,16 @@ export class ProcessItemComponent implements OnInit {
     let modalRef = this.modalService.show(ProcessLookupModalComponent, {
       class: 'modal-md',
       initialState: {
+        organizationId: this.organizationId,
         macroprocess: this.process.macroprocess,
-        selectedProcessId: this.process.id,
-        selectedRelevanceId: (this.process.relevance) ? this.process.relevance.id : null
+        selectedProcess: this.process
       }
     });
 
     // Act on confirmation
-    modalRef.content.confirmed.subscribe(eventData => {
-      // Patch process
-      let request = {
-        relevanceLevelId: (eventData.relevance) ? eventData.relevance.id : null
-      };
-      this.organizationProcessService
-        .patchProcess(this.organizationId, this.process.instanceId, request)
-        .subscribe(
-          response => {
-            this.process.relevance = Constants.RATING_LEVELS.find(level => level.id == response['data'].relevanceLevelId)
-            this.edited.emit(this.process);
-            modalRef.hide();
-          }
-      );
+    modalRef.content.edited.subscribe((editedProcess) => {
+      this.process.relevance = editedProcess.relevance;
+      modalRef.hide();
     });
   }
 
