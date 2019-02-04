@@ -30,8 +30,8 @@ export class OrganizationProcess {
     instanceId: number;
     id: number;
     name: string;
-    itServices: OrganizationItService[] = [];
     relevance: RatingLevel;
+    itServices: OrganizationItService[] = [];
 
     organizationId: number;
     macroprocess: OrganizationMacroprocess;
@@ -41,8 +41,8 @@ export class OrganizationItService {
     instanceId: number;
     id: number;
     name: string;
-    itAssets: OrganizationItAsset[] = [];
     relevance: RatingLevel;
+    itAssets: OrganizationItAsset[] = [];
     
     organizationId: number;
     process: OrganizationProcess;
