@@ -29,6 +29,7 @@ export class DepartmentsLookupModalComponent implements OnInit {
   }
 
   confirm(): void {
+    this.errors = null;
     this.addDepartment(this.selectedDepartmentId);
   }
 
@@ -44,17 +45,15 @@ export class DepartmentsLookupModalComponent implements OnInit {
   }
 
   private addDepartment(departmentId) {
-    this.errors = null;
-
     this.organizationDepartmentService.addDepartment(this.organizationId, { id: departmentId })
-    .subscribe(
-      data => {
-        this.added.emit();
-      },
-      err => {
-        this.errors = Utils.getErrors(err);
-      }
-    );
+      .subscribe(
+        data => {
+          this.added.emit();
+        },
+        err => {
+          this.errors = Utils.getErrors(err);
+        }
+      );
   }
   
 }

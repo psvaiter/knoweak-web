@@ -31,6 +31,7 @@ export class MacroprocessLookupModalComponent implements OnInit {
   }
   
   confirm(): void {
+    this.errors = null;
     this.addMacroprocess(this.selectedMacroprocessId);
   }
 
