@@ -8,8 +8,8 @@ export class Utils {
   static getErrors(response: any): any[] {
     
     switch(response.status) {
-      case 401: return [{ message: "Acesso negado"}];
-      case 403: return [{ message: "Acesso não autorizado"}];
+      case 401: return [{ message: "Usuário não autenticado"}];
+      case 403: return [{ message: "Solicitação não autorizada"}];
       case 404: return [{ message: "Recurso não encontrado"}];
       
       case 400:
