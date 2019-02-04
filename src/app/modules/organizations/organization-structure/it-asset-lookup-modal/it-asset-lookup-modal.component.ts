@@ -17,13 +17,14 @@ export class ItAssetLookupModalComponent implements OnInit {
 
   @Input() itService: OrganizationItService;
   @Output() added: EventEmitter<void> = new EventEmitter<void>();
+  @Output() edited: EventEmitter<OrganizationItAsset> = new EventEmitter<OrganizationItAsset>();
   
   editMode: boolean;
 
   organizationId: number;
   itAssets: any[];
   selectedItAssetSource: string;
-  selectedItAsset: any;
+  selectedItAsset: OrganizationItAsset;
   externalIdentifier: string;
   ratingLevels = Constants.RATING_LEVELS;
   selectedRelevanceId: number;
@@ -45,6 +46,7 @@ export class ItAssetLookupModalComponent implements OnInit {
     this.organizationId = this.itService.organizationId;
     
     if (this.selectedItAsset) {
+      this.selectedRelevanceId = (this.selectedItAsset.relevance) ? this.selectedItAsset.relevance.id : null;
       this.editMode = true;
     }
     else {
@@ -57,17 +59,11 @@ export class ItAssetLookupModalComponent implements OnInit {
     this.errors = null;
 
     if (this.editMode) {
-
+      this.patchItAsset(this.selectedRelevanceId);
     }
     else {
       this.addItAsset(this.selectedItAsset);
     }
-    // this.confirmed.emit({
-    //   itAssetInstanceId: this.selectedItAsset.instanceId,
-    //   itAssetId: this.selectedItAsset.id,
-    //   externalIdentifier: this.externalIdentifier,
-    //   relevance: Constants.RATING_LEVELS.find(level => level.id == this.selectedRelevanceId)
-    // });
   }
 
   selectCatalogSource() {
@@ -186,6 +182,26 @@ export class ItAssetLookupModalComponent implements OnInit {
       this.organizationItAssetService.addItAsset(this.organizationId, request)
         .subscribe(resolve, reject);
     });
+  }
+
+  private patchItAsset(relevanceLevelId: number) {
+    let itServiceInstanceId = this.selectedItAsset.itService.instanceId;
+    let itAssetInstanceId = this.selectedItAsset.instanceId;
+    let request = {
+      relevanceLevelId: relevanceLevelId
+    };
+
+    this.organizationItServiceItAssetService
+      .patchItAsset(this.organizationId, itServiceInstanceId, itAssetInstanceId, request)
+      .subscribe(
+        response => {
+          this.selectedItAsset.relevance = Constants.RATING_LEVELS.find(level => level.id == relevanceLevelId)
+          this.edited.emit(this.selectedItAsset);
+        },
+        err => {
+          this.errors = Utils.getErrors(err);
+        }
+      );
   }
 
 }

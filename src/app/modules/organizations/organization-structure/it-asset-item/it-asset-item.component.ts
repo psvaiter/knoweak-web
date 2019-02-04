@@ -2,7 +2,6 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 import { BsModalService } from 'ngx-bootstrap/modal';
 
-import { Constants } from '../../../../shared/constants';
 import { OrganizationItAsset } from '../../organization';
 import { OrganizationItServiceItAssetService } from '../../../../services/api/organization/organization-it-service-it-asset.service';
 import { ItAssetLookupModalComponent } from '../it-asset-lookup-modal/it-asset-lookup-modal.component';
@@ -38,26 +37,14 @@ export class ItAssetItemComponent implements OnInit {
       class: 'modal-md',
       initialState: {
         itService: this.itAsset.itService,
-        selectedItAsset: this.itAsset,
-        selectedRelevanceId: (this.itAsset.relevance) ? this.itAsset.relevance.id : null
+        selectedItAsset: this.itAsset
       }
     });
 
     // Act on confirmation
-    modalRef.content.confirmed.subscribe(eventData => {
-      // Patch IT service
-      let request = {
-        relevanceLevelId: (eventData.relevance) ? eventData.relevance.id : null
-      };
-      this.organizationItServiceItAssetService
-        .patchItAsset(this.organizationId, this.itAsset.itService.instanceId, this.itAsset.instanceId, request)
-        .subscribe(
-          response => {
-            this.itAsset.relevance = Constants.RATING_LEVELS.find(level => level.id == response['data'].relevanceLevelId)
-            this.edited.emit(this.itAsset);
-            modalRef.hide();
-          }
-        );
+    modalRef.content.edited.subscribe(itAsset => {
+      this.itAsset.relevance = itAsset.relevance;
+      modalRef.hide();
     });
   }
 

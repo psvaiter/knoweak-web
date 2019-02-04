@@ -48,7 +48,7 @@
           type="text" class="mt-2 mb-2 form-control form-control-sm" />
   
         <div class="mx-2 mt-2 mb-4" style="color: #aaa">
-          Identificação: {{ selectedItAsset.externalIdentifier}}
+          Identificação: {{ selectedItAsset.externalIdentifier || "(sem identificação)" }}
         </div>
 
         <ng-select
