@@ -54,7 +54,6 @@ export class MacroprocessItemComponent implements OnInit {
     let modalRef = this.modalService.show(ProcessLookupModalComponent, {
       class: 'modal-md',
       initialState: {
-        organizationId: this.organizationId,
         macroprocess: this.macroprocess
       }
     });

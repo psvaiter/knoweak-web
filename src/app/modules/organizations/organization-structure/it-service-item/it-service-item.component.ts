@@ -56,26 +56,14 @@ export class ItServiceItemComponent implements OnInit {
       class: 'modal-md',
       initialState: {
         process: this.itService.process,
-        selectedItServiceId: this.itService.id,
-        selectedRelevanceId: (this.itService.relevance) ? this.itService.relevance.id : null
+        selectedItService: this.itService
       }
     });
 
     // Act on confirmation
-    modalRef.content.confirmed.subscribe(eventData => {
-      // Patch IT service
-      let request = {
-        relevanceLevelId: (eventData.relevance) ? eventData.relevance.id : null
-      };
-      this.organizationItServiceService
-        .patchItService(this.organizationId, this.itService.instanceId, request)
-        .subscribe(
-          response => {
-            this.itService.relevance = Constants.RATING_LEVELS.find(level => level.id == response['data'].relevanceLevelId)
-            this.edited.emit(this.itService);
-            modalRef.hide();
-          }
-      );
+    modalRef.content.edited.subscribe(itService => {
+      this.itService.relevance = itService.relevance;
+      modalRef.hide();
     });
   }
   

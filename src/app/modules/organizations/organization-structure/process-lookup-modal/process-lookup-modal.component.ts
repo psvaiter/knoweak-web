@@ -14,13 +14,14 @@ import { Utils } from '../../../../shared/utils';
 })
 export class ProcessLookupModalComponent implements OnInit {
 
-  @Input() organizationId: number;
   @Input() macroprocess: OrganizationMacroprocess;
   @Input() selectedProcess: OrganizationProcess;
   @Output() added: EventEmitter<void> = new EventEmitter<void>();
   @Output() edited: EventEmitter<OrganizationProcess> = new EventEmitter<OrganizationProcess>();
   
   editMode: boolean;
+  
+  organizationId: number;
   processes: any[];
   selectedProcessId: number;
   ratingLevels = Constants.RATING_LEVELS;
@@ -40,6 +41,7 @@ export class ProcessLookupModalComponent implements OnInit {
       this.selectedRelevanceId = (this.selectedProcess.relevance) ? this.selectedProcess.relevance.id : null;
       this.editMode = true;
     }
+    this.organizationId = this.macroprocess.organizationId;
     this.loadProcesses();
   }
 

@@ -58,7 +58,6 @@ export class ProcessItemComponent implements OnInit {
     let modalRef = this.modalService.show(ProcessLookupModalComponent, {
       class: 'modal-md',
       initialState: {
-        organizationId: this.organizationId,
         macroprocess: this.process.macroprocess,
         selectedProcess: this.process
       }
@@ -81,12 +80,8 @@ export class ProcessItemComponent implements OnInit {
     });
 
     // Act on confirmation
-    modalRef.content.confirmed.subscribe(eventData => {
-      let organizationItService = new OrganizationItService();
-      organizationItService.id = eventData.itServiceId;
-      organizationItService.relevance = eventData.relevance;
-
-      this.requestAddItService(organizationItService);
+    modalRef.content.added.subscribe(() => {
+      this.listProcessItServices();
       modalRef.hide();
     });
   }
@@ -137,22 +132,6 @@ export class ProcessItemComponent implements OnInit {
           this.itServices = _.orderBy(itServices, ['name']);
         }
       );
-  }
-
-  private requestAddItService(itService: OrganizationItService) {
-    let request = {
-      processInstanceId: this.process.instanceId,
-      itServiceId: itService.id,
-      relevanceLevelId: (itService.relevance) ? itService.relevance.id : null
-    };
-    this.organizationItServiceService.addItService(this.organizationId, request).subscribe(
-      response => {
-        this.listProcessItServices();
-      },
-      err => {
-        console.error(err);
-      }
-    );
   }
 
 }
