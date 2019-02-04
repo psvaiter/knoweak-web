@@ -1,5 +1,7 @@
-import { Component, OnInit, EventEmitter } from '@angular/core';
+import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
 import { CatalogDepartmentService } from '../../../../services/api/catalog/department/catalog-department.service';
+import { OrganizationDepartmentService } from '../../../../services/api/organization/organization-department.service';
+import { Utils } from '../../../../shared/utils';
 
 @Component({
   selector: 'app-departments-lookup-modal',
@@ -8,12 +10,16 @@ import { CatalogDepartmentService } from '../../../../services/api/catalog/depar
 })
 export class DepartmentsLookupModalComponent implements OnInit {
   
+  @Input() organizationId: number;
+  @Output() added = new EventEmitter();
+  
   selectedDepartmentId: number;
   departments = [];
-  confirmed = new EventEmitter<number>();
+  errors: any[];
 
   constructor(
-    private catalogDepartmentService: CatalogDepartmentService
+    private catalogDepartmentService: CatalogDepartmentService,
+    private organizationDepartmentService: OrganizationDepartmentService
   ) { 
     
   }
@@ -23,7 +29,7 @@ export class DepartmentsLookupModalComponent implements OnInit {
   }
 
   confirm(): void {
-    this.confirmed.emit(this.selectedDepartmentId);
+    this.addDepartment(this.selectedDepartmentId);
   }
 
   private loadDepartments(): void {
@@ -37,4 +43,18 @@ export class DepartmentsLookupModalComponent implements OnInit {
     );
   }
 
+  private addDepartment(departmentId) {
+    this.errors = null;
+
+    this.organizationDepartmentService.addDepartment(this.organizationId, { id: departmentId })
+    .subscribe(
+      data => {
+        this.added.emit();
+      },
+      err => {
+        this.errors = Utils.getErrors(err);
+      }
+    );
+  }
+  
 }

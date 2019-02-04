@@ -69,32 +69,15 @@ export class DepartmentListComponent implements OnInit {
   openAddDepartment(): void {
     let modalRef = this.modalService.show(DepartmentsLookupModalComponent, {
       class: 'modal-md',
+      initialState: {
+        organizationId: this.organizationId
+      }
     });
 
-    modalRef.content.confirmed.subscribe(departmentId => {
-      this.addDepartment(departmentId)
-        .then(() => {
-          modalRef.hide();
-        });
+    modalRef.content.added.subscribe(() => {
+      this.getOrganizationDepartments();
+      modalRef.hide();
     });
-  }
-
-  private addDepartment(selectedDepartmentId): Promise<void> {
-    let promise = new Promise<void>((resolve, reject) => {
-      this.organizationDepartmentService.addDepartment(this.organizationId, { id: selectedDepartmentId })
-        .subscribe(
-          data => {
-            this.getOrganizationDepartments();
-            resolve();
-          },
-          err => {
-            console.error(err);
-            reject(err);
-          }
-        );
-    });
-
-    return promise;
   }
 
 }
