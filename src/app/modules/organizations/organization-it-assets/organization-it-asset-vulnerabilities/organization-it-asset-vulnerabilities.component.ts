@@ -11,6 +11,7 @@ import { OrganizationService } from '../../../../services/api/organization/organ
 import { OrganizationItAssetService } from '../../../../services/api/organization/organization-it-asset.service';
 import { OrganizationItAssetVulnerabilityLookupComponent } from './organization-it-asset-vulnerability-lookup/organization-it-asset-vulnerability-lookup.component';
 import { OrganizationItAssetVulnerabilityService } from '../../../../services/api/organization/organization-it-asset-vulnerability.service';
+import { Utils } from '../../../../shared/utils';
 
 @Component({
   selector: 'app-organization-it-asset-vulnerabilities',
@@ -25,6 +26,7 @@ export class OrganizationItAssetVulnerabilitiesComponent implements OnInit {
   vulnerabilities: any[];
   paging: Paging = new Paging();
   userCanManage: boolean;
+  errors: any[];
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -95,7 +97,8 @@ export class OrganizationItAssetVulnerabilitiesComponent implements OnInit {
           this.loadVulnerabilities();
         },
         err => {
-          console.error(err);
+          let messages = Utils.getErrors(err).map(e => e.message);
+          alert(messages.join(" | "));
         }
       );
   }

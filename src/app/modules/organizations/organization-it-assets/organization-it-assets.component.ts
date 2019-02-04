@@ -9,6 +9,7 @@ import { OrganizationService } from '../../../services/api/organization/organiza
 import { OrganizationItAssetService } from '../../../services/api/organization/organization-it-asset.service';
 import { OrganizationItAssetLookupComponent } from './organization-it-asset-lookup/organization-it-asset-lookup.component';
 import { Paging } from '../../../shared/components/pagination/pagination.component';
+import { Utils } from '../../../shared/utils';
 
 @Component({
   selector: 'app-organization-it-assets',
@@ -22,6 +23,7 @@ export class OrganizationItAssetsComponent implements OnInit {
   itAssets: any[];
   paging: Paging = new Paging();
   userCanManage: boolean;
+  errors: any[];
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -89,7 +91,8 @@ export class OrganizationItAssetsComponent implements OnInit {
           this.loadItAssets();
         },
         err => {
-          console.error(err);
+          let messages = Utils.getErrors(err).map(e => e.message);
+          alert(messages.join(" | "));
         }
       );
   }

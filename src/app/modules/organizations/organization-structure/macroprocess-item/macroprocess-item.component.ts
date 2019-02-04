@@ -8,6 +8,7 @@ import { OrganizationMacroprocess, OrganizationProcess, RatingLevel } from '../.
 import { ProcessLookupModalComponent } from '../process-lookup-modal/process-lookup-modal.component';
 import { OrganizationProcessService } from '../../../../services/api/organization/organization-process.service';
 import { Constants } from '../../../../shared/constants';
+import { Utils } from '../../../../shared/utils';
 
 @Component({
   selector: 'app-macroprocess-item',
@@ -78,7 +79,8 @@ export class MacroprocessItemComponent implements OnInit {
         this.listMacroprocessProcesses();
       },
       err => {
-        console.error(err);
+        let messages = Utils.getErrors(err).map(e => e.message);
+        alert(messages.join(" | "));
       }
     );
   }

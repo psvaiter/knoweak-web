@@ -10,6 +10,7 @@ import { Organization } from '../organization';
 import { OrganizationService } from '../../../services/api/organization/organization.service';
 import { OrganizationAnalysisService } from '../../../services/api/organization/organization-analysis.service';
 import { Paging } from '../../../shared/components/pagination/pagination.component';
+import { Utils } from '../../../shared/utils';
 
 @Component({
   selector: 'app-organization-analyses',
@@ -72,7 +73,8 @@ export class OrganizationAnalysesComponent implements OnInit {
         this.listAnalyses(this.paging.currentPage);
       },
       err => {
-        console.error(err);
+        let messages = Utils.getErrors(err).map(e => e.message);
+        alert(messages.join(" | "));
       }
     );
   }

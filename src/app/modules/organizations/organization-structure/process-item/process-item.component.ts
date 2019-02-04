@@ -10,6 +10,7 @@ import { ItServiceLookupModalComponent } from '../it-service-lookup-modal/it-ser
 import { OrganizationProcessService } from '../../../../services/api/organization/organization-process.service';
 import { OrganizationItServiceService } from '../../../../services/api/organization/organization-it-service.service';
 import { Constants } from '../../../../shared/constants';
+import { Utils } from '../../../../shared/utils';
 
 @Component({
   selector: 'app-process-item',
@@ -111,7 +112,8 @@ export class ProcessItemComponent implements OnInit {
         this.listProcessItServices();
       },
       err => {
-        console.error(err);
+        let messages = Utils.getErrors(err).map(e => e.message);
+        alert(messages.join(" | "));
       }
     );
   }

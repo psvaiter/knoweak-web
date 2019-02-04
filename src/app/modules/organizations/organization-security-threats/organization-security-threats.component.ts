@@ -10,6 +10,7 @@ import { OrganizationService } from '../../../services/api/organization/organiza
 import { OrganizationSecurityThreatService } from '../../../services/api/organization/organization-security-threat.service';
 import { Organization } from '../organization';
 import { Paging } from '../../../shared/components/pagination/pagination.component';
+import { Utils } from '../../../shared/utils';
 
 @Component({
   selector: 'app-organization-security-threats',
@@ -23,6 +24,7 @@ export class OrganizationSecurityThreatsComponent implements OnInit {
   securityThreats: any[];
   paging: Paging = new Paging();
   userCanManage: boolean;
+  errors: any[];
 
   constructor(
     private route: ActivatedRoute,
@@ -86,7 +88,8 @@ export class OrganizationSecurityThreatsComponent implements OnInit {
           this.loadSecurityThreats();
         },
         err => {
-          console.error(err);
+          let messages = Utils.getErrors(err).map(e => e.message);
+          alert(messages.join(" | "));
         }
       );
   }

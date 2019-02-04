@@ -6,6 +6,7 @@ import { finalize } from 'rxjs/operators';
 import { OrganizationDepartment } from '../../organization';
 import { DepartmentsLookupModalComponent } from '../departments-lookup-modal/departments-lookup-modal.component';
 import { OrganizationDepartmentService } from '../../../../services/api/organization/organization-department.service';
+import { Utils } from '../../../../shared/utils';
 
 @Component({
   selector: 'app-department-list',
@@ -59,7 +60,8 @@ export class DepartmentListComponent implements OnInit {
         this.getOrganizationDepartments();
       },
       err => {
-        console.error(err);
+        let messages = Utils.getErrors(err).map(e => e.message);
+        alert(messages.join(" | "));
       }
     );
   }

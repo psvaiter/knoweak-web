@@ -7,6 +7,7 @@ import { BsModalService } from 'ngx-bootstrap/modal';
 import { OrganizationDepartment, OrganizationMacroprocess } from '../../organization';
 import { OrganizationMacroprocessService } from '../../../../services/api/organization/organization-macroprocess.service';
 import { MacroprocessLookupModalComponent } from '../macroprocess-lookup-modal/macroprocess-lookup-modal.component';
+import { Utils } from '../../../../shared/utils';
 
 @Component({
   selector: 'app-department-item',
@@ -73,7 +74,8 @@ export class DepartmentItemComponent implements OnInit {
         this.listDepartmentMacroprocesses();
       },
       err => {
-        console.error(err);
+        let messages = Utils.getErrors(err).map(e => e.message);
+        alert(messages.join(" | "));
       }
     );
   }

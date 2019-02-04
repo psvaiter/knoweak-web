@@ -11,6 +11,7 @@ import { OrganizationItServiceItAssetService } from '../../../../services/api/or
 import { OrganizationItAssetService } from '../../../../services/api/organization/organization-it-asset.service';
 import { ItAssetLookupModalComponent } from '../it-asset-lookup-modal/it-asset-lookup-modal.component';
 import { ItServiceLookupModalComponent } from '../it-service-lookup-modal/it-service-lookup-modal.component';
+import { Utils } from '../../../../shared/utils';
 
 @Component({
   selector: 'app-it-service-item',
@@ -125,7 +126,8 @@ export class ItServiceItemComponent implements OnInit {
         this.listItServiceItAssets();
       },
       err => {
-        console.error(err);
+        let messages = Utils.getErrors(err).map(e => e.message);
+        alert(messages.join(" | "));
       }
     );
   }
