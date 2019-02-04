@@ -9,6 +9,7 @@
       [(ngModel)]="selectedMacroprocessId"
       placeholder="Selecione um macroprocesso...">
     </ng-select>
+    <app-error-alert [errors]="errors"></app-error-alert>
   </div>
   <div class="actions">
     <button class="btn btn-outline-success" (click)="confirm()" [disabled]="!selectedMacroprocessId">Salvar</button>

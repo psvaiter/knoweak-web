@@ -11,7 +11,7 @@ import { Utils } from '../../../../shared/utils';
 export class DepartmentsLookupModalComponent implements OnInit {
   
   @Input() organizationId: number;
-  @Output() added = new EventEmitter();
+  @Output() added: EventEmitter<void> = new EventEmitter<void>();
   
   selectedDepartmentId: number;
   departments = [];

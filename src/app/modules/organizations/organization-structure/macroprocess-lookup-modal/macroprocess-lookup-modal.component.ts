@@ -1,6 +1,8 @@
-import { Component, OnInit, EventEmitter } from '@angular/core';
+import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
 import { OrganizationDepartment } from '../../organization';
 import { CatalogMacroprocessService } from '../../../../services/api/catalog/macroprocess/catalog-macroprocess.service';
+import { OrganizationMacroprocessService } from '../../../../services/api/organization/organization-macroprocess.service';
+import { Utils } from '../../../../shared/utils';
 
 @Component({
   selector: 'app-macroprocess-lookup-modal',
@@ -9,19 +11,27 @@ import { CatalogMacroprocessService } from '../../../../services/api/catalog/mac
 })
 export class MacroprocessLookupModalComponent implements OnInit {
 
-  selectedMacroprocessId: number;
-  department: OrganizationDepartment;
-  macroprocesses = [];
-  confirmed = new EventEmitter<number>();
+  @Input() organizationId: number;
+  @Input() department: OrganizationDepartment;
+  @Output() added: EventEmitter<void> = new EventEmitter<void>();
 
-  constructor(private catalogMacroprocessService: CatalogMacroprocessService) { }
+  selectedMacroprocessId: number;
+  macroprocesses = [];
+  errors: any[];
+
+  constructor(
+    private catalogMacroprocessService: CatalogMacroprocessService,
+    private organizationMacroprocessService: OrganizationMacroprocessService
+  ) {
+
+  }
 
   ngOnInit() {
     this.loadMacroprocesses();
   }
   
   confirm(): void {
-    this.confirmed.emit(this.selectedMacroprocessId);
+    this.addMacroprocess(this.selectedMacroprocessId);
   }
 
   private loadMacroprocesses(): void {
@@ -33,6 +43,22 @@ export class MacroprocessLookupModalComponent implements OnInit {
         console.error(err);
       }
     );
+  }
+
+  private addMacroprocess(macroprocessId: number) {
+    let request = {
+      departmentId: this.department.id,
+      macroprocessId: macroprocessId
+    };
+    this.organizationMacroprocessService.add(this.organizationId, request)
+      .subscribe(
+        response => {
+          this.added.emit();
+        },
+        err => {
+          this.errors = Utils.getErrors(err);
+        }
+      );
   }
 
 }

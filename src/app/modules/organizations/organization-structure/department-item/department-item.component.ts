@@ -53,13 +53,14 @@ export class DepartmentItemComponent implements OnInit {
     let modalRef = this.modalService.show(MacroprocessLookupModalComponent, {
       class: "modal-md",
       initialState: {
+        organizationId: this.organizationId,
         department: this.department
       }
     });
 
     // Act on confirmation
-    modalRef.content.confirmed.subscribe(macroprocessId => {
-      this.requestAddMacroprocess(macroprocessId);
+    modalRef.content.added.subscribe(() => {
+      this.listDepartmentMacroprocesses();
       modalRef.hide();
     });
   }
@@ -104,20 +105,6 @@ export class DepartmentItemComponent implements OnInit {
           this.macroprocesses = _.orderBy(macroprocesses, ['name']);
         }
       );
-  }
-
-  private requestAddMacroprocess(macroprocessId: number) {
-    let request = {
-      departmentId: this.department.id,
-      macroprocessId: macroprocessId
-    };
-    this.organizationMacroprocessService.add(this.organizationId, request).subscribe(
-      response => {
-        this.listDepartmentMacroprocesses();
-      },
-      err => {
-        console.error(err);
-      });
   }
 
 }
