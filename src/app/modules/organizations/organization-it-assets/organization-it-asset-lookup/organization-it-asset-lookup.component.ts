@@ -79,7 +79,7 @@ export class OrganizationItAssetLookupComponent implements OnInit {
   private addItAsset() {
     let request = {
       itAssetId: this.selectedItAssetId,
-      externalIdentifier: this.sanitizeText(this.externalIdentifier)
+      externalIdentifier: Utils.sanitizeText(this.externalIdentifier)
     };
 
     this.persisting = true;
@@ -97,7 +97,7 @@ export class OrganizationItAssetLookupComponent implements OnInit {
 
   private patchItAsset(): any {
     let request = {
-      externalIdentifier: this.sanitizeText(this.externalIdentifier)
+      externalIdentifier: Utils.sanitizeText(this.externalIdentifier)
     };
 
     this.persisting = true;
@@ -111,10 +111,6 @@ export class OrganizationItAssetLookupComponent implements OnInit {
           this.errors = Utils.getErrors(err);
         }
       );
-  }
-
-  private sanitizeText(input: string): string {
-    return input = (input) ? input.trim() : null;
   }
 
 }

@@ -55,7 +55,7 @@ export class OrganizationAnalysisModalComponent implements OnInit {
 
   private createAnalysis(scopes) {
     let request = { 
-      description: this.sanitizeText(this.analysis.description),
+      description: Utils.sanitizeText(this.analysis.description),
       scopes: scopes || null
     };
 
@@ -72,7 +72,7 @@ export class OrganizationAnalysisModalComponent implements OnInit {
 
   private updateAnalysis() {
     let request = { 
-      description: this.sanitizeText(this.analysis.description)
+      description: Utils.sanitizeText(this.analysis.description)
     };
 
     this.organizationAnalysisService.patchAnalysis(this.organization.id, this.analysis.id, request)
@@ -84,10 +84,6 @@ export class OrganizationAnalysisModalComponent implements OnInit {
           this.errors = Utils.getErrors(err);
         }
       );
-  }
-
-  private sanitizeText(input: string): string {
-    return input = (input) ? input.trim() : null;
   }
 
   private getSelectedScopes() {
