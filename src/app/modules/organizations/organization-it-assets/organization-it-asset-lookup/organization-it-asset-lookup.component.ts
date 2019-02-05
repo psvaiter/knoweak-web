@@ -4,6 +4,7 @@ import * as _ from 'lodash';
 
 import { OrganizationItAssetService } from '../../../../services/api/organization/organization-it-asset.service';
 import { CatalogItAssetService } from '../../../../services/api/catalog/it-asset/catalog-it-asset.service';
+import { Utils } from '../../../../shared/utils';
 
 @Component({
   selector: 'app-organization-it-asset-lookup',
@@ -22,6 +23,8 @@ export class OrganizationItAssetLookupComponent implements OnInit {
   selectedItAssetId: number;
   externalIdentifier: string;
   editMode: boolean;
+  errors: any[];
+  persisting: boolean;
 
   constructor(
     private catalogItAssetService: CatalogItAssetService,
@@ -41,12 +44,24 @@ export class OrganizationItAssetLookupComponent implements OnInit {
   }
 
   confirm() {
+    this.errors = null;
+
     if (!this.editMode) {
       this.addItAsset();
     }
     else {
       this.patchItAsset();
     }
+  }
+
+  disableSave() {
+    if (this.persisting) {
+      return true;
+    }
+    if (!this.selectedItAssetId) {
+      return true;
+    }
+    return false;
   }
 
   private loadItAssets() {
@@ -66,13 +81,16 @@ export class OrganizationItAssetLookupComponent implements OnInit {
       itAssetId: this.selectedItAssetId,
       externalIdentifier: this.sanitizeText(this.externalIdentifier)
     };
+
+    this.persisting = true;
     this.organizationItAssetService.addItAsset(this.organization.id, request)
+      .pipe(finalize(() => this.persisting = false))
       .subscribe(
         response => {
           this.added.emit(request);
         },
         err => {
-          console.error(err);
+          this.errors = Utils.getErrors(err);
         }
       );
   }
@@ -81,13 +99,16 @@ export class OrganizationItAssetLookupComponent implements OnInit {
     let request = {
       externalIdentifier: this.sanitizeText(this.externalIdentifier)
     };
+
+    this.persisting = true;
     this.organizationItAssetService.patchItAsset(this.organization.id, this.itAsset.instanceId, request)
+      .pipe(finalize(() => this.persisting = false))
       .subscribe(
         response => {
           this.added.emit(request);
         },
         err => {
-          console.error(err);
+          this.errors = Utils.getErrors(err);
         }
       );
   }

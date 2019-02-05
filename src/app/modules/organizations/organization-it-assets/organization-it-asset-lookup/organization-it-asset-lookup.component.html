@@ -22,8 +22,9 @@
       type="text" maxlength="128" class="mt-2 mb-4 form-control form-control-sm"
       placeholder="Preencha uma identificação para o ativo" />
     
+    <app-error-alert [errors]="errors"></app-error-alert>
   </div>
   <div class="actions">
-    <button type="submit" class="btn btn-outline-success" (click)="confirm()" [disabled]="!selectedItAssetId">Salvar</button>
+    <button type="submit" class="btn btn-outline-success" (click)="confirm()" [disabled]="disableSave()">Salvar</button>
   </div>
 </app-modal>
