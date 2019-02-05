@@ -28,8 +28,9 @@
       </ng-select>
     </div>
     
+    <app-error-alert [errors]="errors"></app-error-alert>
   </div>
   <div class="actions">
-    <button type="submit" class="btn btn-outline-success" (click)="confirm()" [disabled]="!selectedSecurityThreatId">Salvar</button>
+    <button type="submit" class="btn btn-outline-success" (click)="confirm()" [disabled]="disableSave()">Salvar</button>
   </div>
 </app-modal>

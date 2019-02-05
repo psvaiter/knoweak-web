@@ -5,6 +5,7 @@ import * as _ from 'lodash';
 import { Constants } from '../../../../shared/constants';
 import { CatalogSecurityThreatService } from '../../../../services/api/catalog/security-threat/catalog-security-threat.service';
 import { OrganizationSecurityThreatService } from '../../../../services/api/organization/organization-security-threat.service';
+import { Utils } from '../../../../shared/utils';
 
 @Component({
   selector: 'app-organization-security-threat-lookup',
@@ -24,6 +25,8 @@ export class OrganizationSecurityThreatLookupComponent implements OnInit {
   selectedSecurityThreatId: number;
   selectedThreatLevelId: number;
   editMode: boolean;
+  errors: any[];
+  persisting: boolean;
 
   constructor(
     private catalogSecurityThreatService: CatalogSecurityThreatService,
@@ -46,12 +49,24 @@ export class OrganizationSecurityThreatLookupComponent implements OnInit {
   }
 
   confirm() {
+    this.errors = null;
+
     if (!this.editMode) {
       this.addSecurityThreat();
     }
     else {
       this.patchSecurityThreat();
     }
+  }
+
+  disableSave() {
+    if (this.persisting) {
+      return true;
+    }
+    if (!this.selectedSecurityThreatId) {
+      return true
+    }
+    return false;
   }
 
   private loadSecurityThreats() {
@@ -71,13 +86,16 @@ export class OrganizationSecurityThreatLookupComponent implements OnInit {
       securityThreatId: this.selectedSecurityThreatId,
       threatLevelId: this.selectedThreatLevelId
     };
+
+    this.persisting = true;
     this.organizationSecurityThreatService.addSecurityThreat(this.organization.id, request)
+      .pipe(finalize(() => this.persisting = false))
       .subscribe(
         response => {
           this.added.emit(request);
         },
         err => {
-          console.error(err);
+          this.errors = Utils.getErrors(err);
         }
       );
   }
@@ -86,13 +104,16 @@ export class OrganizationSecurityThreatLookupComponent implements OnInit {
     let request = {
       threatLevelId: this.selectedThreatLevelId
     };
+
+    this.persisting = true;
     this.organizationSecurityThreatService.patchSecurityThreat(this.organization.id, this.securityThreat.id, request)
+      .pipe(finalize(() => this.persisting = false))
       .subscribe(
         response => {
           this.added.emit(request);
         },
         err => {
-          console.error(err);
+          this.errors = Utils.getErrors(err);
         }
       );
   }
