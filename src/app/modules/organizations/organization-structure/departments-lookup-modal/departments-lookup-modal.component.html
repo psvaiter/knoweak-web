@@ -3,6 +3,7 @@
     <ng-select  
       [items]="departments"
       [searchable]="true"
+      notFoundText="Nenhum item encontrado"
       bindLabel="name"
       bindValue="id" 
       [(ngModel)]="selectedDepartmentId"
