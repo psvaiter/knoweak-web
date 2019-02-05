@@ -27,18 +27,19 @@ export class OrganizationModalComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.editableOrganization = Object.assign({}, this.organization);
+
     if (this.organization.id) {
       this.editMode = true;
-      this.editableOrganization = Object.assign({}, this.organization);
       this.persistedOrganization = Object.assign({}, this.organization);
     }
   }
 
   enableSave(): boolean {
-    if (!this.organization.taxId || !this.organization.taxId.trim()) {
+    if (!this.editableOrganization.taxId || !this.editableOrganization.taxId.trim()) {
       return false;
     }
-    if (!this.organization.legalName || !this.organization.legalName.trim()) {
+    if (!this.editableOrganization.legalName || !this.editableOrganization.legalName.trim()) {
       return false;
     }
     if (this.editMode) {
@@ -58,7 +59,7 @@ export class OrganizationModalComponent implements OnInit {
       action = this.organizationService.patchOrganization(this.organization.id, patchData);
     }
     else {
-      action = this.organizationService.addOrganization(this.organization);
+      action = this.organizationService.addOrganization(this.editableOrganization);
     }
 
     action.subscribe(
