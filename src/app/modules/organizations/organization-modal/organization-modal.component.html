@@ -3,15 +3,15 @@
     <form>
       <div class="form-group">
         <label>Nº de Registro</label>
-        <input type="text" maxlength="16" [(ngModel)]="organization.taxId" name="taxId" placeholder="Ex: CNPJ" class="form-control form-control-sm" />
+        <input type="text" maxlength="16" [(ngModel)]="editableOrganization.taxId" name="taxId" placeholder="Ex: CNPJ" class="form-control form-control-sm" />
       </div>
       <div class="form-group">
         <label>Nome Empresarial</label>
-        <input type="text" maxlength="128" [(ngModel)]="organization.legalName" name="legalName" class="form-control form-control-sm" />
+        <input type="text" maxlength="128" [(ngModel)]="editableOrganization.legalName" name="legalName" class="form-control form-control-sm" />
       </div>
       <div class="form-group">
         <label>Nome Fantasia</label>
-        <input type="text" maxlength="128" [(ngModel)]="organization.tradeName" name="tradeName" class="form-control form-control-sm" />
+        <input type="text" maxlength="128" [(ngModel)]="editableOrganization.tradeName" name="tradeName" class="form-control form-control-sm" />
       </div>
     </form>
     <app-error-alert [errors]="errors"></app-error-alert>

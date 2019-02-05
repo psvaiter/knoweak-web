@@ -43,6 +43,7 @@ export class OrganizationDetailsComponent implements OnInit {
     });
 
     modalRef.content.saved.subscribe(eventData => {
+      this.getOrganization();
       modalRef.hide();
     });
   }

@@ -1,8 +1,9 @@
-import { Component, OnInit, EventEmitter } from '@angular/core';
+import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
 import { Organization } from '../organization';
-import { OrganizationService, OrganizationPatchRequest } from '../../../services/api/organization/organization.service';
+import { OrganizationService } from '../../../services/api/organization/organization.service';
+import { Utils } from '../../../shared/utils';
 
 @Component({
   selector: 'app-organization-modal',
@@ -11,11 +12,13 @@ import { OrganizationService, OrganizationPatchRequest } from '../../../services
 })
 export class OrganizationModalComponent implements OnInit {
 
-  persistedOrganization: Organization;
-  organization: Organization = new Organization();
-  saved = new EventEmitter();
+  @Input() organization: Organization = new Organization();
+  @Output() saved = new EventEmitter();
+
   errors: any[];
   editMode: boolean;
+  editableOrganization: Organization;
+  persistedOrganization: Organization;
 
   constructor(
     private organizationService: OrganizationService
@@ -26,6 +29,7 @@ export class OrganizationModalComponent implements OnInit {
   ngOnInit() {
     if (this.organization.id) {
       this.editMode = true;
+      this.editableOrganization = Object.assign({}, this.organization);
       this.persistedOrganization = Object.assign({}, this.organization);
     }
   }
@@ -44,11 +48,13 @@ export class OrganizationModalComponent implements OnInit {
   }
 
   save() {
+    this.errors = null;
+
     let action: Observable<Object>;
     this.sanitizeData();
 
     if (this.editMode) {
-      let patchData = this.getChanges(this.persistedOrganization, this.organization);
+      let patchData = this.getChanges(this.persistedOrganization, this.editableOrganization);
       action = this.organizationService.patchOrganization(this.organization.id, patchData);
     }
     else {
@@ -57,28 +63,22 @@ export class OrganizationModalComponent implements OnInit {
 
     action.subscribe(
       response => {
-        this.errors = [];
         this.saved.emit(response['data']);
       },
       err => {
-        console.error(err);
-        this.errors = err['error'].errors;
+        this.errors = Utils.getErrors(err);
       }
     );
   }
 
   hasChangedData(): any {
-    return JSON.stringify(this.persistedOrganization) != JSON.stringify(this.organization);
+    return JSON.stringify(this.persistedOrganization) != JSON.stringify(this.editableOrganization);
   }
 
   private sanitizeData() {
-    this.organization.taxId = this.sanitizeText(this.organization.taxId);
-    this.organization.legalName = this.sanitizeText(this.organization.legalName);
-    this.organization.tradeName = this.sanitizeText(this.organization.tradeName);
-  }
-  
-  private sanitizeText(input: string): string {
-    return input = (input) ? input.trim() : null;
+    this.editableOrganization.taxId = Utils.sanitizeText(this.editableOrganization.taxId);
+    this.editableOrganization.legalName = Utils.sanitizeText(this.editableOrganization.legalName);
+    this.editableOrganization.tradeName = Utils.sanitizeText(this.editableOrganization.tradeName);
   }
 
   private getChanges(oldData: any, newData: any): any {
