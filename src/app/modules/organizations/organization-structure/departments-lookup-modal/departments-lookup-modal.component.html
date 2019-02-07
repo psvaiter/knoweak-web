@@ -16,6 +16,6 @@
     <app-error-alert [errors]="errors"></app-error-alert>
   </div>
   <div class="actions">
-    <button class="btn btn-outline-success" (click)="confirm()" [disabled]="!selectedDepartment">Salvar</button>
+    <button class="btn btn-outline-success" (click)="confirm()" [disabled]="!selectedDepartment || persisting">Salvar</button>
   </div>
 </app-modal>
