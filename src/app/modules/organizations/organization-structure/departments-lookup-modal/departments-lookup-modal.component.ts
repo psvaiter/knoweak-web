@@ -13,9 +13,13 @@ export class DepartmentsLookupModalComponent implements OnInit {
   @Input() organizationId: number;
   @Output() added: EventEmitter<void> = new EventEmitter<void>();
   
-  selectedDepartmentId: number;
+  selectedDepartment: any;
   departments = [];
+  name: string;
+  
   errors: any[];
+  loading: boolean;
+  persisting: boolean;
 
   constructor(
     private catalogDepartmentService: CatalogDepartmentService,
@@ -30,13 +34,39 @@ export class DepartmentsLookupModalComponent implements OnInit {
 
   confirm(): void {
     this.errors = null;
-    this.addDepartment(this.selectedDepartmentId);
+    this.persisting = true;
+
+    if (this.isFromCatalog()) {
+      this.addDepartmentToOrganization(this.selectedDepartment)
+        .then(() => {
+          this.persisting = false;
+          this.added.emit();
+        })
+        .catch(err => this.errors = Utils.getErrors(err));
+    }
+    else {
+      this.addDepartmentToCatalog(this.selectedDepartment.name)
+        .then((department) => this.addDepartmentToOrganization(department))
+        .then(() => {
+          this.persisting = false;
+          this.added.emit();
+        })
+        .catch(err => this.errors = Utils.getErrors(err));
+    }
+  }
+
+  addNewOption(name: string) {
+    return { name: name };
+  }
+
+  private isFromCatalog() {
+    return this.selectedDepartment && this.selectedDepartment.id;
   }
 
   private loadDepartments(): void {
     this.catalogDepartmentService.listDepartments(1, 100).subscribe(
       response => {
-        this.departments = response['data'];
+        this.departments = response['data'] || [];
       },
       err => {
         console.error(err);
@@ -44,16 +74,26 @@ export class DepartmentsLookupModalComponent implements OnInit {
     );
   }
 
-  private addDepartment(departmentId) {
-    this.organizationDepartmentService.addDepartment(this.organizationId, { id: departmentId })
-      .subscribe(
-        data => {
-          this.added.emit();
-        },
-        err => {
-          this.errors = Utils.getErrors(err);
-        }
-      );
+  private addDepartmentToOrganization(department): Promise<any> {
+    return new Promise<any>((resolve, reject) => {
+      
+      this.organizationDepartmentService.addDepartment(this.organizationId, { id: department.id })
+        .subscribe(
+          response => resolve(response['data']),
+          err => reject(err)
+        );
+    });
+  }
+
+  private addDepartmentToCatalog(name: string): Promise<any> {
+    return new Promise<any>((resolve, reject) => {
+
+      this.catalogDepartmentService.addDepartment({ name: name })
+        .subscribe(
+          response => resolve(response['data']),
+          err => reject(err)
+        );
+    });
   }
   
 }

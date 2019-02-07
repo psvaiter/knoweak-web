@@ -1,17 +1,21 @@
 <app-modal modalTitle="Adicionar departamento">
   <div class="body">
-    <ng-select  
+    <ng-select
       [items]="departments"
       [searchable]="true"
       notFoundText="Nenhum item encontrado"
+      [addTag]="addNewOption"
+      addTagText="Novo departamento:"
       bindLabel="name"
-      bindValue="id" 
-      [(ngModel)]="selectedDepartmentId"
-      placeholder="Selecione um departamento...">
+      [(ngModel)]="selectedDepartment"
+      placeholder="Selecione um departamento..."
+      [loading]="loading"
+      loadingText="Carregando...">
     </ng-select>
+    
     <app-error-alert [errors]="errors"></app-error-alert>
   </div>
   <div class="actions">
-    <button class="btn btn-outline-success" (click)="confirm()" [disabled]="!selectedDepartmentId">Salvar</button>
+    <button class="btn btn-outline-success" (click)="confirm()" [disabled]="!selectedDepartment">Salvar</button>
   </div>
 </app-modal>

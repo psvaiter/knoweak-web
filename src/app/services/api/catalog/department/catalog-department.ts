@@ -1,5 +1,4 @@
 export class AddCatalogDepartmentRequest {
-    id: number;
     name: string;
 }
 
