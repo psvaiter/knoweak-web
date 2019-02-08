@@ -5,14 +5,17 @@
       [items]="macroprocesses"
       [searchable]="true"
       notFoundText="Nenhum item encontrado"
+      [addTag]="addNewOption"
+      addTagText="Novo macroprocesso:"
       bindLabel="name"
-      bindValue="id" 
-      [(ngModel)]="selectedMacroprocessId"
-      placeholder="Selecione um macroprocesso...">
+      [(ngModel)]="selectedMacroprocess"
+      placeholder="Selecione um macroprocesso..."
+      [loading]="loading"
+      loadingText="Carregando...">
     </ng-select>
     <app-error-alert [errors]="errors"></app-error-alert>
   </div>
   <div class="actions">
-    <button class="btn btn-outline-success" (click)="confirm()" [disabled]="!selectedMacroprocessId">Salvar</button>
+    <button class="btn btn-outline-success" (click)="confirm()" [disabled]="!selectedMacroprocess || persisting">Salvar</button>
   </div>
 </app-modal>
