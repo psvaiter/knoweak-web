@@ -15,7 +15,6 @@ export class DepartmentsLookupModalComponent implements OnInit {
   
   selectedDepartment: any;
   departments = [];
-  name: string;
   
   errors: any[];
   loading: boolean;
@@ -36,31 +35,17 @@ export class DepartmentsLookupModalComponent implements OnInit {
     this.errors = null;
     this.persisting = true;
 
-    if (this.isFromCatalog()) {
-      this.addDepartmentToOrganization(this.selectedDepartment)
-        .then(() => {
-          this.persisting = false;
-          this.added.emit();
-        })
-        .catch(err => this.errors = Utils.getErrors(err));
-    }
-    else {
-      this.addDepartmentToCatalog(this.selectedDepartment.name)
-        .then((department) => this.addDepartmentToOrganization(department))
-        .then(() => {
-          this.persisting = false;
-          this.added.emit();
-        })
-        .catch(err => this.errors = Utils.getErrors(err));
-    }
+    this.addDepartmentToCatalogIfNotExist(this.selectedDepartment)
+      .then((department) => this.addDepartmentToOrganization(department))
+      .then(() => {
+        this.persisting = false;
+        this.added.emit();
+      })
+      .catch(err => this.errors = Utils.getErrors(err));
   }
 
   addNewOption(name: string) {
     return { name: name };
-  }
-
-  private isFromCatalog() {
-    return this.selectedDepartment && this.selectedDepartment.id;
   }
 
   private loadDepartments(): void {
@@ -85,15 +70,23 @@ export class DepartmentsLookupModalComponent implements OnInit {
     });
   }
 
-  private addDepartmentToCatalog(name: string): Promise<any> {
+  private addDepartmentToCatalogIfNotExist(department): Promise<any> {
     return new Promise<any>((resolve, reject) => {
 
-      this.catalogDepartmentService.addDepartment({ name: name })
+      if (this.isAlreadyInCatalog(department)) {
+        return resolve(department);
+      }
+
+      this.catalogDepartmentService.addDepartment({ name: department.name })
         .subscribe(
           response => resolve(response['data']),
           err => reject(err)
         );
     });
+  }
+
+  private isAlreadyInCatalog(department) {
+    return department && department.id;
   }
   
 }
