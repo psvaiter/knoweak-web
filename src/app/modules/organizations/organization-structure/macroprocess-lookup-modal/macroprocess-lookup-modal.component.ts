@@ -41,11 +41,9 @@ export class MacroprocessLookupModalComponent implements OnInit {
 
     this.addToCatalogIfNotExist(this.selectedMacroprocess)
       .then((macroprocess => this.addToOrganization(macroprocess)))
-      .then(() => {
-        this.persisting = false;
-        this.added.emit();
-      })
-      .catch(err => this.errors = Utils.getErrors(err));
+      .then(() => this.added.emit())
+      .catch(err => this.errors = Utils.getErrors(err))
+      .then(() => this.persisting = false);
   }
   
   addNewOption(name: string) {

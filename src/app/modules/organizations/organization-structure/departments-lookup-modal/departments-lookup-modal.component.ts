@@ -39,11 +39,9 @@ export class DepartmentsLookupModalComponent implements OnInit {
 
     this.addToCatalogIfNotExist(this.selectedDepartment)
       .then((department) => this.addToOrganization(department))
-      .then(() => {
-        this.persisting = false;
-        this.added.emit();
-      })
-      .catch(err => this.errors = Utils.getErrors(err));
+      .then(() => this.added.emit())
+      .catch(err => this.errors = Utils.getErrors(err))
+      .then(() => this.persisting = false);
   }
 
   addNewOption(name: string) {
