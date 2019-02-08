@@ -1,4 +1,6 @@
 import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
+import { finalize } from 'rxjs/operators';
+
 import { CatalogDepartmentService } from '../../../../services/api/catalog/department/catalog-department.service';
 import { OrganizationDepartmentService } from '../../../../services/api/organization/organization-department.service';
 import { Utils } from '../../../../shared/utils';
@@ -16,9 +18,9 @@ export class DepartmentsLookupModalComponent implements OnInit {
   selectedDepartment: any;
   departments = [];
   
-  errors: any[];
   loading: boolean;
   persisting: boolean;
+  errors: any[];
 
   constructor(
     private catalogDepartmentService: CatalogDepartmentService,
@@ -35,8 +37,8 @@ export class DepartmentsLookupModalComponent implements OnInit {
     this.errors = null;
     this.persisting = true;
 
-    this.addDepartmentToCatalogIfNotExist(this.selectedDepartment)
-      .then((department) => this.addDepartmentToOrganization(department))
+    this.addToCatalogIfNotExist(this.selectedDepartment)
+      .then((department) => this.addToOrganization(department))
       .then(() => {
         this.persisting = false;
         this.added.emit();
@@ -49,17 +51,21 @@ export class DepartmentsLookupModalComponent implements OnInit {
   }
 
   private loadDepartments(): void {
-    this.catalogDepartmentService.listDepartments(1, 100).subscribe(
-      response => {
-        this.departments = response['data'] || [];
-      },
-      err => {
-        console.error(err);
-      }
-    );
+    this.loading = true;
+
+    this.catalogDepartmentService.listDepartments(1, 100)
+      .pipe(finalize(() => this.loading = false))
+      .subscribe(
+        response => {
+          this.departments = response['data'] || [];
+        },
+        err => {
+          console.error(err);
+        }
+      );
   }
 
-  private addDepartmentToOrganization(department): Promise<any> {
+  private addToOrganization(department): Promise<any> {
     return new Promise<any>((resolve, reject) => {
       
       this.organizationDepartmentService.addDepartment(this.organizationId, { id: department.id })
@@ -67,10 +73,11 @@ export class DepartmentsLookupModalComponent implements OnInit {
           response => resolve(response['data']),
           err => reject(err)
         );
+
     });
   }
 
-  private addDepartmentToCatalogIfNotExist(department): Promise<any> {
+  private addToCatalogIfNotExist(department): Promise<any> {
     return new Promise<any>((resolve, reject) => {
 
       if (this.isAlreadyInCatalog(department)) {
@@ -82,11 +89,12 @@ export class DepartmentsLookupModalComponent implements OnInit {
           response => resolve(response['data']),
           err => reject(err)
         );
+
     });
   }
 
-  private isAlreadyInCatalog(department) {
-    return department && department.id;
+  private isAlreadyInCatalog(item) {
+    return item && item.id;
   }
   
 }
