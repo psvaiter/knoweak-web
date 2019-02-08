@@ -9,10 +9,13 @@
         [items]="processes"
         [searchable]="true"
         notFoundText="Nenhum item encontrado"
+        [addTag]="addNewOption"
+        addTagText="Novo processo:"
         bindLabel="name"
-        bindValue="id"
-        [(ngModel)]="selectedProcessId"
-        placeholder="Selecione um processo...">
+        [(ngModel)]="selectedProcess"
+        placeholder="Selecione um processo..."
+        [loading]="loading"
+        loadingText="Carregando...">
       </ng-select>
     </div>
     
@@ -30,6 +33,6 @@
     <app-error-alert [errors]="errors"></app-error-alert>
   </div>
   <div class="actions">
-    <button class="btn btn-outline-success" (click)="confirm()" [disabled]="!selectedProcessId">Salvar</button>
+    <button class="btn btn-outline-success" (click)="confirm()" [disabled]="!selectedProcess || persisting">Salvar</button>
   </div>
 </app-modal>

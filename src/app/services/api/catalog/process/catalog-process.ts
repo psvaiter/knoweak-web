@@ -1,5 +1,4 @@
 export class AddCatalogProcessRequest {
-    id: number;
     name: string;
 }
 

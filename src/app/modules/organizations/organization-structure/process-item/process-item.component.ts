@@ -59,7 +59,7 @@ export class ProcessItemComponent implements OnInit {
       class: 'modal-md',
       initialState: {
         macroprocess: this.process.macroprocess,
-        selectedProcess: this.process
+        process: this.process
       }
     });
 

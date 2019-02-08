@@ -1,4 +1,5 @@
 import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
+import { finalize } from 'rxjs/operators';
 import * as _ from 'lodash';
 
 import { Constants } from '../../../../shared/constants';
@@ -15,7 +16,7 @@ import { Utils } from '../../../../shared/utils';
 export class ProcessLookupModalComponent implements OnInit {
 
   @Input() macroprocess: OrganizationMacroprocess;
-  @Input() selectedProcess: OrganizationProcess;
+  @Input() process: OrganizationProcess;
   @Output() added: EventEmitter<void> = new EventEmitter<void>();
   @Output() edited: EventEmitter<OrganizationProcess> = new EventEmitter<OrganizationProcess>();
   
@@ -23,9 +24,12 @@ export class ProcessLookupModalComponent implements OnInit {
   
   organizationId: number;
   processes: any[];
-  selectedProcessId: number;
+  selectedProcess: any;
   ratingLevels = Constants.RATING_LEVELS;
   selectedRelevanceId: number;
+
+  loading: boolean;
+  persisting: boolean;
   errors: any[];
 
   constructor(
@@ -36,9 +40,9 @@ export class ProcessLookupModalComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.selectedProcess) {
-      this.selectedProcessId = this.selectedProcess.id;
-      this.selectedRelevanceId = (this.selectedProcess.relevance) ? this.selectedProcess.relevance.id : null;
+    if (this.process) {
+      this.selectedProcess = this.process;
+      this.selectedRelevanceId = (this.process.relevance) ? this.process.relevance.id : null;
       this.editMode = true;
     }
     this.organizationId = this.macroprocess.organizationId;
@@ -47,40 +51,73 @@ export class ProcessLookupModalComponent implements OnInit {
 
   confirm() {
     this.errors = null;
+    this.persisting = true;
 
     if (this.editMode) {
       this.patchProcess(this.selectedRelevanceId);
     }
     else {
-      this.addProcess(this.selectedProcessId, this.selectedRelevanceId);
+      this.addToCatalogIfNotExist(this.selectedProcess)
+        .then(process => this.addToOrganization(process, this.selectedRelevanceId))
+        .then(() => this.added.emit())
+        .catch(err => this.errors = Utils.getErrors(err))
+        .then(() => this.persisting = false);
     }
   }
 
-  private loadProcesses() {
-    this.catalogProcessService.listProcesses(1, 100).subscribe(
-      response => {
-        let processes = response['data'];
-        this.processes = _.orderBy(processes, ['name']);
-      }
-    );
+  addNewOption(name: string) {
+    return { name: name };
   }
 
-  private addProcess(processId: number, relevanceLevelId: number) {
-    let request = {
-      macroprocessInstanceId: this.macroprocess.instanceId,
-      processId: processId,
-      relevanceLevelId: relevanceLevelId
-    };
+  private loadProcesses() {
+    this.loading = true;
 
-    this.organizationProcessService.addProcess(this.organizationId, request)
+    this.catalogProcessService.listProcesses(1, 100)
+      .pipe(finalize(() => this.loading = false))
       .subscribe(
         response => {
-          this.added.emit();
-        },
-        err => {
-          this.errors = Utils.getErrors(err);
+          let processes = response['data'];
+          this.processes = _.orderBy(processes, ['name']);
         }
       );
+  }
+
+  private addToOrganization(process: any, relevanceLevelId: number): Promise<any> {
+    return new Promise<any>((resolve, reject) => {
+
+      let request = {
+        macroprocessInstanceId: this.macroprocess.instanceId,
+        processId: process.id,
+        relevanceLevelId: relevanceLevelId
+      };
+  
+      this.organizationProcessService.addProcess(this.organizationId, request)
+        .subscribe(
+          response => resolve(response['data']),
+          err => reject(err)
+        );
+
+    });
+  }
+
+  private addToCatalogIfNotExist(process): Promise<any> {
+    return new Promise<any>((resolve, reject) => {
+
+      if (this.isAlreadyInCatalog(process)) {
+        return resolve(process);
+      }
+
+      this.catalogProcessService.addProcess({ name: process.name })
+        .subscribe(
+          response => resolve(response['data']),
+          err => reject(err)
+        );
+
+    });
+  }
+
+  private isAlreadyInCatalog(item) {
+    return item && item.id;
   }
 
   private patchProcess(relevanceLevelId: number) {
@@ -88,11 +125,11 @@ export class ProcessLookupModalComponent implements OnInit {
       relevanceLevelId: relevanceLevelId 
     };
     
-    this.organizationProcessService.patchProcess(this.organizationId, this.selectedProcess.instanceId, request)
+    this.organizationProcessService.patchProcess(this.organizationId, this.process.instanceId, request)
       .subscribe(
         response => {
-          this.selectedProcess.relevance = Constants.RATING_LEVELS.find(level => level.id == relevanceLevelId);
-          this.edited.emit(this.selectedProcess);
+          this.process.relevance = Constants.RATING_LEVELS.find(level => level.id == relevanceLevelId);
+          this.edited.emit(this.process);
         },
         err => {
           this.errors = Utils.getErrors(err);
