@@ -33,6 +33,6 @@
   </div>
 
   <div class="actions">
-    <button class="btn btn-outline-success" (click)="save()">{{ (editMode) ? "Atualizar" : "Gerar análise" }}</button>
+    <button class="btn btn-outline-success" [disabled]="!enableSave()" (click)="save()">{{ (editMode) ? "Atualizar" : "Gerar análise" }}</button>
   </div>
 </app-modal>

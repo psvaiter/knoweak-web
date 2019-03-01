@@ -5,6 +5,7 @@ import { Analysis } from '../analysis';
 import { OrganizationAnalysisService } from '../../../../services/api/organization/organization-analysis.service';
 import { OrganizationAnalysisScopeSelectionComponent } from '../organization-analysis-scope-selection/organization-analysis-scope-selection.component';
 import { Utils } from '../../../../shared/utils';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-organization-analysis-modal',
@@ -17,9 +18,10 @@ export class OrganizationAnalysisModalComponent implements OnInit {
   analysis: Analysis = new Analysis();
   editMode: boolean;
   scopeOption: string = "all";  // all | custom
-  errors = [];
-
   @Output() saved = new EventEmitter();
+
+  errors = [];
+  persisting: boolean = false;
 
   @ViewChild(OrganizationAnalysisScopeSelectionComponent)
   private scopeComponent: OrganizationAnalysisScopeSelectionComponent;
@@ -36,7 +38,16 @@ export class OrganizationAnalysisModalComponent implements OnInit {
     }
   }
 
+  enableSave() {
+    if (this.persisting){
+      return false;
+    }
+    return true;
+  }
+
   save() {
+    this.persisting = true;
+
     if (this.editMode) {
       this.updateAnalysis();
     }
@@ -60,6 +71,7 @@ export class OrganizationAnalysisModalComponent implements OnInit {
     };
 
     this.organizationAnalysisService.createAnalysis(this.organization.id, request)
+      .pipe(finalize(() => this.persisting = false))
       .subscribe(
         response => {
           this.saved.emit(this.analysis);
@@ -76,6 +88,7 @@ export class OrganizationAnalysisModalComponent implements OnInit {
     };
 
     this.organizationAnalysisService.patchAnalysis(this.organization.id, this.analysis.id, request)
+      .pipe(finalize(() => this.persisting = false))
       .subscribe(
         response => {
           this.saved.emit(this.analysis);
