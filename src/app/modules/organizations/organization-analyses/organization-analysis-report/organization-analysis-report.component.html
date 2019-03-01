@@ -48,9 +48,9 @@
             <td>{{ detail.securityThreatName }}</td>
             <td *ngIf="showDetails">{{ detail.securityThreatLevel }}</td>
             <td *ngIf="showDetails">{{ detail.itAssetVulnerabilityLevel }}</td>
-            <td>{{ detail.calculatedImpact }}</td>
+            <td>{{ detail.calculatedImpact | percent:'1.0-2' }}</td>
             <td>{{ detail.calculatedProbability | percent:'1.0-2' }}</td>
-            <td>{{ detail.calculatedRisk }}</td>
+            <td>{{ detail.calculatedRisk | percent:'1.0-2' }}</td>
           </tr>
         </tbody>
       </table>
