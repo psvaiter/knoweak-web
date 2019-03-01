@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { finalize } from 'rxjs/operators';
+import { Angular5Csv } from 'angular5-csv/dist/Angular5-csv';
 
 import { AnalysisDetail } from '../analysis';
 import { Paging } from '../../../../shared/components/pagination/pagination.component';
@@ -40,7 +41,9 @@ export class OrganizationAnalysisReportComponent implements OnInit {
     this.loading = true;
     this.records = [];
 
-    this.organizationAnalysisService.listAnalysisDetails(this.organizationId, this.analysisId, page)
+    let recordsPerPage = 20;
+
+    this.organizationAnalysisService.listAnalysisDetails(this.organizationId, this.analysisId, page, recordsPerPage)
       .pipe(finalize(() => this.loading = false))
       .subscribe(
         response => {
@@ -59,6 +62,27 @@ export class OrganizationAnalysisReportComponent implements OnInit {
 
   getNextPage() {
     this.listAnalysisDetails(this.paging.currentPage + 1);
+  }
+
+  exportCsv() {
+    let filename = `analysis-${this.analysisId}-report-page${this.paging.currentPage}-${this.paging.recordsPerPage}`;
+
+    console.log("saving ", filename);
+    new Angular5Csv(this.records, filename, {
+      fieldSeparator: ';',
+      decimalSeparator: '.',
+      showLabels: true,
+      headers: [
+        "Id", 
+        "Departamento", 
+        "Macroprocesso", 
+        "Processo", "Rp", 
+        "Servico de TI", "Rs",
+        "Ativo de TI", "Ra", "Gv",
+        "Ameaca", "Ga",
+        "Impacto", "Prob.", "Risco"
+      ]
+    });
   }
 
 }

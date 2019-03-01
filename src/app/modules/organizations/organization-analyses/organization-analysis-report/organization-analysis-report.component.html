@@ -4,6 +4,9 @@
   <a class="btn btn-sm btn-primary" [routerLink]="" (click)="showDetails = !showDetails">
     {{ (showDetails) ? "Ocultar detalhes" : "Exibir detalhes" }}
   </a>
+  <a class="btn btn-sm btn-primary" [routerLink]="" (click)="exportCsv()">
+    Exportar CSV
+  </a>
   
   <div class="table-container">
     <div class="table-responsive">
