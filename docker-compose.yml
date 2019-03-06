@@ -1,0 +1,10 @@
+version: '3.4'
+
+services:
+  web:
+    build: .
+    volumes:
+      - .:/knoweak
+      - /knoweak/node_modules
+    ports:
+      - '4200:4200'
