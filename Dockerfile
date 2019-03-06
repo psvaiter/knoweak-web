@@ -1,4 +1,4 @@
-FROM node:8-jessie
+FROM node:8-alpine
 
 # Adding modules to PATH so 'ng' can be executed without 
 # installing Angular CLI globally.
