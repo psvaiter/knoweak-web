@@ -1,0 +1,21 @@
+# ---------------------------------------------------------
+# Stage 1
+# ---------------------------------------------------------
+FROM node:8-slim as builder
+
+ENV PATH /knoweak/node_modules/.bin:$PATH
+
+COPY package.json package-lock.json /knoweak/
+
+WORKDIR /knoweak/
+RUN npm install
+
+COPY . /knoweak/
+RUN npm run build
+
+# ---------------------------------------------------------
+# Final stage
+# ---------------------------------------------------------
+FROM nginx:alpine
+
+COPY --from=builder /knoweak/dist /usr/share/nginx/html
