@@ -18,6 +18,6 @@ RUN npm run build
 # Final stage
 # Create nginx image with static files generated in previous stage.
 # -------------------------------------------------------------------
-FROM nginx:alpine
+FROM nginx:1-alpine
 
 COPY --from=build-stage /knoweak/dist /usr/share/nginx/html
