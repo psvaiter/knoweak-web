@@ -1,11 +1,12 @@
-# ---------------------------------------------------------
-# Stage 1
-# ---------------------------------------------------------
-FROM node:8-slim as builder
+# -------------------------------------------------------------------
+# Stage 0
+# Build Angular application.
+# -------------------------------------------------------------------
+FROM node:8-slim as build-stage
 
 ENV PATH /knoweak/node_modules/.bin:$PATH
 
-COPY package.json package-lock.json /knoweak/
+COPY package*.json /knoweak/
 
 WORKDIR /knoweak/
 RUN npm install
@@ -13,9 +14,10 @@ RUN npm install
 COPY . /knoweak/
 RUN npm run build
 
-# ---------------------------------------------------------
+# -------------------------------------------------------------------
 # Final stage
-# ---------------------------------------------------------
+# Create nginx image with static files generated in previous stage.
+# -------------------------------------------------------------------
 FROM nginx:alpine
 
-COPY --from=builder /knoweak/dist /usr/share/nginx/html
+COPY --from=build-stage /knoweak/dist /usr/share/nginx/html
