@@ -32,6 +32,14 @@ export class ProcessLookupModalComponent implements OnInit {
   persisting: boolean;
   errors: any[];
 
+  fieldLabels = new Map([
+    ["macroprocessInstanceId", "Macroprocesso"],
+    ["processId", "Processo"],
+    ["name", "Processo"],
+    ["macroprocessInstanceId/processId", "Macroprocesso + Processo"],
+    ["relevanceLevelId", "Relevância"]
+  ]);
+
   constructor(
     private catalogProcessService: CatalogProcessService,
     private organizationProcessService: OrganizationProcessService
@@ -60,7 +68,7 @@ export class ProcessLookupModalComponent implements OnInit {
       this.addToCatalogIfNotExist(this.selectedProcess)
         .then(process => this.addToOrganization(process, this.selectedRelevanceId))
         .then(() => this.added.emit())
-        .catch(err => this.errors = Utils.getErrors(err))
+        .catch(err => this.errors = Utils.getErrors(err, this.fieldLabels))
         .then(() => this.persisting = false);
     }
   }
@@ -132,7 +140,7 @@ export class ProcessLookupModalComponent implements OnInit {
           this.edited.emit(this.process);
         },
         err => {
-          this.errors = Utils.getErrors(err);
+          this.errors = Utils.getErrors(err, this.fieldLabels);
         }
     );
   }

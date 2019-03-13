@@ -30,6 +30,15 @@ export class ItAssetLookupModalComponent implements OnInit {
   selectedRelevanceId: number;
   errors: any[]
   
+  fieldLabels = new Map([
+    ["itAssetInstanceId", "Ativo de TI da organização"],
+    ["itAssetId", "Ativo de TI"],
+    ["name", "Ativo de TI"],
+    ["externalIdentifier", "Identificação do ativo de TI"],
+    ["itServiceInstanceId/itAssetInstanceId", "Serviço de TI + Ativo de TI"],
+    ["relevanceLevelId", "Relevância"]
+  ]);
+
   // Different IT asset sources that will be assigned to 'itAssets' by user choice
   private catalogItAssets: any[];
   private organizationItAssets: any[];
@@ -144,7 +153,7 @@ export class ItAssetLookupModalComponent implements OnInit {
         
         this.addItServiceItAsset(itAsset.instanceId, this.selectedRelevanceId)
           .then(() => this.added.emit())
-          .catch((err) => this.errors = Utils.getErrors(err));
+          .catch((err) => this.errors = Utils.getErrors(err, this.fieldLabels));
       }
       else {
         
@@ -154,7 +163,7 @@ export class ItAssetLookupModalComponent implements OnInit {
             return this.addItServiceItAsset(itAssetInstanceId, this.selectedRelevanceId);
           })
           .then(() => this.added.emit())
-          .catch((err) => this.errors = Utils.getErrors(err));
+          .catch((err) => this.errors = Utils.getErrors(err, this.fieldLabels));
       }
   }
 
@@ -199,7 +208,7 @@ export class ItAssetLookupModalComponent implements OnInit {
           this.edited.emit(this.selectedItAsset);
         },
         err => {
-          this.errors = Utils.getErrors(err);
+          this.errors = Utils.getErrors(err, this.fieldLabels);
         }
       );
   }

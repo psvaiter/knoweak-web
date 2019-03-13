@@ -27,6 +27,14 @@ export class ItServiceLookupModalComponent implements OnInit {
   ratingLevels = Constants.RATING_LEVELS;
   selectedRelevanceId: number;
   errors: any[];
+  
+  fieldLabels = new Map([
+    ["processInstanceId", "Processo"],
+    ["itServiceId", "Serviço de TI"],
+    ["name", "Serviço de TI"],
+    ["processInstanceId/itServiceId", "Processo + Serviço de TI"],
+    ["relevanceLevelId", "Relevância"]
+  ]);
 
   constructor(
     private catalogItServiceService: CatalogItServiceService,
@@ -78,7 +86,7 @@ export class ItServiceLookupModalComponent implements OnInit {
           this.added.emit();
         },
         err => {
-          this.errors = Utils.getErrors(err);
+          this.errors = Utils.getErrors(err, this.fieldLabels);
         }
       );
   }
@@ -95,7 +103,7 @@ export class ItServiceLookupModalComponent implements OnInit {
           this.edited.emit(this.selectedItService);
         },
         err => {
-          this.errors = Utils.getErrors(err);
+          this.errors = Utils.getErrors(err, this.fieldLabels);
         }
     );
   }

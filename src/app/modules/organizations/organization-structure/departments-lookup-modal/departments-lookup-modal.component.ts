@@ -22,6 +22,11 @@ export class DepartmentsLookupModalComponent implements OnInit {
   persisting: boolean;
   errors: any[];
 
+  fieldLabels = new Map([
+    ["id", "Departamento"],
+    ["name", "Departamento"]
+  ]);
+
   constructor(
     private catalogDepartmentService: CatalogDepartmentService,
     private organizationDepartmentService: OrganizationDepartmentService
@@ -40,7 +45,7 @@ export class DepartmentsLookupModalComponent implements OnInit {
     this.addToCatalogIfNotExist(this.selectedDepartment)
       .then((department) => this.addToOrganization(department))
       .then(() => this.added.emit())
-      .catch(err => this.errors = Utils.getErrors(err))
+      .catch(err => this.errors = Utils.getErrors(err, this.fieldLabels))
       .then(() => this.persisting = false);
   }
 

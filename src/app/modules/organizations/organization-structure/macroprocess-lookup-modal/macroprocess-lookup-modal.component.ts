@@ -24,6 +24,13 @@ export class MacroprocessLookupModalComponent implements OnInit {
   persisting: boolean;
   errors: any[];
 
+  fieldLabels = new Map([
+    ["departmentId", "Departamento"],
+    ["macroprocessId", "Macroprocesso"],
+    ["name", "Macroprocesso"],
+    ["departmentId/macroprocessId", "Departamento + Macroprocesso"]
+  ]);
+
   constructor(
     private catalogMacroprocessService: CatalogMacroprocessService,
     private organizationMacroprocessService: OrganizationMacroprocessService
@@ -42,7 +49,7 @@ export class MacroprocessLookupModalComponent implements OnInit {
     this.addToCatalogIfNotExist(this.selectedMacroprocess)
       .then((macroprocess => this.addToOrganization(macroprocess)))
       .then(() => this.added.emit())
-      .catch(err => this.errors = Utils.getErrors(err))
+      .catch(err => this.errors = Utils.getErrors(err, this.fieldLabels))
       .then(() => this.persisting = false);
   }
   
