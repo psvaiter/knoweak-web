@@ -26,6 +26,10 @@ export class OrganizationAnalysisModalComponent implements OnInit {
   @ViewChild(OrganizationAnalysisScopeSelectionComponent)
   private scopeComponent: OrganizationAnalysisScopeSelectionComponent;
 
+  fieldLabels = new Map([
+    ["description", "Descrição"]
+  ]);
+
   constructor(
     private organizationAnalysisService: OrganizationAnalysisService
   ) { 
@@ -77,7 +81,7 @@ export class OrganizationAnalysisModalComponent implements OnInit {
           this.saved.emit(this.analysis);
         },
         err => {
-          this.errors = Utils.getErrors(err);
+          this.errors = Utils.getErrors(err, this.fieldLabels);
         }
       );
   }
@@ -94,7 +98,7 @@ export class OrganizationAnalysisModalComponent implements OnInit {
           this.saved.emit(this.analysis);
         },
         err => {
-          this.errors = Utils.getErrors(err);
+          this.errors = Utils.getErrors(err, this.fieldLabels);
         }
       );
   }

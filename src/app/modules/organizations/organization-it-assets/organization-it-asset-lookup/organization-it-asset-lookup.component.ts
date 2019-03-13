@@ -26,6 +26,11 @@ export class OrganizationItAssetLookupComponent implements OnInit {
   errors: any[];
   persisting: boolean;
 
+  fieldLabels = new Map([
+    ["itAssetId", "Ativo de TI"],
+    ["externalIdentifier", "Identificação do ativo de TI"]
+  ]);
+
   constructor(
     private catalogItAssetService: CatalogItAssetService,
     private organizationItAssetService: OrganizationItAssetService
@@ -90,7 +95,7 @@ export class OrganizationItAssetLookupComponent implements OnInit {
           this.added.emit(request);
         },
         err => {
-          this.errors = Utils.getErrors(err);
+          this.errors = Utils.getErrors(err, this.fieldLabels);
         }
       );
   }
@@ -108,7 +113,7 @@ export class OrganizationItAssetLookupComponent implements OnInit {
           this.added.emit(request);
         },
         err => {
-          this.errors = Utils.getErrors(err);
+          this.errors = Utils.getErrors(err, this.fieldLabels);
         }
       );
   }

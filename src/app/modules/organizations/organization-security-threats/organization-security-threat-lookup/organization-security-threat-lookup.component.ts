@@ -28,6 +28,11 @@ export class OrganizationSecurityThreatLookupComponent implements OnInit {
   errors: any[];
   persisting: boolean;
 
+  fieldLabels = new Map([
+    ["securityThreatId", "Ameaça"],
+    ["threatLevelId", "Grau da ameaça"]
+  ]);
+
   constructor(
     private catalogSecurityThreatService: CatalogSecurityThreatService,
     private organizationSecurityThreatService: OrganizationSecurityThreatService
@@ -95,7 +100,7 @@ export class OrganizationSecurityThreatLookupComponent implements OnInit {
           this.added.emit(request);
         },
         err => {
-          this.errors = Utils.getErrors(err);
+          this.errors = Utils.getErrors(err, this.fieldLabels);
         }
       );
   }
@@ -113,7 +118,7 @@ export class OrganizationSecurityThreatLookupComponent implements OnInit {
           this.added.emit(request);
         },
         err => {
-          this.errors = Utils.getErrors(err);
+          this.errors = Utils.getErrors(err, this.fieldLabels);
         }
       );
   }
