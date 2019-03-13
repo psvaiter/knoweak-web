@@ -20,6 +20,12 @@ export class OrganizationModalComponent implements OnInit {
   editableOrganization: Organization;
   persistedOrganization: Organization;
 
+  fieldLabels: Map<string, string> = new Map([
+    ["taxId", "Nº de Registro"],
+    ["legalName", "Nome Empresarial"],
+    ["tradeName", "Nome Fantasia"]
+  ]);
+
   constructor(
     private organizationService: OrganizationService
   ) {
@@ -67,7 +73,7 @@ export class OrganizationModalComponent implements OnInit {
         this.saved.emit(response['data']);
       },
       err => {
-        this.errors = Utils.getErrors(err);
+        this.errors = Utils.getErrors(err, this.fieldLabels);
       }
     );
   }

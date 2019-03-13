@@ -4,8 +4,9 @@ export class Utils {
    * This method receives a response from HTTP request and translates to our error structure.
    * The error strucuture has the properties 'field' and 'message'.
    * @param response The response from an HTTP request.
+   * @param fieldLabels Map field names to labels. When field name is found, the label will be used instead of field name.
    */
-  static getErrors(response: any): any[] {
+  static getErrors(response: any, fieldLabels: Map<string, string> = null): any[] {
     
     switch(response.status) {
       case 401: return [{ message: "Usuário não autenticado"}];
@@ -14,7 +15,12 @@ export class Utils {
       
       case 400:
       case 409:
-      case 422: return response['error'].errors;
+      case 422: return response['error'].errors.map(error => {
+        let label = fieldLabels && fieldLabels.get(error.field);
+        return { 
+          field: label || error.field, 
+          message: error.message };
+      });
 
       default: {
         console.error(response);
@@ -31,4 +37,9 @@ export class Utils {
     return input = (input) ? input.trim() : null;
   }
 
+}
+
+interface FieldMapEntry {
+  field: string,
+  label: string
 }
