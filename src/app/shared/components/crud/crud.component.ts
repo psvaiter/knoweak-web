@@ -26,6 +26,7 @@ export class CrudComponent<TEntity> {
   hasUpdated: boolean = false;
   loading: boolean = false;
   persisting: boolean = false;
+  fieldLabels: Map<string, string>;
 
   constructor(protected _crudService: CrudService) { }
 
@@ -79,7 +80,7 @@ export class CrudComponent<TEntity> {
         },
         err => {
           this.hasCreated = false;
-          this.errors = Utils.getErrors(err);
+          this.errors = Utils.getErrors(err, this.fieldLabels);
         }
       );
   }
@@ -102,7 +103,7 @@ export class CrudComponent<TEntity> {
         },
         err => {
           this.hasUpdated = false;
-          this.errors = Utils.getErrors(err);
+          this.errors = Utils.getErrors(err, this.fieldLabels);
         }
       );
   }

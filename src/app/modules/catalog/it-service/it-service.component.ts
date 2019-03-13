@@ -11,6 +11,11 @@ export class ItServiceComponent extends CrudComponent<ItService> implements OnIn
 
   url = CrudService.BaseUrl + '/itServices';
 
+  fieldLabels = new Map([
+    ["name", "Nome"],
+    ["description", "Descrição"]
+  ]);
+  
   ngOnInit() {
     this.getRecords(1);
   }

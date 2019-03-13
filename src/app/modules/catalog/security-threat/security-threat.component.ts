@@ -10,7 +10,12 @@ import { CrudComponent } from '../../../shared/components/crud/crud.component';
 export class SecurityThreatComponent extends CrudComponent<SecurityThreat> implements OnInit {
 
   url = CrudService.BaseUrl + '/securityThreats';
- 
+
+  fieldLabels = new Map([
+    ["name", "Nome"],
+    ["description", "Descrição"]
+  ]);
+  
   ngOnInit() {
     this.getRecords(1);
   }

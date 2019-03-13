@@ -12,6 +12,10 @@ import { CrudService } from '../../../shared/components/crud/crud.service';
 export class DepartmentComponent extends CrudComponent<Department> implements OnInit {
 
   url = CrudService.BaseUrl + '/departments';
+  
+  fieldLabels = new Map([
+    ["name", "Nome"]
+  ]);
 
   ngOnInit() {
     this.getRecords(1);

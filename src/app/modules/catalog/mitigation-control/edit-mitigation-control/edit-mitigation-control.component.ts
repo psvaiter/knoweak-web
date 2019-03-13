@@ -14,6 +14,11 @@ export class EditMitigationControlComponent extends CrudComponent<MitigationCont
   url = CrudService.BaseUrl + '/mitigationControls';
   id: number;
 
+  fieldLabels = new Map([
+    ["name", "Nome"],
+    ["description", "Descrição"]
+  ]);
+  
   constructor(
     protected _crudService: CrudService,
     private location: Location,

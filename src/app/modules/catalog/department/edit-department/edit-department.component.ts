@@ -16,6 +16,10 @@ export class EditDepartmentComponent extends CrudComponent<Department> implement
   url = CrudService.BaseUrl + '/departments';
   id: number;
 
+  fieldLabels = new Map([
+    ["name", "Nome"]
+  ]);
+
   constructor(
     protected _crudService: CrudService,
     private location: Location,

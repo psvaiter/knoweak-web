@@ -14,6 +14,11 @@ export class EditItServiceComponent extends CrudComponent<ItService> implements 
   url = CrudService.BaseUrl + '/itServices';
   id: number;
 
+  fieldLabels = new Map([
+    ["name", "Nome"],
+    ["description", "Descrição"]
+  ]);
+
   constructor(
     protected _crudService: CrudService,
     private location: Location,

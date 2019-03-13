@@ -14,6 +14,10 @@ export class EditProcessComponent extends CrudComponent<Process> implements OnIn
   url = CrudService.BaseUrl + '/processes';
   id: number;
 
+  fieldLabels = new Map([
+    ["name", "Nome"]
+  ]);
+
   constructor(
     protected _crudService: CrudService,
     private location: Location,

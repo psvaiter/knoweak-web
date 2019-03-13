@@ -15,6 +15,12 @@ export class EditItAssetComponent extends CrudComponent<ItAsset> implements OnIn
   id: number;
   categories = [];
 
+  fieldLabels = new Map([
+    ["categoryId", "Categoria"],
+    ["name", "Nome"],
+    ["description", "Descrição"]
+  ]);
+
   constructor(
     protected _crudService: CrudService,
     private location: Location,

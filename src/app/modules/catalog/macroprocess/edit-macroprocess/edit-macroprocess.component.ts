@@ -15,6 +15,10 @@ export class EditMacroprocessComponent extends CrudComponent<Macroprocess> imple
   url = CrudService.BaseUrl + '/macroprocesses';
   id: number;
 
+  fieldLabels = new Map([
+    ["name", "Nome"]
+  ]);
+
   constructor(
     protected _crudService: CrudService,
     private location: Location,

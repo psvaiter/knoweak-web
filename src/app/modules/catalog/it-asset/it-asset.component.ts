@@ -13,6 +13,12 @@ export class ItAssetComponent extends CrudComponent<ItAsset> implements OnInit {
   url = CrudService.BaseUrl + '/itAssets';
   categories = [];
 
+  fieldLabels = new Map([
+    ["categoryId", "Categoria"],
+    ["name", "Nome"],
+    ["description", "Descrição"]
+  ]);
+
   ngOnInit() {
     this.getCategories();
     this.getRecords(1);

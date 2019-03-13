@@ -11,6 +11,10 @@ export class ProcessComponent extends CrudComponent<Process> implements OnInit {
 
   url = CrudService.BaseUrl + '/processes';
 
+  fieldLabels = new Map([
+    ["name", "Nome"]
+  ]);
+  
   ngOnInit() {
     this.getRecords(1);
   }

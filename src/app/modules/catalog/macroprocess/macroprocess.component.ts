@@ -11,6 +11,10 @@ export class MacroprocessComponent extends CrudComponent<Macroprocess> implement
 
   url = CrudService.BaseUrl + '/macroprocesses';
 
+  fieldLabels = new Map([
+    ["name", "Nome"]
+  ]);
+
   ngOnInit() {
     this.getRecords(1);
   }

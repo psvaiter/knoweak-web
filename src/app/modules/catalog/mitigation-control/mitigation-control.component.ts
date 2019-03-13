@@ -10,7 +10,12 @@ import { CrudService } from '../../../shared/components/crud/crud.service';
 export class MitigationControlComponent extends CrudComponent<MitigationControl> implements OnInit {
  
   url = CrudService.BaseUrl + '/mitigationControls';
- 
+
+  fieldLabels = new Map([
+    ["name", "Nome"],
+    ["description", "Descrição"]
+  ]);
+  
   ngOnInit() {
     this.getRecords(1);
   }
